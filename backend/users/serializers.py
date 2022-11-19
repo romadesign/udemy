@@ -11,16 +11,22 @@ class UserSerializer(serializers.ModelSerializer):
             'name',
             'email',
             'password',
-            'role',
             'first_name',
             'last_name',
+            'location',
+            'url',
+            'birthday',
+            'age_limit',
+            'is_active',
+            'is_staff',
             'verified',
             'total_earnings',
             'total_spent',
-            'date_created',
             'sales',
+            'role',
         ]
-        # fields = ["id", "username", "name", "email", "password", "role"]
+        # fields='__all__' other 
+        
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
@@ -32,3 +38,13 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 
+
+class UserSerializer_Detail(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields=[
+            'id',
+            'username',
+            'role',
+        ]
+    
