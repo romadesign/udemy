@@ -95,3 +95,8 @@ otras opciones Detener mysql
 ```
 https://www.sysadmit.com/2017/12/linux-configurar-teclado-espanol.html
 ```
+
+______________________________________________________________________________________________--
+
+## Migraciones posibles soluciones
+https://docs.djangoproject.com/en/4.1/topics/migrations/
