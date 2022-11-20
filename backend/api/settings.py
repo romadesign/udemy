@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     # Security & multi-app management
     'rest_framework',
     'corsheaders',
-    'users'
+    'users',
+    'courses',
 ]
 
 MIDDLEWARE = [
@@ -76,11 +77,19 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'udemy',
+    #     'USER': 'root',
+    #     'PASSWORD': ''
+    # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'udemy',
         'USER': 'root',
-        'PASSWORD': ''
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 

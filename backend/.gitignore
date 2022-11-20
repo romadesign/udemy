@@ -1,4 +1,6 @@
 # Default ignored files
+courses/migrations/__pycache__
+courses/__pycache__
 users/migrations/__pycache__
 users/__pycache__
 api/__pycache__

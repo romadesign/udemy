@@ -100,3 +100,29 @@ ________________________________________________________________________________
 
 ## Migraciones posibles soluciones
 https://docs.djangoproject.com/en/4.1/topics/migrations/
+
+
+## Para utilizar Django con Xampp 
+```
+  'default': {
+         'ENGINE': 'django.db.backends.mysql',
+         'NAME': 'udemy',
+         'USER': 'root',
+         'PASSWORD': ''
+    }
+}
+```
+
+* Ahora
+```
+  DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'udemy',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
+}
+```
