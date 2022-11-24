@@ -7,6 +7,13 @@ from django.core.validators import MaxValueValidator,MinValueValidator
 from django.utils import timezone
 
 # Create your models here.
+class Comment(models.Model):
+    user =              models.CharField(max_length=255)
+    message =           models.TextField()
+    created =           models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.message
 
 class Course(models.Model):
     
@@ -37,7 +44,7 @@ class Course(models.Model):
     
     course_length =     models.CharField(default=0,max_length=20)
   
-    comments =          models.ManyToManyField('Comment', blank=True)
+    comments =          models.ManyToManyField(Comment, blank=True)
     
     payment =           models.CharField(max_length=100, choices=payment, default='paid')
     
@@ -55,10 +62,3 @@ class Course(models.Model):
 
 
       
-class Comment(models.Model):
-    user =              models.CharField(max_length=255)
-    message =           models.TextField()
-    created =           models.DateTimeField(auto_now_add=True)
-    
-    def __str__(self):
-        return self.user

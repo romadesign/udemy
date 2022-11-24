@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .serializers import CourseSerializer
-from .models import Course
+from .models import Course, Comment
 from users.models import User
 
 # Create your views here.
@@ -28,7 +28,7 @@ class CreateCourseView(APIView):
         serializer = CourseSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         
-        data = self.request.data
+        data = self.request.data 
         
         author=data['author']
         price=data['price']
@@ -47,6 +47,8 @@ class CreateCourseView(APIView):
             price=price,
             )
         course.save()
+        
+        
 
         
         return Response({'success': 'Message sent successfully'})
@@ -71,7 +73,7 @@ class ListCoursesView(APIView):
         elif order == 'asc':
             courses = Course.objects.order_by(sortBy).all()[:int(limit)]
         else:
-            courses = Course.objects.order_by(sortBy).all()
+            courses = Course.objects.order_by(sortBy).all() 
             
 
         courses = CourseSerializer(courses, many=True)
