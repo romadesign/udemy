@@ -2,16 +2,17 @@ from rest_framework import serializers
 from .models import Course, Comment
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class Comment_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = [
-            'user', 
+            # 'user', 
             'message'
         ]
+        
 
-class CourseSerializer(serializers.ModelSerializer):
-    comments = CommentSerializer(many=True)
+class get_Courses_Serializer(serializers.ModelSerializer):
+    comments = Comment_Serializer(many=True, read_only=True)
 
     class Meta:
         model = Course
@@ -25,3 +26,4 @@ class CourseSerializer(serializers.ModelSerializer):
             'status',
             'comments'
         ]
+        
