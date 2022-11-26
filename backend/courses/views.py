@@ -3,8 +3,8 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from .serializers import get_Courses_Serializer, Comment_Serializer
-from .models import Course, Comment
+from .serializers import get_Courses_Serializer, Comment_Serializer, post_Course_Serializer
+from .models import Course, Comment, Requisite
 from category.models import Category
 from users.models import User
 import json
@@ -27,7 +27,7 @@ import json
 class Create_Course(APIView):
     def post(self, request, *args, **kwargs):
         # # validation
-        serializer = get_Courses_Serializer(data=request.data)
+        serializer = post_Course_Serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         data = self.request.data
@@ -152,3 +152,21 @@ class Add_Comment_View(APIView):
 
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class Create_Requisite_View(APIView):
+    def post(self, request, course_id, *args, **kwargs):
+        
+        data = self.request.data
+        author = data['user']
+        
+        title=data['title']
+        course = get_object_or_404(Course, id=course_id)
+
+        requisite = Requisite(title=title , user=author)
+        requisite.save()
+
+        course.requisite.add(requisite)
+
+        return Response({'success': 'Requisite added successfully'})
+        
