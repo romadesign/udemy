@@ -5,6 +5,7 @@ from django.db import models
 from users.models import User
 from django.core.validators import MaxValueValidator,MinValueValidator
 from django.utils import timezone
+from category.models import Category
 
 # Create your models here.
 class Comment(models.Model):
@@ -51,6 +52,7 @@ class Course(models.Model):
     price =             models.DecimalField(max_digits=18, decimal_places=2)
     compare_price =     models.DecimalField(max_digits=18,decimal_places=18, blank=True, null=True)
       
+    category =          models.ForeignKey(Category, on_delete=models.PROTECT)
     
     published =         models.DateTimeField(default=timezone.now)
     status =            models.CharField(max_length=10, choices=options, default='draft')

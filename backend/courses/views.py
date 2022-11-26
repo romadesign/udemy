@@ -5,10 +5,11 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .serializers import get_Courses_Serializer, Comment_Serializer
 from .models import Course, Comment
+from category.models import Category
 from users.models import User
 import json
 
-# Create your views here.
+# Create your views here other method post (basic).
 # class Create_Course(APIView):
 #     def post(self, request):
 #         serializer = get_Courses_Serializer(data=request.data)
@@ -33,19 +34,22 @@ class Create_Course(APIView):
 
         author = data['author']
         price = data['price']
-
+        category = data['category']
+        
         if price.find(".") == -1:
             price = price + ".0"
 
         author = get_object_or_404(User, id=author)
-
+        category = get_object_or_404(Category, id=category)
+        
         course = Course(
             title=data['title'],
             description=data['description'],
             language=data['language'],
             author=author,
             payment=data['payment'],
-            price=price
+            price=price,
+            category=category,
         )
 
         course.save()
