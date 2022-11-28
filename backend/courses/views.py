@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .serializers import get_Courses_Serializer, Comment_Serializer, post_Course_Serializer
-from .models import Course, Comment, Requisite
+from .models import Course, Comment, Requisite, CoursesLibrary
 from category.models import Category
 from users.models import User
 import json
@@ -35,13 +35,13 @@ class Create_Course(APIView):
         author = data['author']
         price = data['price']
         category = data['category']
-        
+
         if price.find(".") == -1:
             price = price + ".0"
 
         author = get_object_or_404(User, id=author)
         category = get_object_or_404(Category, id=category)
-        
+
         course = Course(
             title=data['title'],
             description=data['description'],
@@ -156,17 +156,47 @@ class Add_Comment_View(APIView):
 
 class Create_Requisite_View(APIView):
     def post(self, request, course_id, *args, **kwargs):
-        
+
         data = self.request.data
         author = data['user']
-        
-        title=data['title']
+
+        title = data['title']
         course = get_object_or_404(Course, id=course_id)
 
-        requisite = Requisite(title=title , user=author)
+        requisite = Requisite(title=title, user=author)
         requisite.save()
 
         course.requisite.add(requisite)
 
         return Response({'success': 'Requisite added successfully'})
-        
+
+
+class Add_Courses_Library(APIView):
+    def post(self, request, *args, **kwargs):
+
+        data = self.request.data
+        author = data['user']
+        courses = data['course']
+
+        # Trae al user y course ni no se coloca no funcionan
+        user = User.objects.get(id=author)
+        course = Course.objects.get(id=courses)
+
+        # validar si ya esta agregado
+        course_exists = CoursesLibrary.objects.filter(user=user, course=course)
+        course_exists.exists()
+        if not course_exists:
+            courses_list = CoursesLibrary(user=user, course=course)
+            courses_list.save()
+
+            return Response({
+                'success': 'true',
+                'status code': status.HTTP_201_CREATED,
+                "course": "Curso agregado a favoritos"
+            })
+        else:
+            return Response({
+                'success': 'true',
+                'status code': status.HTTP_404_NOT_FOUND,
+                "course": "Ya tienes agregado este curso"
+            })
