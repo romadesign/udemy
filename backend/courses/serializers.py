@@ -36,6 +36,7 @@ class get_Courses_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = [
+            'id',
             'author',
             'title',
             'description',

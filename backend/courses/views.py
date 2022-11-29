@@ -54,12 +54,23 @@ class Create_Course(APIView):
 
         course.save()
 
-        # comments_data=data['comments']
-        # for comment in comments_data:
-        #     comments = Comment(user = comment['user'],message = comment['message'])
-        #     course.comments.add(comments)
-
         return Response({'success': 'Message sent successfully'})
+
+
+class Delete_Course(APIView):
+    def post(self, request, course_id, *args, **kwargs):
+        data = self.request.data
+        author = data['author']
+
+        course_exists = Course.objects.filter(id=course_id, author=author)
+        course_exists.exists()
+
+        if not course_exists:
+            return Response({'you cant delete a course that doesnt exist'})
+        else:
+            course_exists.delete()
+            return Response({'estoy aqui'})
+        
 
 
 class ListCoursesView(APIView):
@@ -212,7 +223,8 @@ class Add_Paid_Courses_Library(APIView):
         user = User.objects.get(id=author)
         course = Course.objects.get(id=courses)
 
-        course_exists = PaidCoursesLibrary.objects.filter(user=user, course=course)
+        course_exists = PaidCoursesLibrary.objects.filter(
+            user=user, course=course)
         course_exists.exists()
 
         if not course_exists:
