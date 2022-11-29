@@ -115,3 +115,14 @@ class CoursesLibrary(models.Model):
 
     def __str__(self) -> str:
         return self.user
+
+
+class PaidCoursesLibrary(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = "Purchased Courses Library"
+
+    def __str__(self) -> str:
+        return self.userc

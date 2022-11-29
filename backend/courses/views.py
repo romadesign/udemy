@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .serializers import get_Courses_Serializer, Comment_Serializer, post_Course_Serializer
-from .models import Course, Comment, Requisite, CoursesLibrary
+from .models import Course, Comment, Requisite, CoursesLibrary, PaidCoursesLibrary
 from category.models import Category
 from users.models import User
 import json
@@ -188,6 +188,36 @@ class Add_Courses_Library(APIView):
         if not course_exists:
             courses_list = CoursesLibrary(user=user, course=course)
             courses_list.save()
+
+            return Response({
+                'success': 'true',
+                'status code': status.HTTP_201_CREATED,
+                "course": "Curso agregado a favoritos"
+            })
+        else:
+            return Response({
+                'success': 'true',
+                'status code': status.HTTP_404_NOT_FOUND,
+                "course": "Ya tienes agregado este curso"
+            })
+
+
+class Add_Paid_Courses_Library(APIView):
+    def post(self, request, *args, **kwargs):
+
+        data = self.request.data
+        author = data['user']
+        courses = data['course']
+
+        user = User.objects.get(id=author)
+        course = Course.objects.get(id=courses)
+
+        course_exists = PaidCoursesLibrary.objects.filter(user=user, course=course)
+        course_exists.exists()
+
+        if not course_exists:
+            course_list = PaidCoursesLibrary(user=user, course=course)
+            course_list.save()
 
             return Response({
                 'success': 'true',
