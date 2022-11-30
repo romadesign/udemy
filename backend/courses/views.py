@@ -62,13 +62,15 @@ class Delete_Course(APIView):
         data = self.request.data
         author = data['author']
 
-        course_exists = Course.objects.filter(id=course_id, author=author)
-        course_exists.exists()
+        course = Course.objects.filter(id=course_id, author=author)
+        comments = Comment.objects.filter(course = course_id)
 
-        if not course_exists:
+        course.exists()
+        if not course:
             return Response({'you cant delete a course that doesnt exist'})
         else:
-            course_exists.delete()
+            comments.delete()
+            course.delete()
             return Response({'estoy aqui'})
         
 

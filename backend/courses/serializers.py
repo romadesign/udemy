@@ -22,7 +22,7 @@ class Comment_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = [
-            # 'user', 
+            'user', 
             'message'
         ]
         
