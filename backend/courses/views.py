@@ -150,7 +150,25 @@ class Update_requisite(APIView):
             })
 
 
+class Deleted_requisite(APIView):
+    def post(self, request, requisite_id, *args, **kwargs):
+        data = self.request.data
+        user = data['user']
+
+        validate_requisite = Requisite.objects.filter(id=requisite_id, user=user)
+        requisite = get_object_or_404(Requisite, id=requisite_id)
+
+        if not validate_requisite:
+            return Response({
+                "message": "You can't do this option"
+            })
+        else:
+            requisite.delete()
+            return Response({'Deleted requisite'})
+
 # student options
+
+
 class List_Courses(APIView):
     def get(self, request):
 
@@ -251,10 +269,10 @@ class Update_Comment_For_Student(APIView):
         message = data['message']
 
         # verificando que el coment_id y user_id sean los correctos
-        getcomment = Comment.objects.filter(id=comment_id, user=user)
+        validate_comment = Comment.objects.filter(id=comment_id, user=user)
         comment = get_object_or_404(Comment, id=comment_id)
 
-        if not getcomment:
+        if not validate_comment:
             return Response({
                 "message": "You can't edit this comment because it's not yours"
             })
