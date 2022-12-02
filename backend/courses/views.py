@@ -111,8 +111,47 @@ class Update_course(APIView):
         return Response({'success': 'update course successfully'})
 
 
+class Create_Requisite(APIView):
+    def post(self, request, course_id, *args, **kwargs):
+
+        data = self.request.data
+        author = data['user']
+
+        title = data['title']
+        course = get_object_or_404(Course, id=course_id)
+
+        requisite = Requisite(title=title, user=author)
+        requisite.save()
+
+        course.requisite.add(requisite)
+
+        return Response({'success': 'Requisite added successfully'})
+
+
+class Update_requisite(APIView):
+    def post(self, request, requisite_id, *args, **kwargs):
+        data = self.request.data
+        user = data['user']
+        title = data['title']
+
+        getrequisite = Comment.objects.filter(id=requisite_id, user=user)
+        requisite = get_object_or_404(Requisite, id=requisite_id)
+
+        if not getrequisite:
+            return Response({
+                "message": "You can't edit this requirement because it doesn't belong to you"
+            })
+        else:
+            requisite.user = user
+            requisite.title = title
+            requisite.save()
+            return Response({
+                "message": "requisite edit successfully"
+            })
+
+
 # student options
-class List_Courses_View(APIView):
+class List_Courses(APIView):
     def get(self, request):
 
         sortBy = request.query_params.get('sortBy')
@@ -164,7 +203,7 @@ class Course_Detail(APIView):
             })
 
 
-class Add_Comment_View(APIView):
+class Add_Comment(APIView):
     def post(self, request, course_id, *args, **kwargs):
         # course_id = self.kwargs['course_id'] or
 
@@ -226,23 +265,6 @@ class Update_Comment_For_Student(APIView):
             return Response({
                 "message": "comment edit successfully"
             })
-
-
-class Create_Requisite_View(APIView):
-    def post(self, request, course_id, *args, **kwargs):
-
-        data = self.request.data
-        author = data['user']
-
-        title = data['title']
-        course = get_object_or_404(Course, id=course_id)
-
-        requisite = Requisite(title=title, user=author)
-        requisite.save()
-
-        course.requisite.add(requisite)
-
-        return Response({'success': 'Requisite added successfully'})
 
 
 class Add_Courses_Library(APIView):

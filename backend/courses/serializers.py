@@ -9,7 +9,7 @@ class RequisiteSerializer(serializers.ModelSerializer):
         model= Requisite
         fields = [
             "title",
-            # "id"
+            "id"
         ]
 
 class WhatLearnt_Serializer(serializers.ModelSerializer):
