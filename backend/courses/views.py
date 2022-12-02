@@ -23,6 +23,8 @@ import json
 #             }
 #         return Response(response, status=status_code)
 
+# options for course creators
+
 
 class Create_Course(APIView):
     def post(self, request, *args, **kwargs):
@@ -109,7 +111,8 @@ class Update_course(APIView):
         return Response({'success': 'update course successfully'})
 
 
-class ListCoursesView(APIView):
+# student options
+class List_Courses_View(APIView):
     def get(self, request):
 
         sortBy = request.query_params.get('sortBy')
@@ -168,6 +171,7 @@ class Add_Comment_View(APIView):
         try:
             course = Course.objects.get(id=course_id)
         except Course.DoesNotExist:
+
             return Response({
                 'success': 'false',
                 'status code': status.HTTP_400_BAD_REQUEST,
@@ -199,6 +203,29 @@ class Add_Comment_View(APIView):
 
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class Update_Comment_For_Student(APIView):
+    def post(self, request, comment_id, *args, **kwargs):
+        data = self.request.data
+        user = data['user']
+        message = data['message']
+
+        # verificando que el coment_id y user_id sean los correctos
+        getcomment = Comment.objects.filter(id=comment_id, user=user)
+        comment = get_object_or_404(Comment, id=comment_id)
+
+        if not getcomment:
+            return Response({
+                "message": "You can't edit this comment because it's not yours"
+            })
+        else:
+            comment.user = user
+            comment.message = message
+            comment.save()
+            return Response({
+                "message": "comment edit successfully"
+            })
 
 
 class Create_Requisite_View(APIView):
