@@ -54,7 +54,7 @@ class Create_Course(APIView):
 
         course.save()
 
-        return Response({'success': 'Message sent successfully'})
+        return Response({'success': 'Create course successfully'})
 
 
 class Delete_Course(APIView):
@@ -63,8 +63,8 @@ class Delete_Course(APIView):
         author = data['author']
 
         course = Course.objects.filter(id=course_id, author=author)
-        comments = Comment.objects.filter(course = course_id)
-        requisite = Requisite.objects.filter(course = course_id)
+        comments = Comment.objects.filter(course=course_id)
+        requisite = Requisite.objects.filter(course=course_id)
 
         course.exists()
         if not course:
@@ -74,7 +74,39 @@ class Delete_Course(APIView):
             comments.delete()
             course.delete()
             return Response({'estoy aqui'})
-        
+
+
+class Update_course(APIView):
+    def post(self, request, course_id, *args, **kwargs):
+        data = self.request.data
+
+        title = data['title']
+        description = data['description']
+        language = data['language']
+        author = data['author']
+        payment = data['payment']
+        price = data['price']
+        category = data['category']
+        status = data['status']
+
+        if price.find(".") == -1:
+            price = price + ".0"
+
+        course = get_object_or_404(Course, id=course_id)
+        author = get_object_or_404(User, id=author)
+        category = get_object_or_404(Category, id=category)
+
+        course.title = title
+        course.description = description
+        course.language = language
+        course.author = author
+        course.payment = payment
+        course.price = price
+        course.category = category
+        course.status = status
+
+        course.save()
+        return Response({'success': 'update course successfully'})
 
 
 class ListCoursesView(APIView):
@@ -238,11 +270,11 @@ class Add_Paid_Courses_Library(APIView):
             return Response({
                 'success': 'true',
                 'status code': status.HTTP_201_CREATED,
-                "course": "Curso agregado a favoritos"
+                "course": "Curso comprado"
             })
         else:
             return Response({
                 'success': 'true',
                 'status code': status.HTTP_404_NOT_FOUND,
-                "course": "Ya tienes agregado este curso"
+                "course": "Ya comprastes este curso"
             })
