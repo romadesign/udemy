@@ -17,5 +17,6 @@ urlpatterns = [
     path('comment/<int:course_id>', Add_Comment.as_view()),
     path('comment/<int:comment_id>/update', Update_Comment_For_Student.as_view()),
     path('add-courses-library', Add_Courses_Library.as_view()),
+    path('my-library', My_library.as_view()),
     path('add-courses-to-paid', Add_Paid_Courses_Library.as_view()),
 ]

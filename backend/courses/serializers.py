@@ -1,16 +1,18 @@
 from rest_framework import serializers
-from .models import Course, Comment, Rate, WhatLearnt, Requisite
+from .models import Course, Comment, Rate, WhatLearnt, Requisite, CoursesLibrary
+from .models import User
 from category.serializers import Category_Serializer
 from rest_framework import serializers
 
 
 class RequisiteSerializer(serializers.ModelSerializer):
     class Meta:
-        model= Requisite
+        model = Requisite
         fields = [
             "title",
             "id"
         ]
+
 
 class WhatLearnt_Serializer(serializers.ModelSerializer):
     class Meta:
@@ -22,14 +24,14 @@ class Comment_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = [
-            'user', 
+            'user',
             'message'
         ]
-        
+
 
 class get_Courses_Serializer(serializers.ModelSerializer):
-    category = Category_Serializer(read_only=True) #method get 
-    rating=serializers.IntegerField(source='get_rating', read_only=True)
+    category = Category_Serializer(read_only=True)  # method get
+    rating = serializers.IntegerField(source='get_rating', read_only=True)
     requisite = RequisiteSerializer(many=True)
     comments = Comment_Serializer(many=True, read_only=True)
 
@@ -50,10 +52,20 @@ class get_Courses_Serializer(serializers.ModelSerializer):
             'comments',
             'category'
         ]
-        
-        
+
+
+class user_serializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'name',
+        ]
+
+
 class post_Course_Serializer(serializers.ModelSerializer):
-    category = Category_Serializer(read_only=True) #add read_only para realizar method post 
+    # add read_only para realizar method post
+    category = Category_Serializer(read_only=True)
 
     class Meta:
         model = Course
@@ -67,4 +79,27 @@ class post_Course_Serializer(serializers.ModelSerializer):
             'status',
             'category'
         ]
-        
+
+
+class data_course_my_library_serializer(serializers.ModelSerializer):
+    rating = serializers.IntegerField(source='get_rating', read_only=True)
+    author = user_serializer(read_only=True)
+
+    class Meta:
+        model = Course
+        fields = [
+            'id',
+            'title',
+            'language',
+            'price',
+            'rating',
+            'author'
+        ]
+
+
+class get_my_library_Serializer(serializers.ModelSerializer):
+    course = data_course_my_library_serializer(read_only=True)
+
+    class Meta:
+        model = CoursesLibrary
+        fields = ['id', 'course']

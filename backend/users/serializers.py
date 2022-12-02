@@ -5,7 +5,7 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields=[
+        fields = [
             'id',
             'username',
             'name',
@@ -25,8 +25,8 @@ class UserSerializer(serializers.ModelSerializer):
             'sales',
             'role',
         ]
-        # fields='__all__' other 
-        
+        # fields='__all__' other
+
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
@@ -38,13 +38,11 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 
-
 class UserSerializer_Detail(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields=[
+        fields = [
             'id',
             'username',
             'role',
         ]
-    

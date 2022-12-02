@@ -3,29 +3,14 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from .serializers import get_Courses_Serializer, Comment_Serializer, post_Course_Serializer
+from .serializers import get_Courses_Serializer, Comment_Serializer, post_Course_Serializer, get_my_library_Serializer
 from .models import Course, Comment, Requisite, CoursesLibrary, PaidCoursesLibrary
 from category.models import Category
 from users.models import User
 import json
 
-# Create your views here other method post (basic).
-# class Create_Course(APIView):
-#     def post(self, request):
-#         serializer = get_Courses_Serializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-#         status_code = status.HTTP_201_CREATED
-#         response = {
-#             'success' : 'True',
-#             'status code' : status_code,
-#             'message': 'User registered  successfully',
-#             }
-#         return Response(response, status=status_code)
 
 # options for course creators
-
-
 class Create_Course(APIView):
     def post(self, request, *args, **kwargs):
         # # validation
@@ -367,3 +352,15 @@ class Add_Paid_Courses_Library(APIView):
                 'status code': status.HTTP_404_NOT_FOUND,
                 "course": "Ya comprastes este curso"
             })
+
+
+class My_library(APIView):
+    def get(self, request, *args, **kwargs):
+
+        data = self.request.data
+        author = data['user']
+
+        get_my_library = CoursesLibrary.objects.filter(user=author)
+        serializer = get_my_library_Serializer(get_my_library, many=True)
+        
+        return Response({'library': serializer.data})
