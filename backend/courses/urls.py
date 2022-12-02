@@ -9,6 +9,7 @@ urlpatterns = [
     path("requisite/create/<int:course_id>", Create_Requisite.as_view()),
     path("requisite/<int:requisite_id>/update", Update_requisite.as_view()),
     path('delete-requisite/<int:requisite_id>', Deleted_requisite.as_view()),
+    path('delete-requisite-all', Deleted_requisite_all.as_view()),
 
     # student options
     path('get-courses', List_Courses.as_view()),

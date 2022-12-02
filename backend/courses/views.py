@@ -155,7 +155,8 @@ class Deleted_requisite(APIView):
         data = self.request.data
         user = data['user']
 
-        validate_requisite = Requisite.objects.filter(id=requisite_id, user=user)
+        validate_requisite = Requisite.objects.filter(
+            id=requisite_id, user=user)
         requisite = get_object_or_404(Requisite, id=requisite_id)
 
         if not validate_requisite:
@@ -166,9 +167,30 @@ class Deleted_requisite(APIView):
             requisite.delete()
             return Response({'Deleted requisite'})
 
+
+class Deleted_requisite_all(APIView):
+    def post(self, request, *args, **kwargs):
+        data = self.request.data
+        author = data['user']
+        requirements = data['requirements']
+
+        validate_user = Course.objects.filter(author=author)
+
+        if not validate_user:
+            return Response({
+                "message": "You can't do this option"
+            })
+        else:
+            for requisite_id in requirements:
+                requisite = get_object_or_404(Requisite, id=requisite_id)
+                requisite.delete()
+
+            return Response({
+                "message": "Data deleted successfully"
+            })
+
+
 # student options
-
-
 class List_Courses(APIView):
     def get(self, request):
 
