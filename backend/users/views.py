@@ -10,26 +10,9 @@ import jwt, datetime
 
 class RegisterView(APIView):
     def post(self, request):
-        
-        serializer = UserSerializer(data = request.data)
+        serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-      
-        user = User.objects.get_or_create(
-            username=request.data["username"],
-            name=request.data["name"],
-            email=request.data["email"],
-            role=request.data["role"],
-            # first_name=request.data["first_name"],
-            # last_name=request.data["last_name"],
-            # location=request.data["location"],
-            # url=request.data["url"],
-            # birthday=request.data["birthday"],
-            # age_limit=request.data["age_limit"],
-            # verified=request.data["verified"],
-            # total_earnings=0,
-            # total_spent=0,
-            # sales=0,
-        )
+        serializer.save()
         status_code = status.HTTP_201_CREATED
         response = {
             'success' : 'True',
@@ -37,18 +20,6 @@ class RegisterView(APIView):
             'message': 'User registered  successfully',
             }
         return Response(response, status=status_code)
-        
-        
-        # serializer = UserSerializer(data=request.data)
-        # serializer.is_valid(raise_exception=True)
-        # serializer.save()
-        # status_code = status.HTTP_201_CREATED
-        # response = {
-        #     'success' : 'True',
-        #     'status code' : status_code,
-        #     'message': 'User registered  successfully',
-        #     }
-        # return Response(response, status=status_code)
 
 
 class LoginView(APIView):

@@ -38,6 +38,10 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 
+
+
+
+
 class UserSerializer_Detail(serializers.ModelSerializer):
     class Meta:
         model = User
