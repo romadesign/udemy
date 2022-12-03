@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .serializers import get_Courses_Serializer, Comment_Serializer, post_Course_Serializer, get_my_library_Serializer
-from .models import Course, Comment, Requisite, CoursesLibrary, PaidCoursesLibrary
+from .models import Course, Comment, Requisite, CoursesLibrary, PaidCoursesLibrary, WhatLearnt
 from category.models import Category
 from users.models import User
 import json
@@ -96,6 +96,60 @@ class Update_course(APIView):
         return Response({'success': 'update course successfully'})
 
 
+class Create_what_learned(APIView):
+    def post(self, request, course_id, *args, **kwargs):
+        data = self.request.data
+        author = data['user']
+        title = data['title']
+
+        course = get_object_or_404(Course, id=course_id)
+        learned = WhatLearnt(title=title, user=author)
+        learned.save()
+
+        course.what_learnt.add(learned)
+
+        return Response({'success': 'data added successfully'})
+
+
+class Update_what_learned(APIView):
+    def post(self, request, learned_id, *args, **kwargs):
+        data = self.request.data
+        user = data['user']
+        title = data['title']
+
+        getlearned = WhatLearnt.objects.filter(id=learned_id, user=user)
+        learned = get_object_or_404(WhatLearnt, id=learned_id)
+
+        if not getlearned:
+            return Response({
+                "message": "You can't edit this requirement because it doesn't belong to you"
+            })
+        else:
+            learned.user = user
+            learned.title = title
+            learned.save()
+            return Response({
+                "message": "data edit successfully"
+            })
+
+
+class Deleted_what_learned(APIView):
+    def post(self, request, learned_id, *args, **kwargs):
+        data = self.request.data
+        user = data['user']
+
+        validate_learned = WhatLearnt.objects.filter(id=learned_id, user=user)
+        learned = get_object_or_404(WhatLearnt, id=learned_id)
+
+        if not validate_learned:
+            return Response({
+                "message": "You can't do this option"
+            })
+        else:
+            learned.delete()
+            return Response({'Deleted learned_'})
+
+
 class Create_Requisite(APIView):
     def post(self, request, course_id, *args, **kwargs):
 
@@ -110,7 +164,7 @@ class Create_Requisite(APIView):
 
         course.requisite.add(requisite)
 
-        return Response({'success': 'Requisite added successfully'})
+        return Response({'success': 'data added successfully'})
 
 
 class Update_requisite(APIView):
@@ -119,7 +173,7 @@ class Update_requisite(APIView):
         user = data['user']
         title = data['title']
 
-        getrequisite = Comment.objects.filter(id=requisite_id, user=user)
+        getrequisite = Requisite.objects.filter(id=requisite_id, user=user)
         requisite = get_object_or_404(Requisite, id=requisite_id)
 
         if not getrequisite:
@@ -343,7 +397,8 @@ class Remove_course_from_my_library(APIView):
 
         validate_course = CoursesLibrary.objects.filter(
             course=course, user=user)
-        added_course = get_object_or_404(CoursesLibrary, id=course_of_my_bookstore_id)
+        added_course = get_object_or_404(
+            CoursesLibrary, id=course_of_my_bookstore_id)
         if not validate_course:
             return Response({
                 "message": "You can't do this option"

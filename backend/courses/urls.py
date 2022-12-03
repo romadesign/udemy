@@ -6,6 +6,10 @@ urlpatterns = [
     path('register/course', Create_Course.as_view()),
     path("course/<int:course_id>/update", Update_course.as_view()),
     path('delete-course/<int:course_id>', Delete_Course.as_view()),
+    path("what-learned/create/<int:course_id>", Create_what_learned.as_view()),
+    path("what-learned/<int:learned_id>/update", Update_what_learned.as_view()),
+    path('delete-what-learned/<int:learned_id>', Deleted_what_learned.as_view()),
+    
     path("requisite/create/<int:course_id>", Create_Requisite.as_view()),
     path("requisite/<int:requisite_id>/update", Update_requisite.as_view()),
     path('delete-requisite/<int:requisite_id>', Deleted_requisite.as_view()),
