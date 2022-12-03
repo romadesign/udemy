@@ -2,9 +2,11 @@
 - Install Python, Xammp, VsCode || PyCharm
 
 ## Librerias instaladas
-- python pip install PyJWT
+- pip install PyJWT
 - pip install mysqlclient
 - pip install corsheaders
+- pip install faker
+- pip instal pillow <- image ->
 
 ### Crear proyecto en windows
 * Crear entorno envn

@@ -6,9 +6,12 @@ from users.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
 from category.models import Category
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
+def upload_to(instance, filename):
+    return 'courses/{0}/{1}'.format(instance.title, filename)
 
 class Course(models.Model):
 
@@ -30,6 +33,8 @@ class Course(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
+
+    image = models.ImageField(_("Image"), upload_to=upload_to, default='/courses/default.jpg')
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

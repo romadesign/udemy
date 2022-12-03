@@ -8,11 +8,13 @@ from .models import Course, Comment, Requisite, CoursesLibrary, PaidCoursesLibra
 from category.models import Category
 from users.models import User
 import json
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 # options for course creators
 class Create_Course(APIView):
     def post(self, request, *args, **kwargs):
+        parser_classes = [MultiPartParser, FormParser]
         # # validation
         serializer = post_Course_Serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -32,6 +34,7 @@ class Create_Course(APIView):
         course = Course(
             title=data['title'],
             description=data['description'],
+            image=data['image'],
             language=data['language'],
             author=author,
             payment=data['payment'],
