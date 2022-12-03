@@ -323,6 +323,37 @@ class Add_Courses_Library(APIView):
             })
 
 
+class My_library(APIView):
+    def get(self, request, *args, **kwargs):
+
+        data = self.request.data
+        author = data['user']
+
+        get_my_library = CoursesLibrary.objects.filter(user=author)
+        serializer = get_my_library_Serializer(get_my_library, many=True)
+
+        return Response({'library': serializer.data})
+
+
+class Remove_course_from_my_library(APIView):
+    def post(self, request, course_of_my_bookstore_id, *args, **kwargs):
+        data = self.request.data
+        user = data['user']
+        course = data['course']
+
+        validate_course = CoursesLibrary.objects.filter(
+            course=course, user=user)
+        added_course = get_object_or_404(CoursesLibrary, id=course_of_my_bookstore_id)
+        if not validate_course:
+            return Response({
+                "message": "You can't do this option"
+            })
+        else:
+            added_course.delete()
+            return Response({'Deleted requisite'})
+        return ""
+
+
 class Add_Paid_Courses_Library(APIView):
     def post(self, request, *args, **kwargs):
 
@@ -352,15 +383,3 @@ class Add_Paid_Courses_Library(APIView):
                 'status code': status.HTTP_404_NOT_FOUND,
                 "course": "Ya comprastes este curso"
             })
-
-
-class My_library(APIView):
-    def get(self, request, *args, **kwargs):
-
-        data = self.request.data
-        author = data['user']
-
-        get_my_library = CoursesLibrary.objects.filter(user=author)
-        serializer = get_my_library_Serializer(get_my_library, many=True)
-        
-        return Response({'library': serializer.data})

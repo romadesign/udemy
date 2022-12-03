@@ -102,4 +102,4 @@ class get_my_library_Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = CoursesLibrary
-        fields = ['id', 'course']
+        fields = ['id', 'course', 'user']
