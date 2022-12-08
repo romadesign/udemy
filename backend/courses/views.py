@@ -10,6 +10,7 @@ from users.models import User
 import json
 from rest_framework.parsers import MultiPartParser, FormParser
 import os
+from PIL import Image
 
 # options for course creators
 class Create_Course(APIView):

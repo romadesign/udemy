@@ -7,6 +7,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
 from category.models import Category
 from django.utils.translation import gettext_lazy as _
+from PIL import Image
 
 # Create your models here.
 
@@ -89,6 +90,25 @@ class Course(models.Model):
     def get_no_rating(self):
         return len(self.rating.all())
 
+
+    # def save(self, *args, **kwargs):
+    #     super(Course, self).save(*args, **kwargs)
+    #     imag = Image.open(self.image.path)
+    #     if imag.width > 400 or imag.height > 300:
+    #         output_size = (400, 300)
+    #         imag.thumbnail(output_size)
+    
+    def save(self, *args, **kwargs):
+        super(Course, self).save(*args, **kwargs)
+        imag = Image.open(self.image.path)
+        xcenter = imag.width/2
+        ycenter = imag.height/2
+        x1 = xcenter - 480
+        y1 = ycenter - 270
+        x2 = xcenter + 480
+        y2 = ycenter + 270
+        cropped = imag.crop((x1, y1, x2, y2))
+        cropped.save(self.image.path)
 
 class Rate(models.Model):
     rate_number = models.IntegerField(
