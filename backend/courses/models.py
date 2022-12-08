@@ -1,5 +1,5 @@
 from django.db import models
-
+import uuid
 # Create your models here.
 from django.db import models
 from users.models import User
@@ -10,8 +10,17 @@ from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
+
+# def upload_to(instance, filename):
+#     return 'courses/{0}/{1}'.format(instance.title, filename)
+# https://www.appsloveworld.com/django/100/513/django-how-to-rename-images-using-a-new-auto-numbering-per-foreign-key
+
 def upload_to(instance, filename):
-    return 'courses/{0}/{1}'.format(instance.title, filename)
+    course_author = instance.author
+    extension = filename.split(".")[-1]
+    new_filename = "%s.%s" % (uuid.uuid4(), extension)
+    return 'courses/{0}/{1}'.format(course_author, new_filename)
+
 
 class Course(models.Model):
 
@@ -34,7 +43,8 @@ class Course(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
 
-    image = models.ImageField(_("Image"), upload_to=upload_to, default='/courses/default.jpg')
+    image = models.ImageField(
+        _("Image"), upload_to=upload_to, default='/courses/default.jpg')
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

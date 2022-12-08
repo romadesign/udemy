@@ -9,7 +9,7 @@ from category.models import Category
 from users.models import User
 import json
 from rest_framework.parsers import MultiPartParser, FormParser
-
+import os
 
 # options for course creators
 class Create_Course(APIView):
@@ -45,25 +45,33 @@ class Create_Course(APIView):
         course.save()
 
         return Response({'success': 'Create course successfully'})
-
+ 
 
 class Delete_Course(APIView):
     def post(self, request, course_id, *args, **kwargs):
         data = self.request.data
         author = data['author']
 
+        coursegetImage = Course.objects.get(id=course_id)
+
         course = Course.objects.filter(id=course_id, author=author)
         comments = Comment.objects.filter(course=course_id)
         requisite = Requisite.objects.filter(course=course_id)
 
-        course.exists()
-        if not course:
-            return Response({'you cant delete a course that doesnt exist'})
+        if os.path.exists(coursegetImage.image.path):
+            course.exists()
+            if not course:
+                return Response({'you cant delete a course that doesnt exist'})
+            else:
+                os.remove(coursegetImage.image.path)
+                requisite.delete()
+                comments.delete()
+                course.delete()
+                return Response({"The file exist"})
         else:
-            requisite.delete()
-            comments.delete()
-            course.delete()
-            return Response({'estoy aqui'})
+            return Response({"The file does not exist"})
+
+        
 
 
 class Update_course(APIView):
