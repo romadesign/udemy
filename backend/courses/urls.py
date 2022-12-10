@@ -19,6 +19,10 @@ urlpatterns = [
     path('get-courses', List_Courses.as_view()),
     path('courses-filter', get_courses_filter_advanced.as_view()),
     path('course/<int:id>/', Course_Detail.as_view()),
+    
+    path('add-rating-course', Add_Rating.as_view()),
+    
+    
     path('comment/<int:course_id>', Add_Comment.as_view()),
     path('comment/<int:comment_id>/update', Update_Comment_For_Student.as_view()),
     path('add-courses-library', Add_Courses_Library.as_view()),

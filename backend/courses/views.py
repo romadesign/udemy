@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .serializers import *
-from .models import Course, Comment, Requisite, CoursesLibrary, PaidCoursesLibrary, WhatLearnt
+from .models import *
 from category.models import Category
 from users.models import User
 import json
@@ -48,7 +48,7 @@ class Create_Course(APIView):
 
         return Response({'success': 'Create course successfully'})
  
-
+ 
 class Delete_Course(APIView):
     def post(self, request, course_id, *args, **kwargs):
         data = self.request.data
@@ -72,8 +72,6 @@ class Delete_Course(APIView):
                 return Response({"The file exist"})
         else:
             return Response({"The file does not exist"})
-
-        
 
 
 class Update_course(APIView):
@@ -452,7 +450,6 @@ class Add_Paid_Courses_Library(APIView):
             })
 
 
-
 class get_courses_filter_advanced(APIView):
     def get(self, request, *args, **kwargs):
         
@@ -490,3 +487,24 @@ class get_courses_filter_advanced(APIView):
             return Response({'courses': courses.data}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'No courses to list'}, status=status.HTTP_404_NOT_FOUND)
+        
+        
+class Add_Rating(APIView):
+    def post(self, request, *args, **kwargs):
+
+        data = self.request.data
+        author = data['user']
+        course_id = data['course']
+        rating = data['rate_number']
+
+         
+        course = get_object_or_404(Course, id=course_id)
+        
+        rating_course_exists = Rate.objects.filter(rate_number=rating, user=author)
+        rating_course_exists.exists()
+
+        if not rating_course_exists:
+            rating = Rate(rate_number=rating, user=author)
+            rating.save()
+            course.rating.add(rating)
+            return Response({'success': 'evaluation of the course satisfactorily'}) 
