@@ -497,14 +497,33 @@ class Add_Rating(APIView):
         course_id = data['course']
         rating = data['rate_number']
 
-         
         course = get_object_or_404(Course, id=course_id)
         
         rating_course_exists = Rate.objects.filter(rate_number=rating, user=author)
         rating_course_exists.exists()
 
-        if not rating_course_exists:
+        if not rating_course_exists: 
             rating = Rate(rate_number=rating, user=author)
             rating.save()
             course.rating.add(rating)
-            return Response({'success': 'evaluation of the course satisfactorily'}) 
+            return Response({'success': 'evaluation of the course satisfactorily'})
+        
+        
+class Edit_Rating(APIView):
+    def post(self, request, *args, **kwargs):
+        data = self.request.data
+        author = data['user']
+        rating = data['rate_number']
+        new_rating = data['new_rating']
+
+        getRating = Rate.objects.get(rate_number=rating, user=author)
+        rate = get_object_or_404(Rate, id=getRating.id)
+
+        if getRating:
+            rate.user = author
+            rate.rate_number = new_rating
+            rate.save()
+            return Response({
+                "message": "rating edited successfully"
+            })
+    
