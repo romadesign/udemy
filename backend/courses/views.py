@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from .serializers import get_Courses_Serializer, Comment_Serializer, post_Course_Serializer, get_my_library_Serializer
+from .serializers import *
 from .models import Course, Comment, Requisite, CoursesLibrary, PaidCoursesLibrary, WhatLearnt
 from category.models import Category
 from users.models import User
@@ -11,6 +11,7 @@ import json
 from rest_framework.parsers import MultiPartParser, FormParser
 import os
 from PIL import Image
+from django.db.models import Q
 
 # options for course creators
 class Create_Course(APIView):
@@ -244,16 +245,15 @@ class Deleted_requisite_all(APIView):
 # student options
 class List_Courses(APIView):
     def get(self, request):
-
         sortBy = request.query_params.get('sortBy')
-        if not (sortBy == 'created' or sortBy == 'price' or sortBy == 'sold' or sortBy == 'name'):
+        if not (sortBy == 'created' or sortBy == 'price' or sortBy == 'sold' or sortBy == 'rating'):
             sortBy = 'created'
 
         order = request.query_params.get('order')
         limit = request.query_params.get('limit')
 
         if not limit:
-            limit = 2
+            limit = 10
 
         if order == 'desc':
             sortBy = '-' + sortBy
@@ -450,3 +450,43 @@ class Add_Paid_Courses_Library(APIView):
                 'status code': status.HTTP_404_NOT_FOUND,
                 "course": "Ya comprastes este curso"
             })
+
+
+
+class get_courses_filter_advanced(APIView):
+    def get(self, request, *args, **kwargs):
+        
+        sortBy = request.query_params.get('sortBy')
+        if not (sortBy == 'created' or sortBy == 'price' or sortBy == 'sold' or sortBy == 'rating'):
+            sortBy = 'created'
+        
+        order = request.query_params.get('order')
+        limit = request.query_params.get('limit')
+        
+        min_price = request.query_params.get('min_price')
+        max_price = request.query_params.get('max_price')
+         
+        rating = request.query_params.get('rating')
+        
+        if not limit:
+            limit = 6
+        if not min_price:
+            min_price = 1
+        if not max_price:
+            max_price = 100  
+
+        if order == 'desc':
+            sortBy = '-' + sortBy
+            courses = Course.objects.filter(Q(price__gte=min_price) & Q(price__lte=max_price)).order_by(sortBy)[:int(limit)]
+            
+        elif order == 'asc':
+            courses = Course.objects.filter(Q(price__gte=min_price) & Q(price__lte=max_price)).order_by(sortBy)[:int(limit)]
+        else:
+            courses = Course.objects.order_by(sortBy)[:int(limit)]
+
+        courses = get_Courses_Serializer(courses, many=True)
+
+        if courses:
+            return Response({'courses': courses.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'No courses to list'}, status=status.HTTP_404_NOT_FOUND)

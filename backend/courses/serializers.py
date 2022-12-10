@@ -29,7 +29,7 @@ class Comment_Serializer(serializers.ModelSerializer):
         ]
 
 
-class get_Courses_Serializer(serializers.ModelSerializer):
+class get_Course_details_Serializer(serializers.ModelSerializer):
     category = Category_Serializer(read_only=True)  # method get
     rating = serializers.IntegerField(source='get_rating', read_only=True)
     requisite = RequisiteSerializer(many=True)
@@ -53,6 +53,22 @@ class get_Courses_Serializer(serializers.ModelSerializer):
             'comments',
             'category'
         ]
+        
+class get_Courses_Serializer(serializers.ModelSerializer):
+    rating = serializers.IntegerField(source='get_rating', read_only=True)
+
+    class Meta:
+        model = Course
+        fields = [
+            'id',
+            'author',
+            'title',
+            'image',
+            'payment',
+            'price',
+            'rating',
+        ]
+
 
 
 class user_serializer(serializers.ModelSerializer):
