@@ -14,6 +14,8 @@ from PIL import Image
 from django.db.models import Q
 
 # options for course creators
+
+
 class Create_Course(APIView):
     def post(self, request, *args, **kwargs):
         parser_classes = [MultiPartParser, FormParser]
@@ -47,8 +49,8 @@ class Create_Course(APIView):
         course.save()
 
         return Response({'success': 'Create course successfully'})
- 
- 
+
+
 class Delete_Course(APIView):
     def post(self, request, course_id, *args, **kwargs):
         data = self.request.data
@@ -452,32 +454,46 @@ class Add_Paid_Courses_Library(APIView):
 
 class get_courses_filter_advanced(APIView):
     def get(self, request, *args, **kwargs):
-        
+
         sortBy = request.query_params.get('sortBy')
         if not (sortBy == 'created' or sortBy == 'price' or sortBy == 'sold' or sortBy == 'rating'):
             sortBy = 'created'
-        
+
         order = request.query_params.get('order')
         limit = request.query_params.get('limit')
-        
+
         min_price = request.query_params.get('min_price')
         max_price = request.query_params.get('max_price')
-         
+
         rating = request.query_params.get('rating')
-        
+
         if not limit:
             limit = 6
         if not min_price:
             min_price = 1
         if not max_price:
-            max_price = 100  
+            max_price = 100
+        # if not rating:
+        #     rating = 2
 
         if order == 'desc':
             sortBy = '-' + sortBy
-            courses = Course.objects.filter(Q(price__gte=min_price) & Q(price__lte=max_price)).order_by(sortBy)[:int(limit)]
-            
+
+            if rating:
+                courses = Course.objects.filter(Q(price__gte=min_price) & Q(
+                    price__lte=max_price)).filter(rating__rate_number=rating).order_by(sortBy)[:int(limit)]
+            else:
+                courses = Course.objects.filter(Q(price__gte=min_price) & Q(
+                    price__lte=max_price)).order_by(sortBy)[:int(limit)]
+
         elif order == 'asc':
-            courses = Course.objects.filter(Q(price__gte=min_price) & Q(price__lte=max_price)).order_by(sortBy)[:int(limit)]
+
+            if rating:
+                courses = Course.objects.filter(Q(price__gte=min_price) & Q(
+                    price__lte=max_price)).filter(rating__rate_number=rating).order_by(sortBy)[:int(limit)]
+            else:
+                courses = Course.objects.filter(Q(price__gte=min_price) & Q(
+                    price__lte=max_price)).order_by(sortBy)[:int(limit)]
         else:
             courses = Course.objects.order_by(sortBy)[:int(limit)]
 
@@ -487,10 +503,16 @@ class get_courses_filter_advanced(APIView):
             return Response({'courses': courses.data}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'No courses to list'}, status=status.HTTP_404_NOT_FOUND)
-        
-        
+
+
 class Add_Rating(APIView):
     def post(self, request, *args, **kwargs):
+
+        # verification rating && course_id && user
+        # rate = rate_number & user
+        # course_rating = course_id & rate_id
+
+        # rating__course <- selected course_id
 
         data = self.request.data
         author = data['user']
@@ -498,17 +520,20 @@ class Add_Rating(APIView):
         rating = data['rate_number']
 
         course = get_object_or_404(Course, id=course_id)
-        
-        rating_course_exists = Rate.objects.filter(rate_number=rating, user=author)
+
+        rating_course_exists = Rate.objects.filter(
+            rate_number=rating, user=author)
         rating_course_exists.exists()
 
-        if not rating_course_exists: 
+        if not rating_course_exists:
             rating = Rate(rate_number=rating, user=author)
             rating.save()
             course.rating.add(rating)
             return Response({'success': 'evaluation of the course satisfactorily'})
-        
-        
+        else:
+            return Response({'success': 'you already added your assessment to the course'})
+
+
 class Edit_Rating(APIView):
     def post(self, request, *args, **kwargs):
         data = self.request.data
@@ -526,4 +551,3 @@ class Edit_Rating(APIView):
             return Response({
                 "message": "rating edited successfully"
             })
-    

@@ -90,14 +90,13 @@ class Course(models.Model):
     def get_no_rating(self):
         return len(self.rating.all())
 
-
     # def save(self, *args, **kwargs):
     #     super(Course, self).save(*args, **kwargs)
     #     imag = Image.open(self.image.path)
     #     if imag.width > 400 or imag.height > 300:
     #         output_size = (400, 300)
     #         imag.thumbnail(output_size)
-    
+
     def save(self, *args, **kwargs):
         super(Course, self).save(*args, **kwargs)
         imag = Image.open(self.image.path)
@@ -109,6 +108,7 @@ class Course(models.Model):
         y2 = ycenter + 270
         cropped = imag.crop((x1, y1, x2, y2))
         cropped.save(self.image.path)
+
 
 class Rate(models.Model):
     rate_number = models.IntegerField(
