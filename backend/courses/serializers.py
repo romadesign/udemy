@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Course, Comment, Rate, WhatLearnt, Requisite, CoursesLibrary
+from .models import Course, Comment, Rate, WhatLearnt, Requisite, CoursesLibrary, PaidCoursesLibrary
 from .models import User
 from category.serializers import Category_Serializer
 from rest_framework import serializers
@@ -85,7 +85,7 @@ class post_Course_Serializer(serializers.ModelSerializer):
 
 
 class data_course_my_library_serializer(serializers.ModelSerializer):
-    rating = serializers.IntegerField(source='get_rating', read_only=True)
+    # rating = serializers.IntegerField(source='get_rating', read_only=True)
     author = user_serializer(read_only=True)
 
     class Meta:
@@ -102,6 +102,29 @@ class data_course_my_library_serializer(serializers.ModelSerializer):
 
 class get_my_library_Serializer(serializers.ModelSerializer):
     course = data_course_my_library_serializer(read_only=True)
+
+    class Meta:
+        model = CoursesLibrary
+        fields = ['id', 'course', 'user']
+
+class data_course_purchased_serializer(serializers.ModelSerializer):
+    rating = serializers.IntegerField(source='get_rating', read_only=True)
+    student_rating = serializers.IntegerField(source='get_no_rating', read_only=True)
+
+    class Meta:
+        model = Course
+        fields = [
+            'id',
+            'title',
+            'language',
+            'price',
+            'rating',
+            'student_rating'
+        ]
+
+
+class get_my_purchased_course(serializers.ModelSerializer):
+    course = data_course_purchased_serializer(read_only=True)
 
     class Meta:
         model = CoursesLibrary

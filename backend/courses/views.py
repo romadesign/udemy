@@ -12,6 +12,9 @@ from rest_framework.parsers import MultiPartParser, FormParser
 import os
 from PIL import Image
 from django.db.models import Q
+from django.http import JsonResponse
+from django.http import HttpResponse
+from rest_framework import permissions, status
 
 # options for course creators
 
@@ -396,9 +399,33 @@ class My_library(APIView):
         author = data['user']
 
         get_my_library = CoursesLibrary.objects.filter(user=author)
+        results_my_library = []
+
+        # capture my course add library
+        for i in get_my_library:
+            itemLibrary = {}
+            itemLibrary['id'] = i.id
+            itemLibrary['course'] = i.course.id
+            itemLibrary['user'] = i.user
+
+            # capture my rating
+            results_my_rating = []
+            for r in i.course.rating.all():
+                get_my_rating = Rate.objects.filter(id=r.id, user=author)
+                results_my_rating.append(get_my_rating)
+
+            itemLibrary['rating'] = results_my_rating
+
+            results_my_library.append(itemLibrary)
+
+        print(results_my_library)
+
         serializer = get_my_library_Serializer(get_my_library, many=True)
 
-        return Response({'library': serializer.data})
+        return Response(
+            {'data': serializer.data},
+            status=status.HTTP_200_OK
+        )
 
 
 class Remove_course_from_my_library(APIView):
