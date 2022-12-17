@@ -96,7 +96,8 @@ class data_course_my_library_serializer(serializers.ModelSerializer):
             'language',
             'price',
             'rating',
-            'author'
+            'author',
+            'image'
         ]
 
 

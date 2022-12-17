@@ -403,10 +403,15 @@ class My_library(APIView):
 
         # capture my course add library
         for i in get_my_library:
+            
             itemLibrary = {}
             itemLibrary['id'] = i.id
-            itemLibrary['course'] = i.course.id
-            # itemLibrary['user'] = i.user
+            itemLibrary['courseId'] = i.course.id
+            itemLibrary['title'] = i.course.title
+            # itemLibrary['description'] = i.course.description
+            itemLibrary['image'] = i.course.image.url #verification not path
+            # itemLibrary['authorId'] = i.user.id
+            itemLibrary['author'] = i.user.name
 
             # capture my rating
             results_my_rating = []
@@ -419,13 +424,12 @@ class My_library(APIView):
                     my_rating_data = Rate.objects.get(id=selected_rating[0].id)
                     rate['id'] = my_rating_data.id
                     rate['rate_number'] = my_rating_data.rate_number
-                    rate['user'] = my_rating_data.user
+                    rate['userId'] = my_rating_data.user
                     results_my_rating.append(rate)
 
             itemLibrary['rating'] = results_my_rating
 
             results_my_library.append(itemLibrary)
-
 
         # serializer = get_my_library_Serializer(get_my_library, many=True)
 
