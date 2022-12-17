@@ -13,8 +13,8 @@ import os
 from PIL import Image
 from django.db.models import Q
 from django.http import JsonResponse
-from django.http import HttpResponse
 from rest_framework import permissions, status
+from rest_framework.pagination import PageNumberPagination
 
 # options for course creators
 
@@ -400,7 +400,6 @@ class My_library(APIView):
 
         get_my_library = CoursesLibrary.objects.filter(user=author)
         results_my_library = []
-
         # capture my course add library
         for i in get_my_library:
             
@@ -437,8 +436,10 @@ class My_library(APIView):
         #     {'data': serializer.data},
         #     status=status.HTTP_200_OK
         # )
-        
-        return JsonResponse(results_my_library, safe=False)
+        paginator = ResponsePagination_My_library()
+        results = paginator.paginate_queryset(results_my_library, request )
+        # return JsonResponse(results, safe=False)
+        return paginator.get_paginated_response({'data':results})
 
 
 class Remove_course_from_my_library(APIView):
@@ -591,3 +592,10 @@ class Edit_Rating(APIView):
             return Response({
                 "message": "rating edited successfully"
             })
+
+
+class ResponsePagination_My_library(PageNumberPagination):
+    page_query_param = 'p'
+    page_size = 1
+    page_size_query_param = 'page_size'
+    max_page_size = 4
