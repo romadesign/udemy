@@ -35,4 +35,6 @@ urlpatterns = [
          Remove_course_from_my_library.as_view()),
 
     path('add-courses-to-paid', Add_Paid_Courses_Library.as_view()),
+    path('my-acquired-courses', My_acquired_courses.as_view()),
+
 ]

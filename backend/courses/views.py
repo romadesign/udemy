@@ -394,21 +394,33 @@ class Add_Courses_Library(APIView):
 
 class My_library(APIView):
     def get(self, request, *args, **kwargs):
+        data = self.request.data
+        author = data['user']
+        get_my_library = CoursesLibrary.objects.filter(user=author)
+        serializer = get_my_library_Serializer(get_my_library, many=True)
+
+        paginator = ResponsePagination_My_library()
+        results = paginator.paginate_queryset(serializer.data, request)
+        return paginator.get_paginated_response({'library': results})
+
+
+class My_acquired_courses(APIView):
+    def get(self, request, *args, **kwargs):
 
         data = self.request.data
         author = data['user']
 
-        get_my_library = CoursesLibrary.objects.filter(user=author)
+        get_my_library = PaidCoursesLibrary.objects.filter(user=author)
         results_my_library = []
         # capture my course add library
         for i in get_my_library:
-            
+
             itemLibrary = {}
             itemLibrary['id'] = i.id
             itemLibrary['courseId'] = i.course.id
             itemLibrary['title'] = i.course.title
             # itemLibrary['description'] = i.course.description
-            itemLibrary['image'] = i.course.image.url #verification not path
+            itemLibrary['image'] = i.course.image.url  # verification not path
             # itemLibrary['authorId'] = i.user.id
             itemLibrary['author'] = i.user.name
 
@@ -417,7 +429,7 @@ class My_library(APIView):
             for r in i.course.rating.all():
                 selected_rating = Rate.objects.filter(id=r.id, user=author)
                 selected_rating.exists()
-                
+
                 if selected_rating:
                     rate = {}
                     my_rating_data = Rate.objects.get(id=selected_rating[0].id)
@@ -430,6 +442,7 @@ class My_library(APIView):
 
             results_my_library.append(itemLibrary)
 
+        print(results_my_library)
         # serializer = get_my_library_Serializer(get_my_library, many=True)
 
         # return Response(
@@ -437,9 +450,9 @@ class My_library(APIView):
         #     status=status.HTTP_200_OK
         # )
         paginator = ResponsePagination_My_library()
-        results = paginator.paginate_queryset(results_my_library, request )
+        results = paginator.paginate_queryset(results_my_library, request)
         # return JsonResponse(results, safe=False)
-        return paginator.get_paginated_response({'data':results})
+        return paginator.get_paginated_response({'data': results})
 
 
 class Remove_course_from_my_library(APIView):
@@ -596,6 +609,6 @@ class Edit_Rating(APIView):
 
 class ResponsePagination_My_library(PageNumberPagination):
     page_query_param = 'p'
-    page_size = 1
+    page_size = 4
     page_size_query_param = 'page_size'
     max_page_size = 4

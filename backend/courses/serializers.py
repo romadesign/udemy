@@ -85,7 +85,7 @@ class post_Course_Serializer(serializers.ModelSerializer):
 
 
 class data_course_my_library_serializer(serializers.ModelSerializer):
-    # rating = serializers.IntegerField(source='get_rating', read_only=True)
+    rating = serializers.IntegerField(source='get_rating', read_only=True)
     author = user_serializer(read_only=True)
 
     class Meta:
@@ -93,7 +93,6 @@ class data_course_my_library_serializer(serializers.ModelSerializer):
         fields = [
             'id',
             'title',
-            'language',
             'price',
             'rating',
             'author',
@@ -145,5 +144,6 @@ class get_Courses_Serializer(serializers.ModelSerializer):
             'payment',
             'price',
             'rating',
+            'category'
         ]
 
