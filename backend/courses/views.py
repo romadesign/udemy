@@ -406,26 +406,35 @@ class My_library(APIView):
             itemLibrary = {}
             itemLibrary['id'] = i.id
             itemLibrary['course'] = i.course.id
-            itemLibrary['user'] = i.user
+            # itemLibrary['user'] = i.user
 
             # capture my rating
             results_my_rating = []
             for r in i.course.rating.all():
-                get_my_rating = Rate.objects.filter(id=r.id, user=author)
-                results_my_rating.append(get_my_rating)
+                selected_rating = Rate.objects.filter(id=r.id, user=author)
+                selected_rating.exists()
+                
+                if selected_rating:
+                    rate = {}
+                    my_rating_data = Rate.objects.get(id=selected_rating[0].id)
+                    rate['id'] = my_rating_data.id
+                    rate['rate_number'] = my_rating_data.rate_number
+                    rate['user'] = my_rating_data.user
+                    results_my_rating.append(rate)
 
             itemLibrary['rating'] = results_my_rating
 
             results_my_library.append(itemLibrary)
 
-        print(results_my_library)
 
-        serializer = get_my_library_Serializer(get_my_library, many=True)
+        # serializer = get_my_library_Serializer(get_my_library, many=True)
 
-        return Response(
-            {'data': serializer.data},
-            status=status.HTTP_200_OK
-        )
+        # return Response(
+        #     {'data': serializer.data},
+        #     status=status.HTTP_200_OK
+        # )
+        
+        return JsonResponse(results_my_library, safe=False)
 
 
 class Remove_course_from_my_library(APIView):
