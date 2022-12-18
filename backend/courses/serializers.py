@@ -105,7 +105,7 @@ class get_my_library_Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = CoursesLibrary
-        fields = ['id', 'course', 'user']
+        fields = ['id', 'course']
 
 class data_course_purchased_serializer(serializers.ModelSerializer):
     rating = serializers.IntegerField(source='get_rating', read_only=True)
