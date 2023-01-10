@@ -15,7 +15,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from rest_framework import permissions, status
 from rest_framework.pagination import PageNumberPagination
-
+from django.db import connection
 # options for course creators
 
 
@@ -404,56 +404,6 @@ class My_library(APIView):
         return paginator.get_paginated_response({'library': results})
 
 
-class My_acquired_courses(APIView):
-    def get(self, request, *args, **kwargs):
-
-        sort = request.query_params.get('sort')
-        if not (sort == 'course__title' or sort == '-course__title'):
-            sort = 'id'
-
-
-        data = self.request.data
-        author = data['user']
-
-        get_my_library = PaidCoursesLibrary.objects.filter(user=author).order_by(sort)
-        results_my_library = []
-        # capture my course add library
-        for i in get_my_library:
-            
-            itemLibrary = {}
-            itemLibrary['id'] = i.id
-            itemLibrary['courseId'] = i.course.id
-            itemLibrary['title'] = i.course.title
-            # itemLibrary['description'] = i.course.description
-            itemLibrary['image'] = i.course.image.url #verification not path
-            itemLibrary['authorId'] = i.user.id
-            itemLibrary['author'] = i.user.name
-
-            # capture my rating
-            results_my_rating = []
-            for r in i.course.rating.all():
-                selected_rating = Rate.objects.filter(id=r.id, user=author)
-                selected_rating.exists()
-                
-                if selected_rating:
-                    rate = {}
-                    my_rating_data = Rate.objects.get(id=selected_rating[0].id)
-                    rate['id'] = my_rating_data.id
-                    rate['rate_number'] = my_rating_data.rate_number
-                    rate['userId'] = my_rating_data.user
-                    results_my_rating.append(rate)
-
-            itemLibrary['rating'] = results_my_rating
-
-            results_my_library.append(itemLibrary)
-        print(results_my_library)
-
-       
-        paginator = ResponsePagination_My_library()
-        results = paginator.paginate_queryset(results_my_library, request )
-        return paginator.get_paginated_response({'data':results})
-
-
 class Remove_course_from_my_library(APIView):
     def post(self, request, course_of_my_bookstore_id, *args, **kwargs):
         data = self.request.data
@@ -503,6 +453,54 @@ class Add_Paid_Courses_Library(APIView):
                 'status code': status.HTTP_404_NOT_FOUND,
                 "course": "Ya comprastes este curso"
             })
+
+
+class My_acquired_courses(APIView):
+    def get(self, request, *args, **kwargs):
+
+        sort = request.query_params.get('sort')
+        if not (sort == 'course__title' or sort == '-course__title'):
+            sort = 'id'
+
+        data = self.request.data
+        author = data['user']
+
+        get_my_library = PaidCoursesLibrary.objects.filter(
+            user=author).order_by(sort)
+        results_my_library = []
+        # capture my course add library
+        for i in get_my_library:
+
+            itemLibrary = {}
+            itemLibrary['id'] = i.id
+            itemLibrary['courseId'] = i.course.id
+            itemLibrary['title'] = i.course.title
+            # itemLibrary['description'] = i.course.description
+            itemLibrary['image'] = i.course.image.url  # verification not path
+            itemLibrary['authorId'] = i.user.id
+            itemLibrary['author'] = i.user.name
+
+            # capture my rating
+            results_my_rating = []
+            for r in i.course.rating.all():
+                selected_rating = Rate.objects.filter(id=r.id, user=author)
+                selected_rating.exists()
+
+                if selected_rating:
+                    rate = {}
+                    my_rating_data = Rate.objects.get(id=selected_rating[0].id)
+                    rate['id'] = my_rating_data.id
+                    rate['rate_number'] = my_rating_data.rate_number
+                    rate['userId'] = my_rating_data.user
+                    results_my_rating.append(rate)
+
+            itemLibrary['rating'] = results_my_rating
+
+            results_my_library.append(itemLibrary)
+
+        paginator = ResponsePagination_My_library()
+        results = paginator.paginate_queryset(results_my_library, request)
+        return paginator.get_paginated_response({'data': results})
 
 
 class get_courses_filter_advanced(APIView):
@@ -561,30 +559,28 @@ class get_courses_filter_advanced(APIView):
 class Add_Rating(APIView):
     def post(self, request, *args, **kwargs):
 
-        # verification rating && course_id && user
-        # rate = rate_number & user
-        # course_rating = course_id & rate_id
-
-        # rating__course <- selected course_id
-
         data = self.request.data
         author = data['user']
         course_id = data['course']
         rating = data['rate_number']
 
-        course = get_object_or_404(Course, id=course_id)
+        # capture id my rating
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT courses_rate.id FROM courses_rate JOIN courses_course_rating CR ON CR.rate_id=courses_rate.id  WHERE courses_rate.user = %s AND CR.course_id = %s",
+                (author, course_id))
 
-        rating_course_exists = Rate.objects.filter(
-            rate_number=rating, user=author)
-        rating_course_exists.exists()
-
-        if not rating_course_exists:
-            rating = Rate(rate_number=rating, user=author)
-            rating.save()
-            course.rating.add(rating)
-            return Response({'success': 'evaluation of the course satisfactorily'})
-        else:
-            return Response({'success': 'you already added your assessment to the course'})
+            #.fetchone() trae para un dato  , fetchall() para varios datos
+            verification_data = cursor.fetchone()
+            if verification_data is not None:
+                return Response({'success': 'you already added your assessment to the course'})
+            else:
+                # verification_data = verification_data
+                course = get_object_or_404(Course, id=course_id)
+                rating = Rate(rate_number=rating, user=author)
+                rating.save()
+                course.rating.add(rating)
+                return Response({'success': 'evaluation of the course satisfactorily'})
 
 
 class Edit_Rating(APIView):
