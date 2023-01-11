@@ -564,23 +564,36 @@ class Add_Rating(APIView):
         course_id = data['course']
         rating = data['rate_number']
 
-        # capture id my rating
-        with connection.cursor() as cursor:
-            cursor.execute(
-                "SELECT courses_rate.id FROM courses_rate JOIN courses_course_rating CR ON CR.rate_id=courses_rate.id  WHERE courses_rate.user = %s AND CR.course_id = %s",
-                (author, course_id))
+        #before 
+        # with connection.cursor() as cursor:
+        #     cursor.execute(
+        #         "SELECT courses_rate.id FROM courses_rate JOIN courses_course_rating CR ON CR.rate_id=courses_rate.id  WHERE courses_rate.user = %s AND CR.course_id = %s",
+        #         (author, course_id))
 
-            #.fetchone() trae para un dato  , fetchall() para varios datos
-            verification_data = cursor.fetchone()
-            if verification_data is not None:
-                return Response({'success': 'you already added your assessment to the course'})
-            else:
-                # verification_data = verification_data
-                course = get_object_or_404(Course, id=course_id)
-                rating = Rate(rate_number=rating, user=author)
-                rating.save()
-                course.rating.add(rating)
-                return Response({'success': 'evaluation of the course satisfactorily'})
+        #     #.fetchone() trae para un dato  , fetchall() para varios datos
+        #     verification_data = cursor.fetchone()
+        #     if verification_data is not None:
+        #         return Response({'success': 'you already added your assessment to the course'})
+        #     else:
+        #         # verification_data = verification_data
+        #         course = get_object_or_404(Course, id=course_id)
+        #         rating = Rate(rate_number=rating, user=author)
+        #         rating.save()
+        #         course.rating.add(rating)
+        #         return Response({'success': 'evaluation of the course satisfactorily'})
+
+        # after 
+        rating_course_exists = Rate.objects.filter(user=author, course__id=course_id)
+        print(rating_course_exists)
+        rating_course_exists.exists()
+        if not rating_course_exists:
+            course = get_object_or_404(Course, id=course_id)
+            rating = Rate(rate_number=rating, user=author)
+            rating.save()
+            course.rating.add(rating)
+            return Response({'success': 'evaluation of the course satisfactorily'})
+        else:
+            return Response({'success': 'you already added your assessment to the course'})
 
 
 class Edit_Rating(APIView):
