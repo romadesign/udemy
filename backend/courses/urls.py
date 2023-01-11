@@ -24,6 +24,7 @@ urlpatterns = [
 
     path('add-rating-course', Add_Rating.as_view()),
     path('edit-rating-course', Edit_Rating.as_view()),
+    path('deleted-rating-course/<int:rating_id>', Deleted_Rating.as_view()),
 
     path('comment/<int:course_id>', Add_Comment.as_view()),
     path('comment/<int:comment_id>/update',

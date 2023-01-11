@@ -587,11 +587,11 @@ class Add_Rating(APIView):
 class Edit_Rating(APIView):
     def post(self, request, *args, **kwargs):
         data = self.request.data
+        id = data['id']
         author = data['user']
-        rating = data['rate_number']
         new_rating = data['new_rating']
 
-        getRating = Rate.objects.get(rate_number=rating, user=author)
+        getRating = Rate.objects.get(id=id, user=author)
         rate = get_object_or_404(Rate, id=getRating.id)
 
         if getRating:
@@ -603,8 +603,24 @@ class Edit_Rating(APIView):
             })
 
 
+class Deleted_Rating(APIView):
+    def post(self, request, rating_id, *args, **kwargs):
+        data = self.request.data
+        user = data['user']
+
+        validate_learned = Rate.objects.filter(id=rating_id, user=user)
+        learned = get_object_or_404(Rate, id=rating_id)
+
+        if not validate_learned:
+            return Response({
+                "message": "You can't do this option"
+            })
+        else:
+            learned.delete()
+            return Response({'rating erased'})
+
 class ResponsePagination_My_library(PageNumberPagination):
     page_query_param = 'p'
-    page_size = 10
+    page_size = 1
     page_size_query_param = 'page_size'
-    max_page_size = 10
+    max_page_size = 1
