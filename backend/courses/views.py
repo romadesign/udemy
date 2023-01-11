@@ -457,7 +457,6 @@ class Add_Paid_Courses_Library(APIView):
 
 class My_acquired_courses(APIView):
     def get(self, request, *args, **kwargs):
-
         sort = request.query_params.get('sort')
         if not (sort == 'course__title' or sort == '-course__title'):
             sort = 'id'
@@ -465,41 +464,29 @@ class My_acquired_courses(APIView):
         data = self.request.data
         author = data['user']
 
-        get_my_library = PaidCoursesLibrary.objects.filter(
-            user=author).order_by(sort)
-        results_my_library = []
-        # capture my course add library
+        get_my_library = PaidCoursesLibrary.objects.filter(user=author).order_by(
+            sort).select_related('course').prefetch_related('course__rating')
+        results = []
         for i in get_my_library:
-
             itemLibrary = {}
             itemLibrary['id'] = i.id
             itemLibrary['courseId'] = i.course.id
             itemLibrary['title'] = i.course.title
-            # itemLibrary['description'] = i.course.description
-            itemLibrary['image'] = i.course.image.url  # verification not path
+            itemLibrary['image'] = i.course.image.url
             itemLibrary['authorId'] = i.user.id
             itemLibrary['author'] = i.user.name
 
-            # capture my rating
-            results_my_rating = []
-            for r in i.course.rating.all():
-                selected_rating = Rate.objects.filter(id=r.id, user=author)
-                selected_rating.exists()
+            # ratings = i.course.rating.filter(user=author)
+            # rate = RateSerializer(ratings, many=True)
+            # itemLibrary['rating'] = rate.data
 
-                if selected_rating:
-                    rate = {}
-                    my_rating_data = Rate.objects.get(id=selected_rating[0].id)
-                    rate['id'] = my_rating_data.id
-                    rate['rate_number'] = my_rating_data.rate_number
-                    rate['userId'] = my_rating_data.user
-                    results_my_rating.append(rate)
-
-            itemLibrary['rating'] = results_my_rating
-
-            results_my_library.append(itemLibrary)
+            rating = i.course.rating.filter(user=author)
+            if rating.exists():
+                itemLibrary['rating'] = RateSerializer(rating.first()).data
+            results.append(itemLibrary)
 
         paginator = ResponsePagination_My_library()
-        results = paginator.paginate_queryset(results_my_library, request)
+        results = paginator.paginate_queryset(results, request)
         return paginator.get_paginated_response({'data': results})
 
 
@@ -564,7 +551,7 @@ class Add_Rating(APIView):
         course_id = data['course']
         rating = data['rate_number']
 
-        #before 
+        # before
         # with connection.cursor() as cursor:
         #     cursor.execute(
         #         "SELECT courses_rate.id FROM courses_rate JOIN courses_course_rating CR ON CR.rate_id=courses_rate.id  WHERE courses_rate.user = %s AND CR.course_id = %s",
@@ -582,8 +569,9 @@ class Add_Rating(APIView):
         #         course.rating.add(rating)
         #         return Response({'success': 'evaluation of the course satisfactorily'})
 
-        # after 
-        rating_course_exists = Rate.objects.filter(user=author, course__id=course_id)
+        # after
+        rating_course_exists = Rate.objects.filter(
+            user=author, course__id=course_id)
         print(rating_course_exists)
         rating_course_exists.exists()
         if not rating_course_exists:

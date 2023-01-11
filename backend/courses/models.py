@@ -160,4 +160,4 @@ class PaidCoursesLibrary(models.Model):
         verbose_name_plural = "Purchased Courses Library"
 
     def __str__(self) -> str:
-        return self.userc
+        return self.user

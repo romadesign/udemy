@@ -53,7 +53,6 @@ class get_Course_details_Serializer(serializers.ModelSerializer):
             'comments',
             'category'
         ]
-        
 
 
 class user_serializer(serializers.ModelSerializer):
@@ -107,9 +106,11 @@ class get_my_library_Serializer(serializers.ModelSerializer):
         model = CoursesLibrary
         fields = ['id', 'course']
 
+
 class data_course_purchased_serializer(serializers.ModelSerializer):
     rating = serializers.IntegerField(source='get_rating', read_only=True)
-    student_rating = serializers.IntegerField(source='get_no_rating', read_only=True)
+    student_rating = serializers.IntegerField(
+        source='get_no_rating', read_only=True)
 
     class Meta:
         model = Course
@@ -134,6 +135,7 @@ class get_my_purchased_course(serializers.ModelSerializer):
 class get_Courses_Serializer(serializers.ModelSerializer):
     rating = serializers.IntegerField(source='get_rating', read_only=True)
     author = user_serializer(read_only=True)
+
     class Meta:
         model = Course
         fields = [
@@ -146,4 +148,10 @@ class get_Courses_Serializer(serializers.ModelSerializer):
             'rating',
             'category'
         ]
+
+
+class RateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rate
+        fields = ('id', 'rate_number', 'user')
 
