@@ -60,23 +60,27 @@ class Delete_Course(APIView):
         author = data['author']
 
         coursegetImage = Course.objects.get(id=course_id)
-
         course = Course.objects.filter(id=course_id, author=author)
+        data = Deleted_Course_Serializer(course, many=True)
         comments = Comment.objects.filter(course=course_id)
         requisite = Requisite.objects.filter(course=course_id)
-
         if os.path.exists(coursegetImage.image.path):
             course.exists()
             if not course:
                 return Response({'you cant delete a course that doesnt exist'})
             else:
+                for ratings in data.data:
+                    for id in ratings['rating']:
+                        data = Rate.objects.filter(id=id)
+                        data.delete()
+                        print(data)
                 os.remove(coursegetImage.image.path)
                 requisite.delete()
                 comments.delete()
                 course.delete()
-                return Response({"The file exist"})
+                return Response({"Course successfully removed"})
         else:
-            return Response({"The file does not exist"})
+            return Response({"The course does not exist"})
 
 
 class Update_course(APIView):
@@ -618,6 +622,7 @@ class Deleted_Rating(APIView):
         else:
             learned.delete()
             return Response({'rating erased'})
+
 
 class ResponsePagination_My_library(PageNumberPagination):
     page_query_param = 'p'

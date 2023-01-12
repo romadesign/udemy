@@ -148,6 +148,23 @@ class get_Courses_Serializer(serializers.ModelSerializer):
             'rating',
             'category'
         ]
+        
+class Deleted_Course_Serializer(serializers.ModelSerializer):
+    author = user_serializer(read_only=True)
+
+    class Meta:
+        model = Course
+        fields = [
+            'id',
+            'author',
+            'title',
+            'image',
+            'payment',
+            'price',
+            'rating',
+            'category'
+        ]
+
 
 
 class RateSerializer(serializers.ModelSerializer):
