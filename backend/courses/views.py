@@ -61,7 +61,7 @@ class Delete_Course(APIView):
 
         coursegetImage = Course.objects.get(id=course_id)
         course = Course.objects.filter(id=course_id, author=author)
-        data = Deleted_Course_Serializer(course, many=True)
+        delete_ratings = Deleted_Course_Serializer(course, many=True)
         comments = Comment.objects.filter(course=course_id)
         requisite = Requisite.objects.filter(course=course_id)
         if os.path.exists(coursegetImage.image.path):
@@ -69,7 +69,7 @@ class Delete_Course(APIView):
             if not course:
                 return Response({'you cant delete a course that doesnt exist'})
             else:
-                for ratings in data.data:
+                for ratings in delete_ratings.data:
                     for id in ratings['rating']:
                         data = Rate.objects.filter(id=id)
                         data.delete()
@@ -84,7 +84,7 @@ class Delete_Course(APIView):
 
 
 class Update_course(APIView):
-    def post(self, request, course_id, *args, **kwargs):
+    def put(self, request, course_id, *args, **kwargs):
         data = self.request.data
 
         title = data['title']
@@ -95,6 +95,7 @@ class Update_course(APIView):
         price = data['price']
         category = data['category']
         status = data['status']
+        image = data['image']
 
         if price.find(".") == -1:
             price = price + ".0"
@@ -111,6 +112,15 @@ class Update_course(APIView):
         course.price = price
         course.category = category
         course.status = status
+
+        # validation image
+        coursegetImage = Course.objects.get(id=course_id)
+        with coursegetImage.image.open() as file:
+            url_image = file
+
+        if image != url_image:
+            os.remove(coursegetImage.image.path)
+            course.image = image
 
         course.save()
         return Response({'success': 'update course successfully'})
