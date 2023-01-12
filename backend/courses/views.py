@@ -296,7 +296,7 @@ class Course_Detail(APIView):
         course_exists.exists()
         if course_exists:
             course = course_exists.first()
-            serializer = get_Courses_Serializer(course)
+            serializer = get_Course_details_Serializer(course)
 
             return Response({
                 'success': 'true',
@@ -310,6 +310,12 @@ class Course_Detail(APIView):
                 "course": "Not exists"
             })
 
+
+# class Get_Comments(APIView):
+#     def get(self, request, *args, **kwargs):
+#         data = self.request.data
+#         author = data['user']
+#         return paginator.get_paginated_response({'comments': results})
 
 class Add_Comment(APIView):
     def post(self, request, course_id, *args, **kwargs):
