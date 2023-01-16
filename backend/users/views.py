@@ -37,9 +37,10 @@ class LoginView(APIView):
 
         payload = {
             'id': user.id,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=1),
             'iat': datetime.datetime.utcnow()
         }
+        
 
         token = jwt.encode(payload, 'secret', algorithm='HS256')
 
@@ -65,7 +66,7 @@ class UserView(APIView):
             payload = jwt.decode(token, 'secret', algorithms=["HS256"])
 
         except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed('Unauthenticated!')
+            raise AuthenticationFailed('Your session has expired!')
 
         user = User.objects.filter(id=payload['id']).first()
         serializer = UserSerializer_Detail(user)
