@@ -1,11 +1,11 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import { useAuth } from '@/hooks/auth'
 
 export default function Home() {
+
+  const { user} = useAuth()
+
   return (
     <>
       <Head>
@@ -17,6 +17,13 @@ export default function Home() {
       <main className={styles.main}>
         <div>
           holal
+          {user ? (
+                  <a >no login</a>
+              ) : (
+                <>
+                    <a >login</a>
+                </>
+              )}
         </div>
       </main>
     </>

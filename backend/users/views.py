@@ -4,7 +4,8 @@ from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from .serializers import UserSerializer, UserSerializer_Detail
 from .models import User
-import jwt, datetime
+import jwt
+import datetime
 # Create your views here.
 
 
@@ -15,10 +16,10 @@ class RegisterView(APIView):
         serializer.save()
         status_code = status.HTTP_201_CREATED
         response = {
-            'success' : 'True',
-            'status code' : status_code,
+            'success': 'True',
+            'status_code': status_code,
             'message': 'User registered  successfully',
-            }
+        }
         return Response(response, status=status_code)
 
 
@@ -40,13 +41,15 @@ class LoginView(APIView):
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=1),
             'iat': datetime.datetime.utcnow()
         }
-        
 
         token = jwt.encode(payload, 'secret', algorithm='HS256')
 
         response = Response()
+        status_code_lg = status.HTTP_201_CREATED
 
         response.set_cookie(key='jwt', value=token, httponly=True)
+        response.set_cookie(key='status_code_lg',
+                            value=status_code_lg)
 
         response.data = {
             'jwt': token
