@@ -2,7 +2,6 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-
 const Login = () => {
   const router = useRouter()
   const { login } = useAuth()

@@ -1,0 +1,45 @@
+.content {
+  padding: 1rem;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.content_one {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+  align-items: center;
+  padding-right: 0.7rem;
+}
+
+.content_two {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  align-items: center;
+  width: auto
+}
+
+.row img {}
+
+.row input[type="search"] {
+  width: inherit;
+  height: 35px;
+  border-radius: 1rem;
+  padding: 0 2.4rem 0 1rem;
+}
+
+.content_one span {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+
+.content_two span {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.9rem;
+}

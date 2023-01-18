@@ -8,10 +8,10 @@ export const useAuth = ({} = {}) => {
 
   //cookies save
   const setCookie = (key, value) => {
-    if (getCookie('id') == null) {
+    if (getCookie('status_code_lg') == null) {
       document.cookie = key + '=' + value + '; Path=/;'
     }
-    if (getCookie('type') == null) {
+    if (getCookie('jwt') == null) {
       document.cookie = key + '=' + value + '; Path=/;'
     } else {
       document.cookie = key + '=' + value + '; Path=/;'
