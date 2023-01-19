@@ -1,7 +1,7 @@
 import Head from 'next/head'
-import styles from '@/styles/Home.module.css'
 import { useAuth } from '@/hooks/auth'
-
+import CardCourse from '@/components/card/cardCourse'
+import styles from '@/styles/course.module.css'
 export default function Home() {
 
   const { user} = useAuth()
@@ -14,9 +14,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
         <div>
-          holal
           {user ? (
                   <a >no login</a>
               ) : (
@@ -25,7 +23,7 @@ export default function Home() {
                 </>
               )}
         </div>
-      </main>
+      <CardCourse title={'Cursos'} />
     </>
   )
 }

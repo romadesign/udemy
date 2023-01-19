@@ -1,0 +1,49 @@
+.content{
+  display: flex;
+  padding: 2rem;
+  gap: 1rem;
+  /* overflow: scroll; */
+  overflow-x: hidden;
+  white-space: normal;
+}
+
+.wrapper{
+  max-width: 500px;
+}
+.wrapper .carousel{
+  
+  cursor: pointer;
+}
+
+.carousel h4{
+  font-family: var(--font-mono);
+}
+
+.button_left_rigth{
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.button_left{
+  background-color: black;
+  color: white;
+  font-size: 1.3rem;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  font-weight: 800;
+  position: absolute;
+  top: 28%;
+}
+.button_rigth{
+  background-color: black;
+    color: white;
+    font-size: 1.3rem;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-weight: 800;
+    position: absolute;
+    top: 28%;
+    right: 0;
+}

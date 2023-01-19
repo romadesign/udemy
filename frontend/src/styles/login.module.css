@@ -7,11 +7,11 @@
 .content {
   padding: 4.8rem 2.4rem;
 }
-
 .form {
   display: grid;
   gap: 0.7rem;
 }
+
 
 .inputs {
   color: #1c1d1f;
@@ -34,7 +34,7 @@
 
 .form button {
   background-color: #a435f0;
-  margin-top: 1.6rem;
+  margin: 1.6rem 0 1rem 0;
   width: 100%;
   color: #fff;
   height: 3.3rem;
@@ -48,10 +48,16 @@
   background-color: #8b15da;
 
 }
-
 .authseparator {
   border-top: 1px solid #d1d7dc;
   margin: 1.6rem 0;
+}
+
+.content h3{
+  font-family: var(--font-mono);
+  margin-bottom: 1.6rem;
+  text-align: left;
+  font-size: 1rem;
 }
 
 .content span{
@@ -59,15 +65,10 @@
   font-weight: 400;
   font-size: 0.9rem;
 }
-.content h3{
-  font-family: var(--font-mono);
-  margin-bottom: 1.6rem;
-  text-align: left;
-  font-size: 1rem;
-}
+
 .content a{
   font-family: var(--font-mono);
   font-weight: 800;
   font-size: 0.9rem;
-  color: #a435f0;
+  color: #8c17da;
 }

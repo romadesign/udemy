@@ -20,12 +20,12 @@ const Navbar = () => (
         <Link href='/'>
           <img width={25} src='/img/carrito.svg' />
         </Link>
-        <button className={styles.login}>
-          <Link href='/login'>Log in</Link>
-        </button>
-        <button className={styles.register}>
-          <Link href='/register'>Sign up</Link>
-        </button>
+        <Link href='/login'>
+          <button className={styles.login}>Log in</button>
+        </Link>
+        <Link href='/register'>
+          <button className={styles.register}>Sign up</button>
+        </Link>
       </div>
     </div>
   </div>

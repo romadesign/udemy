@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import styles from '@/styles/login.module.css'
+
 const Login = () => {
   const router = useRouter()
   const { login } = useAuth()
@@ -17,43 +19,37 @@ const Login = () => {
   }
 
   return (
-    <>
-      <section>
-        <div>
-          <h4>Iniciar sesión</h4>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <h3>Log in to your Udemy account</h3>
 
-          <form onSubmit={submitForm}>
+        <form onSubmit={submitForm} className={styles.form}>
+          <div>
             <input
+            className={styles.inputs}
               type='email'
-              placeholder='Dirección de correo electronico'
+              placeholder='Email'
               value={email}
               onChange={e => setEmail(e.target.value)}
             />
+          </div>
+          <div>
             <input
+            className={styles.inputs}
               type='password'
-              placeholder='Contraseña'
+              placeholder='Password'
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
-            <button>Iniciar sesión</button>
-          </form>
-          <div>
-            <div>
-              <input type='checkbox' />
-              <span>Recúerdame</span>
-            </div>
-            <h6>¿Necesitas ayuda? </h6>
           </div>
-          <h5>
-            ¿Todavía sin Netflix? <a href='/'>Suscríbete ya.</a>
-          </h5>
-          <h6>
-            Esta página utiliza Google reCAPTCHA para garantizar que no eres un
-            robot.
-          </h6>
-        </div>
-      </section>
-    </>
+          <button>Log in</button>
+        </form>
+        <span>
+          or <Link href='/login'>Forgot Password</Link>
+        </span>
+        <div className={styles.authseparator}></div>
+      </div>
+    </div>
   )
 }
 
