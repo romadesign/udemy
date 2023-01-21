@@ -40,6 +40,7 @@
   font-family: var(--font-mono);
   font-weight: 400;
   font-size: 0.9rem;
+  cursor: pointer;
 }
 
 .content_two span {
@@ -47,6 +48,8 @@
   font-weight: 400;
   font-size: 0.9rem;
   width: max-content;
+  cursor: pointer;
+  
 }
 
 .login{
@@ -67,4 +70,10 @@
     font-weight: 800;
     cursor: pointer;
     color: white;
+}
+
+.heart{
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
 }

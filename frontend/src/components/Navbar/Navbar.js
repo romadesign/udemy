@@ -16,7 +16,13 @@ const Navbar = () => (
         />
       </div>
       <div className={styles.content_two}>
-        <span>teach on udemy</span>
+        <span>Teach on udemy</span>
+        <span>My learning</span>
+        <Link href='/'>
+          <p className={styles.heart}>
+          &#9825;
+          </p>
+        </Link>
         <Link href='/'>
           <img width={25} src='/img/carrito.svg' />
         </Link>
