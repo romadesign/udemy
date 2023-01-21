@@ -1,16 +1,26 @@
 import styles from '@/styles/course.module.css'
 import { Api } from '@/hooks/api'
+import Rating from './stars'
+
 const Card = ({ course }) => {
+  console.log(course.rating.length)
+  function truncate(string, n) {
+    return string?.length > n ? string.substr(0, n - 1) + '...' : string
+  }
+
   const { apiGetImage } = Api()
-  console.log(course)
   return (
     <div className={styles.wrapper}>
       <div className={styles.carousel}>
-        <img width={230} height={140} src={apiGetImage(course.image)} />
-        <h4>{course.title}</h4>
+        <img width={220} height={130} src={apiGetImage(course.image)} />
+        <h4>{truncate(course.title, 53)}</h4>
         <h5>{course.author.name}name</h5>
-        <span>Rating {course.rating}</span>
-        <p>Price {course.price}</p>
+        <span className={styles.content_rating}>
+          {course.rating}
+          <Rating rating={course.rating} />
+        </span>
+
+        <p className={styles.price}>{course.price}$</p>
       </div>
     </div>
   )

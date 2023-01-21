@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { useAuth } from '@/hooks/auth'
-import CardCourse from '@/components/card/cardCourse'
+import CardCourse from '@/components/card/CardCourse'
 import styles from '@/styles/course.module.css'
 export default function Home() {
 

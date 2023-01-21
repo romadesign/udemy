@@ -4,10 +4,10 @@ import { Api } from '@/hooks/api'
 import Card from './card'
 import styles from '@/styles/course.module.css'
 
-const CardCourse = ({title}) => {
+const CardCourse = ({ title }) => {
   const { apiGetCourses } = Api()
   const [courses, setCourse] = useState()
-  console.log(courses)
+  console.log(courses, 'aqui')
 
   const slider = useRef()
 
@@ -18,7 +18,7 @@ const CardCourse = ({title}) => {
   const getCourse = async () => {
     apiGetCourses()
       .then(function (res) {
-        setCourse(res.data.courses)
+        setCourse(res.results.data)
       })
       .catch(function (error) {
         console.log(error)
@@ -39,20 +39,20 @@ const CardCourse = ({title}) => {
   }
 
   return (
-    <div>
-    <h3>{title}</h3>
+    <div className={styles.container}>
+      <h3>{title}</h3>
       <div className={styles.button_left_rigth}>
-      <div>
-        <button className={styles.button_left} onClick={sliderLeft}>&#60;</button>
+        <div >
+          <button className={styles.button_left}onClick={sliderLeft}>&#60;</button>
+        </div>
+        <div ref={slider} className={styles.content}>
+          {courses != undefined &&
+            courses.map((course, id) => <Card key={id} course={course} />)}
+        </div>
+        <div  >
+          <button className={styles.button_rigth} onClick={sliderRigth}>&#62;</button>
+        </div>
       </div>
-      <div ref={slider} className={styles.content}>
-        {courses != undefined &&
-          courses.map((course, id) => <Card key={id} course={course} />)}
-      </div>
-      <div>
-        <button className={styles.button_rigth}  onClick={sliderRigth}>&#62;</button>
-      </div>
-    </div>
     </div>
   )
 }

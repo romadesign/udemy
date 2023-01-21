@@ -5,17 +5,17 @@ export const Api = () => {
   //get Films
   const apiGetCourses = async () => {
     const data = await axios.get('/api/get-courses')
-    return data
+    return data.data
   }
 
   const apiGetImage = (img) => {
-    const data = `http://localhost:8000/${img}`
+    const data = `http://localhost:8000${img}`
     return data
   }
 
 
   return {
     apiGetCourses,
-    apiGetImage,
+    apiGetImage
   }
-}
+} 
