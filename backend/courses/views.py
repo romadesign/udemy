@@ -282,6 +282,11 @@ class List_Courses(APIView):
 
         courses = get_Courses_Serializer(courses, many=True)
 
+
+        paginator = ResponsePagination_My_library()
+        results = paginator.paginate_queryset(courses.data, request)
+        return paginator.get_paginated_response({'data': results})
+
         if courses:
             return Response({'courses': courses.data}, status=status.HTTP_200_OK)
         else:
@@ -642,6 +647,6 @@ class Deleted_Rating(APIView):
 
 class ResponsePagination_My_library(PageNumberPagination):
     page_query_param = 'p'
-    page_size = 1
+    page_size = 5
     page_size_query_param = 'page_size'
-    max_page_size = 1
+    max_page_size = 5
