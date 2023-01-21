@@ -2,7 +2,6 @@ import styles from '@/styles/course.module.css'
 
 const Stars = ({ rating }) => {
 
-  console.log('llegue rating', rating)
   const getStars = () => {
     if (
       rating &&

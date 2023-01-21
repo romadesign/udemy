@@ -1,13 +1,10 @@
 import Link from 'next/link'
 import { useEffect, useState, useRef } from 'react'
-import { Api } from '@/hooks/api'
 import Card from './card'
 import styles from '@/styles/course.module.css'
 
-const CardCourse = ({ title }) => {
-  const { apiGetCourses } = Api()
+const CardCourse = ({ title, data }) => {
   const [courses, setCourse] = useState()
-  console.log(courses, 'aqui')
 
   const slider = useRef()
 
@@ -16,25 +13,20 @@ const CardCourse = ({ title }) => {
   }, [])
 
   const getCourse = async () => {
-    apiGetCourses()
+    data()
       .then(function (res) {
         setCourse(res.results.data)
       })
       .catch(function (error) {
-        console.log(error)
+        // console.log(error)
       })
   }
 
   const sliderLeft = () => {
-    // var slider = document.getElementById('slider' + rowId)
-    // slider.scrollLeft = slider.scrollLeft - 1200
     slider.current.scrollLeft = slider.current.scrollLeft - 1200
   }
 
   const sliderRigth = () => {
-    // var slider = document.getElementById('slider' + rowId)
-    // slider.scrollLeft = slider.scrollLeft + 1200
-    console.log('click', slider.scrollLeft + 1200)
     slider.current.scrollLeft = slider.current.scrollLeft + 1200
   }
 
