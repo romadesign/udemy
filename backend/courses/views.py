@@ -282,7 +282,6 @@ class List_Courses(APIView):
 
         courses = get_Courses_Serializer(courses, many=True)
 
-
         paginator = ResponsePagination_My_library()
         results = paginator.paginate_queryset(courses.data, request)
         return paginator.get_paginated_response({'data': results})
@@ -418,7 +417,7 @@ class Add_Courses_Library(APIView):
 
 
 class My_library(APIView):
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         data = self.request.data
         author = data['user']
         get_my_library = CoursesLibrary.objects.filter(user=author)
@@ -426,7 +425,7 @@ class My_library(APIView):
 
         paginator = ResponsePagination_My_library()
         results = paginator.paginate_queryset(serializer.data, request)
-        return paginator.get_paginated_response({'library': results})
+        return paginator.get_paginated_response({'data': results})
 
 
 class Remove_course_from_my_library(APIView):
@@ -481,7 +480,7 @@ class Add_Paid_Courses_Library(APIView):
 
 
 class My_acquired_courses(APIView):
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         sort = request.query_params.get('sort')
         if not (sort == 'course__title' or sort == '-course__title'):
             sort = 'id'
@@ -489,21 +488,16 @@ class My_acquired_courses(APIView):
         data = self.request.data
         author = data['user']
 
-        get_my_library = PaidCoursesLibrary.objects.filter(user=author).order_by(
+        My_acquired_courses = PaidCoursesLibrary.objects.filter(user=author).order_by(
             sort).select_related('course').prefetch_related('course__rating')
         results = []
-        for i in get_my_library:
+        for i in My_acquired_courses:
             itemLibrary = {}
             itemLibrary['id'] = i.id
-            itemLibrary['courseId'] = i.course.id
-            itemLibrary['title'] = i.course.title
-            itemLibrary['image'] = i.course.image.url
-            itemLibrary['authorId'] = i.user.id
-            itemLibrary['author'] = i.user.name
 
-            # ratings = i.course.rating.filter(user=author)
-            # rate = RateSerializer(ratings, many=True)
-            # itemLibrary['rating'] = rate.data
+            course = Course.objects.filter(id=i.course.id)
+            itemLibrary['course'] = data_my_acquired_courses_serializer(
+                course.first()).data
 
             rating = i.course.rating.filter(user=author)
             if rating.exists():

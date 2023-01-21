@@ -16,10 +16,10 @@ class RegisterView(APIView):
         serializer.save()
         status_code = status.HTTP_201_CREATED
         response = {
-            'success': 'True',
-            'status_code': status_code,
+            'success' : 'True',
+            'status code' : status_code,
             'message': 'User registered  successfully',
-        }
+            }
         return Response(response, status=status_code)
 
 
@@ -38,18 +38,15 @@ class LoginView(APIView):
 
         payload = {
             'id': user.id,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=1),
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
             'iat': datetime.datetime.utcnow()
         }
 
         token = jwt.encode(payload, 'secret', algorithm='HS256')
 
         response = Response()
-        status_code_lg = status.HTTP_201_CREATED
 
         response.set_cookie(key='jwt', value=token, httponly=True)
-        response.set_cookie(key='status_code_lg',
-                            value=status_code_lg)
 
         response.data = {
             'jwt': token
@@ -69,10 +66,10 @@ class UserView(APIView):
             payload = jwt.decode(token, 'secret', algorithms=["HS256"])
 
         except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed('Your session has expired!')
+            raise AuthenticationFailed('Unauthenticated!')
 
         user = User.objects.filter(id=payload['id']).first()
-        serializer = UserSerializer_Detail(user)
+        serializer = UserSerializer(user)
 
         return Response(serializer.data)
 

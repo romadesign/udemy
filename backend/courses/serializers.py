@@ -98,6 +98,20 @@ class data_course_my_library_serializer(serializers.ModelSerializer):
             'image'
         ]
 
+class data_my_acquired_courses_serializer(serializers.ModelSerializer):
+    rating = serializers.IntegerField(source='get_rating', read_only=True)
+    author = user_serializer(read_only=True)
+
+    class Meta:
+        model = Course
+        fields = [
+            'id',
+            'title',
+            'rating',
+            'author',
+            'image'
+        ]
+
 
 class get_my_library_Serializer(serializers.ModelSerializer):
     course = data_course_my_library_serializer(read_only=True)
