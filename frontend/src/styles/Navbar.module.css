@@ -49,7 +49,7 @@
   font-size: 0.9rem;
   width: max-content;
   cursor: pointer;
-  
+  white-space: pre;
 }
 
 .login{
@@ -76,4 +76,24 @@
   font-size: 1.5rem;
   font-weight: bold;
   cursor: pointer;
+}
+
+.circulo {
+	width: 25px;
+  height: 25px;
+	border-radius: 50%;
+	background: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+  margin:0px auto;
+  padding:3%
+}
+
+.circulo > h2 {
+	font-family: sans-serif;
+	color: white;
+	font-size: 1rem;
+	font-weight: bold;
 }

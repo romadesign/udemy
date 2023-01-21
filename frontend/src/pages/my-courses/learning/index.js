@@ -5,8 +5,7 @@ import { useAuth } from '@/hooks/auth'
 
 const Learning = () => {
     const { apiMyAcquiredCourses } = Api()
-  const { user, getCookie} = useAuth()
-
+    const { getCookie } = useAuth()
 
     return (
         <div >

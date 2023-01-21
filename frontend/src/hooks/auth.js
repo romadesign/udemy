@@ -50,7 +50,7 @@ export const useAuth = ({} = {}) => {
       .catch(error => {
         if(error.response.status == 403){
           setCookie('status_code_lg', error.response.status)
-          // logout()
+          logout()
         }
       })
   )
