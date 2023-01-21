@@ -1,14 +1,12 @@
 import Head from 'next/head'
 import { useAuth } from '@/hooks/auth'
 import CardCourse from '@/components/card/CardCourse'
-import CardCourseUser from '@/components/cardUser/CardCourse'
-import styles from '@/styles/course.module.css'
 import { Api } from '@/hooks/api'
 
 
 export default function Home() {
-  const { apiGetCourses, apiGetMyLibrary, apiMyAcquiredCourses } = Api()
-  const { user, getCookie} = useAuth()
+  const { apiGetCourses  } = Api()
+  const { user} = useAuth()
   
 
   return (
@@ -29,8 +27,6 @@ export default function Home() {
               )}
         </div>
       <CardCourse title={'Cursos'} data={apiGetCourses}/>
-      <CardCourseUser title={'mi libreria'} data={apiGetMyLibrary} user={getCookie('account')}/>
-      <CardCourseUser title={'mis cursos comprados'} data={apiMyAcquiredCourses} user={getCookie('account')}/>
     </>
   )
 }

@@ -15,10 +15,10 @@ export const Api = () => {
     return data.data
   }
 
-  const apiMyAcquiredCourses = async (user) => {
+  const apiMyAcquiredCourses = async (user, payload) => {
     const formData = new FormData()
     formData.append('user', user)
-    const data = await axios.post('/api/my-acquired-courses', formData)
+    const data = await axios.post(`/api/my-acquired-courses?p=${payload.p}&page_size=${payload.page_size}&sort=${payload.sort}`, formData,)
     return data.data
   }
 

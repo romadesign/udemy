@@ -6,6 +6,12 @@ import styles from '@/styles/course.module.css'
 const CardCourse = ({ title, data, user }) => {
   const [courses, setCourse] = useState()
 
+  const payload = {
+    'p' : 1,
+    'page_size' : 4,
+    'sort' : 'course__title'
+  }
+
   const slider = useRef()
 
   useEffect(() => {
@@ -13,21 +19,13 @@ const CardCourse = ({ title, data, user }) => {
   }, [])
 
   const getMyLibrary = async () => {
-    data(user)
+    data(user, payload)
       .then(function (res) {
         setCourse(res.results.data)
       })
       .catch(function (error) {
         // console.log(error)
       })
-  }
-
-  const sliderLeft = () => {
-    slider.current.scrollLeft = slider.current.scrollLeft - 1200
-  }
-
-  const sliderRigth = () => {
-    slider.current.scrollLeft = slider.current.scrollLeft + 1200
   }
 
   return (
