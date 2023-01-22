@@ -1,7 +1,7 @@
 .content {
-  padding: 1rem;
+  padding: 0 1rem;
   box-shadow: 0 2px 4px rgb(0 0 0 / 8%), 0 4px 12px rgb(0 0 0 / 8%);
-    z-index: 1010;
+  z-index: 1010;
 }
 
 .row {
@@ -22,10 +22,11 @@
   gap: 1rem;
   justify-content: flex-end;
   align-items: center;
-  width: auto
+  width: auto;
+  position: relative;
+  height: 70px;
 }
 
-.row img {}
 
 .row input[type="search"] {
   width: inherit;
@@ -52,48 +53,107 @@
   white-space: pre;
 }
 
-.login{
+.login {
   color: #1c1d1f;
-    background-color: transparent;
-    border: 1px solid #1c1d1f;
-    height: 2.5rem;
-    width: 90px;
-    font-weight: 800;
-    cursor: pointer;
-}
-.register{
-  color: #1c1d1f;
-    background-color:  #1c1d1f;
-    border: 1px solid #1c1d1f;
-    height: 2.5rem;
-    width: 90px;
-    font-weight: 800;
-    cursor: pointer;
-    color: white;
+  background-color: transparent;
+  border: 1px solid #1c1d1f;
+  height: 2.5rem;
+  width: 90px;
+  font-weight: 800;
+  cursor: pointer;
 }
 
-.heart{
+.register {
+  color: #1c1d1f;
+  background-color: #1c1d1f;
+  border: 1px solid #1c1d1f;
+  height: 2.5rem;
+  width: 90px;
+  font-weight: 800;
+  cursor: pointer;
+  color: white;
+}
+
+.heart {
   font-size: 1.5rem;
   font-weight: bold;
   cursor: pointer;
 }
 
 .circulo {
-	width: 25px;
-  height: 25px;
-	border-radius: 50%;
-	background: black;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-  margin:0px auto;
-  padding:3%
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0px auto;
+  padding: 3%
 }
 
-.circulo > h2 {
-	font-family: sans-serif;
-	color: white;
-	font-size: 1rem;
-	font-weight: bold;
+.circulo>h2 {
+  font-family: sans-serif;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.circulo_profile {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0px auto;
+  padding: 3%
+}
+
+.circulo_profile h2 {
+  font-family: sans-serif;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: var(--font-mono);
+
+}
+
+.content_profile {
+  position: absolute;
+  top: 4.6rem;
+  padding: 1rem;
+  border: 1px solid #c7c7c7;
+  background: white;
+  z-index: 1;
+}
+
+.content_profile_name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.content_profile_name h3 {
+  font-family: var(--font-mono);
+}
+
+.content_profile_name p {
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+  color: #525252;
+}
+
+.authseparator {
+  border-top: 1px solid #d1d7dc;
+  margin: 1.6rem 0;
+}
+
+.content_options_profile span{
+  text-align: left;
+  font-family: var(--font-mono);
 }

@@ -84,7 +84,7 @@ const Register = () => {
           </div>
           <button>Sing up</button>
         </form>
-        <div class={styles.authseparator}></div>
+        <div className={styles.authseparator}></div>
         <span>
           Already have an account? <Link href='/login'>Log in</Link>
         </span>
