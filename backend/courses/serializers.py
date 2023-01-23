@@ -157,10 +157,8 @@ class get_Courses_Serializer(serializers.ModelSerializer):
             'author',
             'title',
             'image',
-            'payment',
             'price',
             'rating',
-            'category',
         ]
         
 class Deleted_Course_Serializer(serializers.ModelSerializer):

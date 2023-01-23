@@ -513,7 +513,7 @@ class get_courses_filter_advanced(APIView):
     def get(self, request, *args, **kwargs):
 
         sortBy = request.query_params.get('sortBy')
-        if not (sortBy == 'created' or sortBy == 'price' or sortBy == 'sold' or sortBy == 'rating'):
+        if not (sortBy == 'created' or sortBy == 'price' or sortBy == 'rating'):
             sortBy = 'created'
 
         order = request.query_params.get('order')
@@ -531,7 +531,7 @@ class get_courses_filter_advanced(APIView):
         if not max_price:
             max_price = 100
         # if not rating:
-        #     rating = 2
+        #     rating = 5
 
         if order == 'desc':
             sortBy = '-' + sortBy
@@ -644,3 +644,16 @@ class ResponsePagination_My_library(PageNumberPagination):
     page_size = 5
     page_size_query_param = 'page_size'
     max_page_size = 5
+
+
+class get_students_are_viewing(APIView):
+    def post(self, request, *args, **kwargs):
+        data = self.request.data
+        rating = data['rating']
+
+        courses = Course.objects.filter(rating__rate_number=rating)
+        serializers = get_Courses_Serializer(courses, many=True)
+
+        paginator = ResponsePagination_My_library()
+        results = paginator.paginate_queryset(serializers.data, request)
+        return paginator.get_paginated_response({'data': results})
