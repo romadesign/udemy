@@ -13,7 +13,6 @@ const Urls = () => {
 	const [user, setUser] = useState()
 	const [modalProfile, setModalProfile] = useState(false)
 
-
 	useEffect(() => {
 		const getUser = () => {
 			axios.get('/api/user')
@@ -56,7 +55,7 @@ const Urls = () => {
 								<img width={25} src='/img/carrito.svg' />
 							</Link>
 							<Link className={styles.circulo} href='/' onMouseEnter={onMouseEnter}>
-								<h2>{user !== undefined && user.name[0].toUpperCase()}</h2>
+								<h2>{user !== undefined && user.name[0]}</h2>
 							</Link>
 						</>
 					) : (
@@ -79,7 +78,7 @@ const Urls = () => {
 				<div className={styles.content_profile} onMouseLeave={onMouseLeave}>
 					<div className={styles.content_profile_name}>
 						<Link className={styles.circulo_profile} href='/'>
-							<h2>{user !== undefined && user.name[0].toUpperCase()}</h2>
+							<h2>{user !== undefined && user.name[0]}</h2>
 						</Link>
 						<div>
 							<h3>{user !== undefined && user.name}</h3>

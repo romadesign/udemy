@@ -48,7 +48,7 @@ export const useAuth = ({} = {}) => {
         setCookie('account', res.data.id)
       })
       .catch(error => {
-        if(error.response.status == 403){
+        if (error.response.status == 403) {
           setCookie('status_code_lg', error.response.status)
           logout()
         }
@@ -60,8 +60,7 @@ export const useAuth = ({} = {}) => {
     axios
       .post('/api/register', props)
       .then(res => {
-        console.log('llegue')
-        if(res.data.status_code == 201){
+        if (res.data.status_code == 201) {
           router.push('/login')
         }
       })
@@ -77,10 +76,11 @@ export const useAuth = ({} = {}) => {
       .post('/api/login', props)
       .then(res => {
         console.log('token', res.data.jwt)
-        router.push('/')
+        window.setTimeout( window.location.href = "/" , 200);
       })
       .catch(error => {
         setErrors(error.response.data.detail)
+        console.log(error.response.data.detail)
       })
   }
 
@@ -91,7 +91,6 @@ export const useAuth = ({} = {}) => {
       setCookie('status_code_lg', 403)
     })
   }
-
 
   return {
     user,

@@ -1,17 +1,16 @@
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import styles from '@/styles/login.module.css'
 
 const Login = () => {
-  const router = useRouter()
   const { login } = useAuth()
 
   const [email, setEmail] = useState('romacode@gmail.com')
   const [password, setPassword] = useState('romacode')
   const [errors, setErrors] = useState([])
   const [status, setStatus] = useState(null)
+  console.log(errors)
 
   const submitForm = async event => {
     event.preventDefault()

@@ -17,15 +17,6 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-        <div>
-          {user ? (
-                  <a >no login</a>
-              ) : (
-                <>
-                    <a >login</a>
-                </>
-              )}
-        </div>
       <CardCourse title={'Cursos'} data={apiGetCourses}/>
     </>
   )
