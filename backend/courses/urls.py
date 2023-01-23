@@ -20,6 +20,7 @@ urlpatterns = [
     # student options
     path('get-courses', List_Courses.as_view()),
     path('getstudents-are-viewing', get_students_are_viewing.as_view()),
+    path('get-my-search', get_my_search.as_view()),
     path('courses-filter', get_courses_filter_advanced.as_view()),
     path('course/<int:id>/', Course_Detail.as_view()),
 

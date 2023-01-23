@@ -649,9 +649,22 @@ class ResponsePagination_My_library(PageNumberPagination):
 class get_students_are_viewing(APIView):
     def post(self, request, *args, **kwargs):
         data = self.request.data
-        rating = data['rating']
+        rating = data['option']
 
         courses = Course.objects.filter(rating__rate_number=rating)
+        serializers = get_Courses_Serializer(courses, many=True)
+
+        paginator = ResponsePagination_My_library()
+        results = paginator.paginate_queryset(serializers.data, request)
+        return paginator.get_paginated_response({'data': results})
+
+
+class get_my_search(APIView):
+    def post(self, request, *args, **kwargs):
+        data = self.request.data
+        title = data['option']
+
+        courses = Course.objects.filter(title__icontains=title)
         serializers = get_Courses_Serializer(courses, many=True)
 
         paginator = ResponsePagination_My_library()

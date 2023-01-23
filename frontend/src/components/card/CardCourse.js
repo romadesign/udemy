@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'react'
 import Card from './card'
 import styles from '@/styles/course.module.css'
 
-const CardCourse = ({ title, data }) => {
+const CardCourse = ({ title, data, option }) => {
   const [courses, setCourse] = useState()
 
   const slider = useRef()
@@ -13,7 +13,7 @@ const CardCourse = ({ title, data }) => {
   }, [])
 
   const getCourse = async () => {
-    data()
+    data(option)
       .then(function (res) {
         setCourse(res.results.data)
       })

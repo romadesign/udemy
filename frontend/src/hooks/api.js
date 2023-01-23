@@ -8,6 +8,20 @@ export const Api = () => {
     return data.data
   }
 
+  const getStudentsAreViewing = async (option) => {
+    const formData = new FormData()
+    formData.append('option', option)
+    const data = await axios.post('/api/getstudents-are-viewing', formData)
+    return data.data
+  }
+
+  const getMySearch = async (option) => {
+    const formData = new FormData()
+    formData.append('option', option)
+    const data = await axios.post('/api/get-my-search', formData)
+    return data.data
+  }
+
   const apiGetMyLibrary = async (user) => {
     const formData = new FormData()
     formData.append('user', user)
@@ -30,6 +44,8 @@ export const Api = () => {
 
   return {
     apiGetCourses,
+    getStudentsAreViewing,
+    getMySearch,
     apiGetMyLibrary,
     apiMyAcquiredCourses,
     apiGetImage
