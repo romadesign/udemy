@@ -1,11 +1,17 @@
 from rest_framework import serializers
-from .models import Category
+from .models import *
 
 
 class Category_Serializer(serializers.ModelSerializer):
     class Meta:
-        model=Category
+        model = Category
         fields = [
-            # 'id', 
+            'id',
             'name'
         ]
+
+
+class Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'

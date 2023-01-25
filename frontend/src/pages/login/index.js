@@ -1,16 +1,27 @@
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styles from '@/styles/login.module.css'
 
 const Login = () => {
   const { login } = useAuth()
 
-  const [email, setEmail] = useState('romacode@gmail.com')
+  const [email, setEmail] = useState('')
+  const [data, setData] = useState([
+    { gmail: 'romacode@gmail.com' },
+    { gmail: 'test@gmail.com' }
+  ])
   const [password, setPassword] = useState('romacode')
+  const [statusboton, setstatusboton] = useState(false)
   const [errors, setErrors] = useState([])
   const [status, setStatus] = useState(null)
-  console.log(errors)
+
+  useEffect(() => {
+    var index = data.findIndex(e => e.gmail == email)
+    var result = index != -1 ? setstatusboton(false) : setstatusboton(true)
+    console.log(result)
+
+  })
 
   const submitForm = async event => {
     event.preventDefault()
@@ -25,7 +36,7 @@ const Login = () => {
         <form onSubmit={submitForm} className={styles.form}>
           <div>
             <input
-            className={styles.inputs}
+              className={styles.inputs}
               type='email'
               placeholder='Email'
               value={email}
@@ -34,14 +45,14 @@ const Login = () => {
           </div>
           <div>
             <input
-            className={styles.inputs}
+              className={styles.inputs}
               type='password'
               placeholder='Password'
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
           </div>
-          <button>Log in</button>
+          <button disabled={statusboton}>Log in</button>
         </form>
         <span>
           or <Link href='/login'>Forgot Password</Link>
