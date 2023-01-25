@@ -29,6 +29,18 @@ export const Api = () => {
     return data.data
   }
 
+  const apiGetCategories = async () => {
+    const data = await axios.get('/api/get-category')
+    return data.data
+  }
+
+  const apiGetCoursesByCategories = async (category) => {
+    const formData = new FormData()
+    formData.append('category', category)
+    const data = await axios.post('/api/get-course-by-category', formData)
+    return data.data
+  }
+
   const apiMyAcquiredCourses = async (user, payload) => {
     const formData = new FormData()
     formData.append('user', user)
@@ -48,6 +60,8 @@ export const Api = () => {
     getMySearch,
     apiGetMyLibrary,
     apiMyAcquiredCourses,
+    apiGetCategories,
+    apiGetCoursesByCategories,
     apiGetImage
   }
 } 

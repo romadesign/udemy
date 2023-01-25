@@ -1,0 +1,6 @@
+.content{
+  background-color: red;
+  display: flex;
+  gap: 2rem;
+  list-style:none;
+}

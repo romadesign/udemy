@@ -19,7 +19,7 @@ class ResponsePagination_My_library(PageNumberPagination):
 
 class courses_by_categories(APIView):
     def get(self, request, *args, **kwargs):
-        categories = Category.objects.all()
+        categories = Category.objects.all()[:int(6)]
         serializer = Category_Serializer(categories, many=True, read_only=True)
         return Response(serializer.data)
 
