@@ -1,29 +1,41 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from 'react'
+import Card from './card'
+import styles from '@/styles/course.module.css'
+import { Api } from '@/hooks/api'
 
-const CardCourse = ({data}) => {
-
-  const [category, setCategory] = useState(2)
+const CardCourse = ({ courses, setCourses }) => {
+  const { apiGetCoursesByCategories } = Api()
 
   useEffect(() => {
-    getData()
+    if (courses == undefined) {
+      apiGetCoursesByCategories(1)
+        .then(function (res) {
+          setCourses(res.results.data)
+        })
+        .catch(function (error) {
+          // console.log(error)
+        })
+    }
   }, [])
 
-  const getData = async () => {
-    data(category)
-      .then(function (res) {
-        setCategory(res.results.data)
-      })
-      .catch(function (error) {
-        // console.log(error)
-      })
-  }
+  const slider = useRef()
 
   return (
-    <div>
-      <h3>asd</h3>
-      <div >
-        <div >
-          hello
+    <div className={styles.container}>
+      <div className={styles.button_left_rigth}>
+        <div>
+          <button className={styles.button_left}>
+            &#60;
+          </button>
+        </div>
+        <div ref={slider} className={styles.content}>
+          {courses != undefined &&
+            courses.map((course, id) => <Card key={id} course={course} />)}
+        </div>
+        <div>
+          <button className={styles.button_rigth} >
+            &#62;
+          </button>
         </div>
       </div>
     </div>

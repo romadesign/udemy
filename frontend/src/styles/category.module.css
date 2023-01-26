@@ -1,6 +1,34 @@
+.container{
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  font-family: var(--font-mono);
+}
+
 .content{
-  background-color: red;
   display: flex;
   gap: 2rem;
   list-style:none;
+}
+
+.content li{
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.content li:hover{
+  font-weight: 700;
+  color: rgb(104, 104, 104);
+}
+
+.container p {
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.content_card_course{
+  border: 1px solid #d1d7dc;
+  margin-top: 1rem;
+  padding: 1.5rem;
 }
