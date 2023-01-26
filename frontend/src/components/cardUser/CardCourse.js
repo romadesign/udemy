@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useEffect, useState, useRef } from 'react'
-import Card from './card'
+import Card from '../GeneralCardComponent/card'
+
 import styles from '@/styles/course.module.css'
 
 const CardCourse = ({ title, data, user }) => {

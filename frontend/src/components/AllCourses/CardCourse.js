@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import Card from './card'
+import Card from '../GeneralCardComponent/card'
 import styles from '@/styles/course.module.css'
 import { Api } from '@/hooks/api'
 
