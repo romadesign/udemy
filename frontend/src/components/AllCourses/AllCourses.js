@@ -25,7 +25,7 @@ const AllCourses = () => {
     <div className={styles.container}>
       <div>
         <h1>A broad selection of courses</h1>
-        <p>
+        <p className={styles.content_category_text_p}>
           Choose from 213,000 online video courses with new additions published
           every month
         </p>

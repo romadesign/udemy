@@ -21,14 +21,16 @@
   color: rgb(104, 104, 104);
 }
 
-.container p {
-  font-size: 1.3rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
+
 
 .content_card_course{
   border: 1px solid #d1d7dc;
   margin-top: 1rem;
   padding: 1.5rem;
+}
+
+.content_category_text_p{
+  margin-top: 0.7rem;
+  margin-bottom: 0.7rem;
+  font-size: 1.2rem;
 }

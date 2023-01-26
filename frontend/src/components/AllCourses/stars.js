@@ -52,7 +52,7 @@ const Stars = ({ rating }) => {
           </div>
           <div>
             {
-              rating >= 51 ? (
+              rating >= 5 ? (
                 <p className={styles.star_show}>&#9733;</p>
               ) :
                 (
