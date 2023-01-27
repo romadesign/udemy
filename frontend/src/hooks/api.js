@@ -34,10 +34,10 @@ export const Api = () => {
     return data.data
   }
 
-  const apiGetCoursesByCategories = async (category) => {
+  const apiGetCoursesByCategories = async (category, page) => {
     const formData = new FormData()
     formData.append('category', category)
-    const data = await axios.post('/api/get-course-by-category', formData)
+    const data = await axios.post(`/api/get-course-by-category?p=${page}`, formData)
     return data.data
   }
 

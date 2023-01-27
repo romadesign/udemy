@@ -5,7 +5,10 @@ import { Api } from '@/hooks/api'
 import axios from '@/lib/axios'
 
 const CardCourse = ({
+  data,
+  page,
   statusData,
+  setStatusData,
   courses,
   next,
   previous,
@@ -16,27 +19,49 @@ const CardCourse = ({
 }) => {
   const slider = useRef()
 
-  const { apiGetCoursesByCategories } = Api()
+  useEffect(() => {
+    if (courses == undefined) {
+      data(1, page)
+        .then(function (res) {
+          setCourses(res.results.data)
+          setNext(res.next)
+          setPrevious(res.previous)
+          setStatusData(true)
+          console.log('llegue')
+        })
+        .catch(function (error) {
+          // console.log(error)
+        })
+    }
+  }, [])
 
   const sliderLeft = () => {
     slider.current.scrollLeft = slider.current.scrollLeft - 1200
   }
 
   const getCousePaginationNext = async () => {
+    page = page + 1
+    console.log(page)
     if (statusData == true) {
-      const formData = new FormData()
-      formData.append('category', 1)
-      const data = await axios.post(next, formData)
-      setCourses(data.data.results.data)
-      setNext(data.data.next)
-      setPrevious(data.data.previous)
+      data(1, page)
+        .then(function (res) {
+          setCourses(res.results.data)
+          setNext(res.next)
+          setPrevious(res.previous)
+        })
+        .catch(function (error) {
+          // console.log(error)
+        })
     } else {
-      const formData = new FormData()
-      formData.append('category', categoryId)
-      const data = await axios.post(next, formData)
-      setCourses(data.data.results.data)
-      setNext(data.data.next)
-      setPrevious(data.data.previous)
+      data(categoryId, page)
+        .then(function (res) {
+          setCourses(res.results.data)
+          setNext(res.next)
+          setPrevious(res.previous)
+        })
+        .catch(function (error) {
+          // console.log(error)
+        })
     }
   }
 

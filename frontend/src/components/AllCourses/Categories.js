@@ -13,24 +13,12 @@ const Categories = ({ category }) => {
   const [count, setCount] = useState()
   const [categorySelected, setCategorySelected] = useState()
   const [statusData, setStatusData] = useState(false)
-  console.log(statusData)
-  useEffect(() => {
-    if (courses == undefined) {
-      apiGetCoursesByCategories(1)
-        .then(function (res) {
-          setCourses(res.results.data)
-          setNext(res.next)
-          setPrevious(res.previous)
-          setStatusData(true)
-        })
-        .catch(function (error) {
-          // console.log(error)
-        })
-    }
-  }, [])
+  const [page, setPage] = useState(1)
+  
+ 
 
   const captureId = category_id => {
-    apiGetCoursesByCategories(category_id)
+    apiGetCoursesByCategories(category_id, page)
       .then(function (res) {
         setCourses(res.results.data)
         setNext(res.next)
@@ -57,6 +45,7 @@ const Categories = ({ category }) => {
       <div className={styles.content_card_course}>
         <CardCourse
           data={apiGetCoursesByCategories}
+          page={page}
           statusData={statusData}
           courses={courses}
           next={next}
@@ -65,6 +54,7 @@ const Categories = ({ category }) => {
           setNext={setNext}
           setPrevious={setPrevious}
           categoryId={categorySelected}
+          setStatusData={setStatusData}
         />
       </div>
     </div>

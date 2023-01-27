@@ -70,8 +70,13 @@
   position: absolute;
   top: 20%;
   left: 0;
+  cursor: pointer;
 }
 
+.button_left:hover{
+
+  background-color: #414040;
+}
 
 .button_rigth {
   background-color: #1c1d1f;
@@ -85,6 +90,11 @@
   position: absolute;
   top: 20%;
   right: 0;
+  cursor: pointer;
+}
+
+.button_rigth:hover{
+  background-color: #414040;
 }
 
 .price {
