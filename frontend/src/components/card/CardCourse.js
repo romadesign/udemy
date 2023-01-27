@@ -9,6 +9,7 @@ const CardCourse = ({ title, data, option }) => {
   const [courses, setCourse] = useState()
   const [next, setNext] = useState()
   const [previous, setPrevious] = useState()
+  const [count, setCount] = useState()
 
   useEffect(() => {
     getCourse()
@@ -19,23 +20,36 @@ const CardCourse = ({ title, data, option }) => {
       .then(function (res) {
         setCourse(res.results.data)
         setNext(res.next)
-        console.log(res)
+        setPrevious(res.previous)
+        setCount(res.count)
       })
       .catch(function (error) {
         // console.log(error)
       })
   }
 
+  const getCousePaginationPrevious = async () => {
+    const formData = new FormData()
+    formData.append('option', option)
+    const data = await axios.post(previous, formData)
+    setCourse(data.data.results.data)
+    setNext(data.data.next)
+    setPrevious(data.data.previous)
+  }
+
   const getCousePaginationNext = async () => {
-    console.log('llegue')
     const formData = new FormData()
     formData.append('option', option)
     const data = await axios.post(next, formData)
+    setCourse(prevResults => [...prevResults, ...data.data.results.data])
+    setNext(data.data.next)
+    setPrevious(data.data.previous)
     console.log(data)
   }
 
   const sliderLeft = () => {
     slider.current.scrollLeft = slider.current.scrollLeft - 1200
+    getCousePaginationPrevious()
   }
 
   const sliderRigth = () => {
@@ -48,18 +62,22 @@ const CardCourse = ({ title, data, option }) => {
       <h3>{title}</h3>
       <div className={styles.button_left_rigth}>
         <div>
-          <button className={styles.button_left} onClick={sliderLeft}>
-            &#60;
-          </button>
+          {previous !== null && (
+            <button className={styles.button_left} onClick={sliderLeft}>
+              &#60;
+            </button>
+          )}
         </div>
         <div ref={slider} className={styles.content}>
           {courses != undefined &&
             courses.map((course, id) => <Card key={id} course={course} />)}
         </div>
         <div>
-          <button className={styles.button_rigth} onClick={sliderRigth}>
-            &#62;
-          </button>
+          {next != null && (
+            <button className={styles.button_rigth} onClick={sliderRigth}>
+              &#62;
+            </button>
+          )}
         </div>
         aqui
       </div>
