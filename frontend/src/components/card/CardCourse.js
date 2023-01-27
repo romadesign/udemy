@@ -41,10 +41,9 @@ const CardCourse = ({ title, data, option }) => {
     const formData = new FormData()
     formData.append('option', option)
     const data = await axios.post(next, formData)
-    setCourse(prevResults => [...prevResults, ...data.data.results.data])
+    setCourse(data.data.results.data)
     setNext(data.data.next)
     setPrevious(data.data.previous)
-    console.log(data)
   }
 
   const sliderLeft = () => {
