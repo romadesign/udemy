@@ -7,8 +7,6 @@ const Categories = ({ category }) => {
   const { apiGetCoursesByCategories } = Api()
   const [courses, setCourses] = useState()
   const [next, setNext] = useState()
-  console.log(next)
-
   const [previous, setPrevious] = useState()
   const [count, setCount] = useState()
   const [categorySelected, setCategorySelected] = useState()
@@ -18,6 +16,8 @@ const Categories = ({ category }) => {
  
 
   const captureId = category_id => {
+    let page = 1
+    setPage(page)
     apiGetCoursesByCategories(category_id, page)
       .then(function (res) {
         setCourses(res.results.data)
@@ -46,6 +46,7 @@ const Categories = ({ category }) => {
         <CardCourse
           data={apiGetCoursesByCategories}
           page={page}
+          setPage={setPage}
           statusData={statusData}
           courses={courses}
           next={next}

@@ -1,12 +1,11 @@
 import { useEffect, useState, useRef } from 'react'
 import Card from '../GeneralCardComponent/card'
 import styles from '@/styles/course.module.css'
-import { Api } from '@/hooks/api'
-import axios from '@/lib/axios'
 
 const CardCourse = ({
   data,
   page,
+  setPage,
   statusData,
   setStatusData,
   courses,
@@ -27,7 +26,8 @@ const CardCourse = ({
           setNext(res.next)
           setPrevious(res.previous)
           setStatusData(true)
-          console.log('llegue')
+          console.log(res.results)
+
         })
         .catch(function (error) {
           // console.log(error)
@@ -41,13 +41,14 @@ const CardCourse = ({
 
   const getCousePaginationNext = async () => {
     page = page + 1
-    console.log(page)
+    setPage(page)
     if (statusData == true) {
       data(1, page)
         .then(function (res) {
           setCourses(res.results.data)
           setNext(res.next)
           setPrevious(res.previous)
+          console.log(res.results)
         })
         .catch(function (error) {
           // console.log(error)
