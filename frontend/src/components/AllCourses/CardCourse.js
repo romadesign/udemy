@@ -3,7 +3,7 @@ import Card from '../GeneralCardComponent/card'
 import styles from '@/styles/course.module.css'
 
 const CardCourse = ({
-  data,
+  getData,
   page,
   setPage,
   statusData,
@@ -20,13 +20,12 @@ const CardCourse = ({
 
   useEffect(() => {
     if (courses == undefined) {
-      data(1, page)
+      getData(1, page)
         .then(function (res) {
           setCourses(res.results.data)
           setNext(res.next)
           setPrevious(res.previous)
           setStatusData(true)
-          console.log(res.results)
 
         })
         .catch(function (error) {
@@ -35,26 +34,53 @@ const CardCourse = ({
     }
   }, [])
 
+  const getCousePaginationPrevious = async () => {
+    page = page - 1
+    setPage(page)
+    if (statusData == true) {
+      getData(1, page)
+        .then(function (res) {
+          setCourses(res.results.data)
+          setNext(res.next)
+          setPrevious(res.previous)
+        })
+        .catch(function (error) {
+          // console.log(error)
+        })
+    } else {
+      getData(categoryId, page)
+        .then(function (res) {
+          setCourses(res.results.data)
+          setNext(res.next)
+          setPrevious(res.previous)
+        })
+        .catch(function (error) {
+          // console.log(error)
+        })
+    }
+  }
+
   const sliderLeft = () => {
     slider.current.scrollLeft = slider.current.scrollLeft - 1200
+    getCousePaginationPrevious()
   }
 
   const getCousePaginationNext = async () => {
     page = page + 1
     setPage(page)
     if (statusData == true) {
-      data(1, page)
+      getData(1, page)
         .then(function (res) {
           setCourses(res.results.data)
+          // setCourses(prevResults => [...prevResults, ...res.results.data])
           setNext(res.next)
           setPrevious(res.previous)
-          console.log(res.results)
         })
         .catch(function (error) {
           // console.log(error)
         })
     } else {
-      data(categoryId, page)
+      getData(categoryId, page)
         .then(function (res) {
           setCourses(res.results.data)
           setNext(res.next)
@@ -67,8 +93,9 @@ const CardCourse = ({
   }
 
   const sliderRigth = () => {
-    slider.current.scrollLeft = slider.current.scrollLeft + 1200
     getCousePaginationNext()
+    const e = slider.current.scrollLeft = slider.current.scrollLeft + 500
+    console.log(e)
   }
 
   return (

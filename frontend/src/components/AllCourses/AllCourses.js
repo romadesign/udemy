@@ -4,7 +4,7 @@ import Categories from './Categories'
 import styles from '@/styles/category.module.css'
 
 const AllCourses = () => {
-  const { apiGetCategories } = Api()
+  const { apiGetCategories, apiGetCoursesByCategories } = Api()
 
   const [categories, setCategories] = useState()
 
@@ -30,7 +30,7 @@ const AllCourses = () => {
           every month
         </p>
         <div>
-          <Categories category={categories} />
+          <Categories category={categories} getData={apiGetCoursesByCategories}/>
         </div>
       </div>
     </div>

@@ -1,10 +1,8 @@
 import styles from '@/styles/category.module.css'
 import CardCourse from './CardCourse'
-import { Api } from '@/hooks/api'
 import { useEffect, useState } from 'react'
 
-const Categories = ({ category }) => {
-  const { apiGetCoursesByCategories } = Api()
+const Categories = ({ category, getData }) => {
   const [courses, setCourses] = useState()
   const [next, setNext] = useState()
   const [previous, setPrevious] = useState()
@@ -18,7 +16,7 @@ const Categories = ({ category }) => {
   const captureId = category_id => {
     let page = 1
     setPage(page)
-    apiGetCoursesByCategories(category_id, page)
+    getData(category_id, page)
       .then(function (res) {
         setCourses(res.results.data)
         setNext(res.next)
@@ -44,7 +42,7 @@ const Categories = ({ category }) => {
       </ul>
       <div className={styles.content_card_course}>
         <CardCourse
-          data={apiGetCoursesByCategories}
+          getData={getData}
           page={page}
           setPage={setPage}
           statusData={statusData}
