@@ -8,17 +8,17 @@ export const Api = () => {
     return data.data
   }
 
-  const getStudentsAreViewing = async (option) => {
+  const getStudentsAreViewing = async (option, page_size) => {
     const formData = new FormData()
     formData.append('option', option)
-    const data = await axios.post('/api/getstudents-are-viewing', formData)
+    const data = await axios.post(`/api/getstudents-are-viewing?p=1&${page_size}`, formData)
     return data.data
   }
 
-  const getMySearch = async (option) => {
+  const getMySearch = async (option, page_size) => {
     const formData = new FormData()
     formData.append('option', option)
-    const data = await axios.post('/api/get-my-search', formData)
+    const data = await axios.post(`/api/get-my-search?p=1&${page_size}`, formData)
     return data.data
   }
 

@@ -10,18 +10,20 @@ const CardCourse = ({ title, data, option }) => {
   const [next, setNext] = useState()
   const [previous, setPrevious] = useState()
   const [count, setCount] = useState()
+  const [page_size, setPage_size] = useState('page_size=2')
 
   useEffect(() => {
     getCourse()
   }, [])
 
   const getCourse = async () => {
-    data(option)
+    data(option, page_size)
       .then(function (res) {
         setCourse(res.results.data)
         setNext(res.next)
         setPrevious(res.previous)
         setCount(res.count)
+        setPage_size('')
       })
       .catch(function (error) {
         // console.log(error)
@@ -40,10 +42,11 @@ const CardCourse = ({ title, data, option }) => {
   const getCousePaginationNext = async () => {
     const formData = new FormData()
     formData.append('option', option)
-    const data = await axios.post(next, formData)
+    const data = await axios.post(`${next}&${page_size}`, formData)
     setCourse(data.data.results.data)
     setNext(data.data.next)
     setPrevious(data.data.previous)
+    setPage_size('')
   }
 
   const sliderLeft = () => {
