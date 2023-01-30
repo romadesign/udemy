@@ -12,8 +12,29 @@ const CardCourse = ({ title, data, option }) => {
   const [count, setCount] = useState()
   const [page_size, setPage_size] = useState('page_size=2')
 
+
+
+  const[statuswith, setStatusWith] = useState(false)
+  console.log(statuswith)
+  useEffect(()=> {
+    window.addEventListener('resize', ()=> {
+        console.log(window.innerWidth)
+        if(window.innerWidth <= 1200){
+          console.log('hello')
+          setStatusWith(true)
+        }else{
+          setStatusWith(false)
+
+        }
+    })
+ }, [])
+
+
+ 
+
   useEffect(() => {
     getCourse()
+
   }, [])
 
   const getCourse = async () => {
@@ -70,7 +91,7 @@ const CardCourse = ({ title, data, option }) => {
             </button>
           )}
         </div>
-        <div ref={slider} className={styles.content}>
+        <div ref={slider} className={statuswith == true ? styles.content : styles.content_reponsive}>
           {courses != undefined &&
             courses.map((course, id) => <Card key={id} course={course} />)}
         </div>
