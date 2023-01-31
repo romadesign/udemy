@@ -17,7 +17,7 @@
 
 .content {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1rem;
   /* overflow: scroll; */
   overflow-x: hidden;
@@ -84,7 +84,7 @@
   cursor: pointer;
 }
 
-.button_left:hover{
+.button_left:hover {
 
   background-color: #414040;
 }
@@ -104,7 +104,7 @@
   cursor: pointer;
 }
 
-.button_rigth:hover{
+.button_rigth:hover {
   background-color: #414040;
 }
 
@@ -142,4 +142,18 @@
 .star_hide {
   color: rgb(205 205 205);
   font-weight: bold;
+}
+
+@media (max-width: 780px) {
+  .content {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .button_left{
+      top: 37%;
+  }
+
+  .button_rigth {
+    top: 37%;
+  }
 }

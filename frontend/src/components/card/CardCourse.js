@@ -10,25 +10,7 @@ const CardCourse = ({ title, data, option }) => {
   const [next, setNext] = useState()
   const [previous, setPrevious] = useState()
   const [count, setCount] = useState()
-  const [page_size, setPage_size] = useState('page_size=2')
-
-
-
-  const[statuswith, setStatusWith] = useState(false)
-  console.log(statuswith)
-  useEffect(()=> {
-    window.addEventListener('resize', ()=> {
-        console.log(window.innerWidth)
-        if(window.innerWidth <= 1200){
-          console.log('hello')
-          setStatusWith(true)
-        }else{
-          setStatusWith(false)
-
-        }
-    })
- }, [])
-
+  const [page_size, setPage_size] = useState('page_size=4')
 
  
 
@@ -91,7 +73,7 @@ const CardCourse = ({ title, data, option }) => {
             </button>
           )}
         </div>
-        <div ref={slider} className={statuswith == true ? styles.content : styles.content_reponsive}>
+        <div ref={slider} className={styles.content}>
           {courses != undefined &&
             courses.map((course, id) => <Card key={id} course={course} />)}
         </div>
@@ -102,7 +84,6 @@ const CardCourse = ({ title, data, option }) => {
             </button>
           )}
         </div>
-        aqui
       </div>
     </div>
   )

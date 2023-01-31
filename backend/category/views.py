@@ -15,9 +15,9 @@ from rest_framework.pagination import PageNumberPagination
 
 class ResponsePagination_My_library(PageNumberPagination):
     page_query_param = 'p'
-    page_size = 5
+    page_size = 4
     page_size_query_param = 'page_size'
-    max_page_size = 5
+    max_page_size = 4
 
 
 class courses_by_categories(APIView):
