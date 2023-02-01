@@ -3,6 +3,7 @@
   gap: 2rem;
   justify-content: center;
   font-family: var(--font-mono);
+  padding: 1rem;
 }
 
 .content{
@@ -33,4 +34,12 @@
   margin-top: 0.7rem;
   margin-bottom: 0.7rem;
   font-size: 1.2rem;
+}
+
+.statusOptionTrue{
+  background-color: red;
+}
+
+.statusOptionFalse{
+  background-color: rgb(105, 160, 4);
 }
