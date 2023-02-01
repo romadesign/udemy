@@ -13,10 +13,10 @@ const CardCourse = ({
   setCourses,
   setNext,
   setPrevious,
-  categoryId
+  categoryId,
+  setStatusData
 }) => {
   const slider = useRef()
-
 
   const getCousePaginationPrevious = async () => {
     page = page - 1
@@ -27,7 +27,6 @@ const CardCourse = ({
           setCourses(res.results.data)
           setNext(res.next)
           setPrevious(res.previous)
-
         })
         .catch(function (error) {
           // console.log(error)
@@ -38,7 +37,6 @@ const CardCourse = ({
           setCourses(res.results.data)
           setNext(res.next)
           setPrevious(res.previous)
-
         })
         .catch(function (error) {
           // console.log(error)
@@ -96,7 +94,7 @@ const CardCourse = ({
 
   const sliderRigth = () => {
     getCousePaginationNext()
-    const e = slider.current.scrollLeft = slider.current.scrollLeft + 500
+    const e = (slider.current.scrollLeft = slider.current.scrollLeft + 500)
     console.log(e)
   }
 
