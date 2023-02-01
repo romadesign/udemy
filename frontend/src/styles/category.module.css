@@ -15,11 +15,12 @@
 .content li{
   font-weight: 700;
   cursor: pointer;
+  color: rgb(104, 104, 104);
 }
 
 .content li:hover{
   font-weight: 700;
-  color: rgb(104, 104, 104);
+  color: rgb(0, 0, 0);
 }
 
 
@@ -37,9 +38,6 @@
 }
 
 .statusOptionTrue{
-  background-color: red;
+  color: black !important;
 }
 
-.statusOptionFalse{
-  background-color: rgb(105, 160, 4);
-}

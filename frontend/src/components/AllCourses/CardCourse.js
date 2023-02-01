@@ -7,7 +7,6 @@ const CardCourse = ({
   page,
   setPage,
   statusData,
-  setStatusData,
   courses,
   next,
   previous,
@@ -18,21 +17,6 @@ const CardCourse = ({
 }) => {
   const slider = useRef()
 
-  useEffect(() => {
-    if (courses == undefined) {
-      getData(1, page)
-        .then(function (res) {
-          setCourses(res.results.data)
-          setNext(res.next)
-          setPrevious(res.previous)
-          setStatusData(true)
-
-        })
-        .catch(function (error) {
-          // console.log(error)
-        })
-    }
-  }, [])
 
   const getCousePaginationPrevious = async () => {
     page = page - 1
@@ -43,6 +27,7 @@ const CardCourse = ({
           setCourses(res.results.data)
           setNext(res.next)
           setPrevious(res.previous)
+
         })
         .catch(function (error) {
           // console.log(error)
@@ -53,6 +38,7 @@ const CardCourse = ({
           setCourses(res.results.data)
           setNext(res.next)
           setPrevious(res.previous)
+
         })
         .catch(function (error) {
           // console.log(error)
@@ -91,6 +77,22 @@ const CardCourse = ({
         })
     }
   }
+
+  useEffect(() => {
+    if (courses == undefined) {
+      let categoryIdGet = 1
+      getData(categoryIdGet, page)
+        .then(function (res) {
+          setCourses(res.results.data)
+          setNext(res.next)
+          setPrevious(res.previous)
+          setStatusData(true)
+        })
+        .catch(function (error) {
+          // console.log(error)
+        })
+    }
+  }, [])
 
   const sliderRigth = () => {
     getCousePaginationNext()

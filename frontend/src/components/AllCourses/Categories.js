@@ -1,6 +1,7 @@
 import styles from '@/styles/category.module.css'
 import CardCourse from './CardCourse'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 const Categories = ({ category, getData }) => {
   const [courses, setCourses] = useState()
@@ -10,8 +11,7 @@ const Categories = ({ category, getData }) => {
   const [categorySelected, setCategorySelected] = useState()
   const [statusData, setStatusData] = useState(false)
   const [page, setPage] = useState(1)
-  
- 
+  const [activateLinkClick, setActivateLinkClick] = useState(false)
 
   const captureId = category_id => {
     let page = 1
@@ -24,6 +24,7 @@ const Categories = ({ category, getData }) => {
         setCount(res.count)
         setCategorySelected(category_id)
         setStatusData(false)
+        setActivateLinkClick(true)
       })
       .catch(function (error) {
         // console.log(error)
@@ -35,7 +36,15 @@ const Categories = ({ category, getData }) => {
       <ul className={styles.content}>
         {category != undefined &&
           category.map(cat => (
-            <li key={cat.id} onClick={() => captureId(cat.id)}>
+            <li
+              key={cat.id}
+              className={
+                activateLinkClick == true
+                  ? categorySelected == cat.id && styles.statusOptionTrue
+                  : cat.id == 1 && styles.statusOptionTrue
+              }
+              onClick={() => captureId(cat.id)}
+            >
               {cat.name}
             </li>
           ))}
