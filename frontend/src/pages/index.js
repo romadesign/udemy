@@ -3,7 +3,8 @@ import { useAuth } from '@/hooks/auth'
 import CardCourse from '@/components/card/CardCourse'
 import { Api } from '@/hooks/api'
 import AllCourses from '@/components/AllCourses/AllCourses'
-
+import Banner from '@/components/Banner/Banner'
+import styles from '@/styles/Home.module.css'
 
 export default function Home() {
   const { getStudentsAreViewing, getMySearch  } = Api()
@@ -18,6 +19,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Banner />
       <AllCourses />
       <CardCourse title={'Students are viewing'} data={getStudentsAreViewing} option={5}/>
       {/* guardar en el localstorage el dato que ingreso en el buscador y cuando hace click en un curso */} 

@@ -1,10 +1,13 @@
+
 .container{
   display: flex;
   gap: 2rem;
   justify-content: center;
-  font-family: var(--font-mono);
   padding: 1rem;
+  margin-top: 2rem;
+  font-size: 1.2rem;
 }
+
 
 .content{
   display: flex;
@@ -13,9 +16,11 @@
 }
 
 .content li{
+  font-family: var(--font-mono);
   font-weight: 700;
   cursor: pointer;
   color: rgb(104, 104, 104);
+  font-size: 1rem;
 }
 
 .content li:hover{
@@ -35,6 +40,7 @@
   margin-top: 0.7rem;
   margin-bottom: 0.7rem;
   font-size: 1.2rem;
+  font-family: var(--font-mono);
 }
 
 .statusOptionTrue{
