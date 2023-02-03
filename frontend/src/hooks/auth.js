@@ -46,6 +46,7 @@ export const useAuth = ({} = {}) => {
       .then(res => {
         setCookie('status_code_lg', res.status)
         setCookie('account', res.data.id)
+        return res
       })
       .catch(error => {
         if (error.response.status == 403) {

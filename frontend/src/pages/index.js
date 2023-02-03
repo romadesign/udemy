@@ -8,7 +8,7 @@ import styles from '@/styles/Home.module.css'
 
 export default function Home() {
   const { getStudentsAreViewing, getMySearch  } = Api()
-  const { user} = useAuth()
+  const { user } = useAuth()
   
 
   return (
@@ -19,7 +19,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Banner />
+      <Banner user={user} />
       <AllCourses />
       <CardCourse title={'Students are viewing'} data={getStudentsAreViewing} option={5}/>
       {/* guardar en el localstorage el dato que ingreso en el buscador y cuando hace click en un curso */} 
