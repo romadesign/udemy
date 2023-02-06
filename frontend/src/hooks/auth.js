@@ -44,12 +44,15 @@ export const useAuth = ({} = {}) => {
     axios
       .get('/api/user')
       .then(res => {
+        console.log(res, 'ac')
         setCookie('status_code_lg', res.status)
         setCookie('account', res.data.id)
         return res
       })
       .catch(error => {
         if (error.response.status == 403) {
+          console.log(error, 'ac')
+
           setCookie('status_code_lg', error.response.status)
           logout()
         }
@@ -76,8 +79,8 @@ export const useAuth = ({} = {}) => {
     axios
       .post('/api/login', props)
       .then(res => {
-        console.log('token', res.data.jwt)
-        window.setTimeout( window.location.href = "/" , 200);
+        // window.setTimeout( window.location.href = "/" , 200);
+        router.push('/')
       })
       .catch(error => {
         setErrors(error.response.data.detail)

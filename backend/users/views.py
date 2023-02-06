@@ -8,6 +8,8 @@ import jwt
 import datetime
 # Create your views here.
 
+import os
+sistemaop = os.name
 
 class RegisterView(APIView):
     def post(self, request):
@@ -16,10 +18,10 @@ class RegisterView(APIView):
         serializer.save()
         status_code = status.HTTP_201_CREATED
         response = {
-            'success' : 'True',
-            'status code' : status_code,
+            'success': 'True',
+            'status code': status_code,
             'message': 'User registered  successfully',
-            }
+        }
         return Response(response, status=status_code)
 
 
@@ -57,7 +59,12 @@ class LoginView(APIView):
 
 class UserView(APIView):
     def get(self, request):
-        token = request.COOKIES.get('jwt')
+        gettoken = request.COOKIES.get('jwt')
+
+        if (sistemaop == 'nt'):
+            token = gettoken
+        elif (sistemaop == 'posix'):
+            token = gettoken[2:-1]
 
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
