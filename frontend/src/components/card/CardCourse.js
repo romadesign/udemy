@@ -12,7 +12,7 @@ const CardCourse = ({ title, data, option }) => {
   const [count, setCount] = useState()
   const [page_size, setPage_size] = useState('page_size=4')
 
- 
+
 
   useEffect(() => {
     getCourse()
@@ -62,8 +62,10 @@ const CardCourse = ({ title, data, option }) => {
     getCousePaginationNext()
   }
 
+  
+
   return (
-    <div className={styles.container}>
+    <div  className={styles.container}>
       <h3>{title}</h3>
       <div className={styles.button_left_rigth}>
         <div>

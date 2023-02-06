@@ -29,6 +29,12 @@ export const Api = () => {
     return data.data
   }
 
+  const apiGetCourseDetailCard = async (course) => {
+    const id = course
+    const data = await axios.get(`/api/course-detail/${id}`)
+    return data.data
+  }
+
   const apiGetCategories = async () => {
     const data = await axios.get('/api/get-category')
     return data.data
@@ -56,6 +62,7 @@ export const Api = () => {
 
   return {
     apiGetCourses,
+    apiGetCourseDetailCard,
     getStudentsAreViewing,
     getMySearch,
     apiGetMyLibrary,
