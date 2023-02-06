@@ -23,6 +23,7 @@ urlpatterns = [
     path('get-my-search', get_my_search.as_view()),
     path('courses-filter', get_courses_filter_advanced.as_view()),
     path('course/<int:id>/', Course_Detail.as_view()),
+    path('course-detail/<int:id>/', Course_Detail_card.as_view()),
 
     path('add-rating-course', Add_Rating.as_view()),
     path('edit-rating-course', Edit_Rating.as_view()),

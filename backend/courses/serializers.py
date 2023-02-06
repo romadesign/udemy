@@ -33,6 +33,7 @@ class get_Course_details_Serializer(serializers.ModelSerializer):
     category = Category_Serializer(read_only=True)  # method get
     rating = serializers.IntegerField(source='get_rating', read_only=True)
     requisite = RequisiteSerializer(many=True)
+    what_learnt = WhatLearnt_Serializer(many=True)
     comments = Comment_Serializer(many=True, read_only=True)
 
     class Meta:
@@ -52,6 +53,18 @@ class get_Course_details_Serializer(serializers.ModelSerializer):
             'status',
             'comments',
             'category'
+        ]
+
+class get_Course_details_card_Serializer(serializers.ModelSerializer):
+    what_learnt = WhatLearnt_Serializer(many=True)
+
+    class Meta:
+        model = Course
+        fields = [
+            'id',
+            'title',                        
+            'description',
+            'what_learnt',
         ]
 
 

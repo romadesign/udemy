@@ -314,6 +314,27 @@ class Course_Detail(APIView):
                 "course": "Not exists"
             })
 
+class Course_Detail_card(APIView):
+    def get(self, request, *args, **kwargs):
+        id = self.kwargs['id']
+        course_exists = Course.objects.filter(id=id)
+
+        course_exists.exists()
+        if course_exists:
+            course = course_exists.first()
+            serializer = get_Course_details_card_Serializer(course)
+
+            return Response({
+                'success': 'true',
+                'status code': status.HTTP_201_CREATED,
+                "course": serializer.data
+            })
+        else:
+            return Response({
+                'success': 'true',
+                'status code': status.HTTP_404_NOT_FOUND,
+                "course": "Not exists"
+            })
 
 # class Get_Comments(APIView):
 #     def get(self, request, *args, **kwargs):
