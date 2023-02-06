@@ -23,7 +23,7 @@ export default function Home() {
       <AllCourses />
       <CardCourse title={'Students are viewing'} data={getStudentsAreViewing} option={5}/>
       {/* guardar en el localstorage el dato que ingreso en el buscador y cuando hace click en un curso */} 
-      <CardCourse title={'Because you searched for'} data={getMySearch} option={'django'}/>
+      <CardCourse title={'Because you searched for'} data={getMySearch} option={'next'}/>
       {/*crear nueva columna en user y crear nueva tabla con los tipos de profesión*/}
       {/*capturar la profesión del user y buscar cursos relacionandos*/}
       <CardCourse title={'Popular for aspiring'} data={getMySearch} option={'development'}/>
