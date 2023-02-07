@@ -3,6 +3,7 @@ import axios from '@/lib/axios'
 
 const CourseDetail = ({ course }) => {
 
+
   console.log(course)
 
   return (
