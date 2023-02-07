@@ -28,22 +28,15 @@
 
 .content_reponsive {
   display: grid;
-
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 
 
-
-.wrapper {
-  max-width: 500px;
-}
-
 .wrapper .carousel {
-
   cursor: pointer;
 }
-
+  
 .carousel h4 {
   font-family: var(--font-mono);
   margin-top: 0.4rem;
@@ -148,12 +141,11 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .button_left{
-      top: 37%;
+  .button_left {
+    top: 37%;
   }
 
   .button_rigth {
     top: 37%;
   }
 }
-

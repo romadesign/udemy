@@ -64,6 +64,8 @@ class get_Course_details_card_Serializer(serializers.ModelSerializer):
             'id',
             'title',                        
             'description',
+            'created',
+            'updated',
             'what_learnt',
         ]
 

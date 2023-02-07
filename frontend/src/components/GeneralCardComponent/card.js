@@ -3,18 +3,26 @@ import { Api } from '@/hooks/api'
 import Rating from '../GeneralCardComponent/stars'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import CardDetail from '../CardDetail/CardDetail'
+import { useState } from 'react'
 
 const Card = ({ course }) => {
-  const router = useRouter()
   const { apiGetImage, apiGetCourseDetailCard } = Api()
-  function truncate (string, n) {
+  const router = useRouter()
+  const [modalDetail, setModalDetail] = useState(false)
+  const [courseD, setCourseD] = useState()
+
+
+  function truncate(string, n) {
     return string?.length > n ? string.substr(0, n - 1) + '...' : string
   }
+
   const courseDetail = course => {
-    console.log('asd', course)
+
+    setModalDetail(true)
     apiGetCourseDetailCard(course)
       .then(function (res) {
-        console.log(res)
+        setCourseD(res.course)
         // router.push("/")
       })
       .catch(function (error) {
@@ -29,15 +37,15 @@ const Card = ({ course }) => {
           router.push(
             router.pathname == '/'
               ? {
-                  pathname: '/course/[id]',
-                  query: { id: course.id },
-                  as: 'asdas'
-                }
+                pathname: '/course/[id]',
+                query: { id: course.id },
+                as: 'asdas'
+              }
               : {
-                  pathname: '/course/[id]',
-                  query: { id: course.course.id },
-                  as: 'asdasdasasdaas'
-                }
+                pathname: '/course/[id]',
+                query: { id: course.course.id },
+                as: 'asdasdasasdaas'
+              }
           )
         }}
         onMouseEnter={() =>
@@ -89,6 +97,13 @@ const Card = ({ course }) => {
                 <Rating rating={course.rating.rate_number} />
               </span>
             )}
+        </div>
+        <div>
+          {
+            modalDetail == true &&
+            // <CardDetail course={router.pathname == '/' ? course : course.course} setModalDetail={setModalDetail} />
+            <CardDetail course={courseD} setModalDetail={setModalDetail} />
+          }
         </div>
       </div>
     </>

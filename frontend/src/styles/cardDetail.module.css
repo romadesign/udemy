@@ -1,0 +1,59 @@
+.content {
+    position: absolute;
+    top: 0;
+    width: 260px;
+    padding: 1.5rem;
+    border: 1px solid #e7e7e7;
+    background-color: #fff;
+    box-shadow: 0 0 0 1px #d1d7dc, 0 2px 4px rgb(0 0 0 / 8%), 0 4px 12px rgb(0 0 0 / 8%);
+    font-family: var(--font-mono);
+    z-index: 1;
+}
+
+.title {
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+}
+.description{
+    font-size: 0.8rem;
+}
+.what_learnt{
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+    margin-top: 0.8rem;
+}
+.what_learnt_list{
+    margin-bottom: 0.4rem;
+}
+.content_heart{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.button{
+    width: 85%;
+    border: 0;
+    height: 40px;
+    background: #b12dff;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+}
+.icon{
+    text-align: center;
+    background: #fffcfc;
+    border: 1px solid;
+    width: 54px;
+    height: 45px;
+    font-size: 2rem;
+    border-radius: 22rem;
+}
+.icon2{
+    text-align: center;
+    background: #fffcfc;
+    border: 1px solid;
+    width: 54px;
+    height: 45px;
+    font-size: 2rem;
+    border-radius: 22rem;
+}
