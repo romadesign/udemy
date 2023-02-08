@@ -41,7 +41,6 @@ const Content = ({ title }) => {
         </div>
       </div>
       {router.pathname == '/my-courses/wishlist' && (
-        
         <CardCourseUser data={apiGetMyLibrary} user={getCookie('account')} />
       )}
       {router.pathname == '/my-courses/learning' && (

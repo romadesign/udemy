@@ -77,7 +77,7 @@ const Card = ({ course }) => {
           {router.pathname === '/' && (
             <>
               <span className={styles.content_rating}>
-                {course.rating}
+                {course.rating !== 0 && course.rating}
                 <Rating rating={course.rating} />
               </span>
               <p className={styles.price}>{course.price}$</p>
@@ -86,7 +86,7 @@ const Card = ({ course }) => {
           {router.pathname === '/my-courses/wishlist' && (
             <div>
               <span className={styles.content_rating}>
-                {course.course.rating}
+                {course.course.rating !== 0 && course.course.rating } 
                 <Rating rating={course.course.rating} />
               </span>
               <p className={styles.price}>{course.course.price}$</p>
@@ -95,7 +95,7 @@ const Card = ({ course }) => {
           {router.pathname === '/my-courses/learning' &&
             course.rating != undefined && (
               <span className={styles.content_rating}>
-                {course.course.rating}
+                {course.rating.rate_number} 
                 <Rating rating={course.rating.rate_number} />
               </span>
             )}
