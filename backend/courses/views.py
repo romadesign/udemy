@@ -664,7 +664,7 @@ class ResponsePagination(PageNumberPagination):
     page_query_param = 'p'
     page_size = 2
     page_size_query_param = 'page_size'
-    max_page_size = 5
+    max_page_size = 8
 
 
 class get_students_are_viewing(APIView):

@@ -9,7 +9,7 @@ const CardCourse = ({ data, user }) => {
   const [courses, setCourse] = useState()
   const payload = {
     p: 1,
-    page_size: 4,
+    page_size: 9,
     sort: 'course__title'
   }
 
