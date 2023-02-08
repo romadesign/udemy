@@ -282,7 +282,7 @@ class List_Courses(APIView):
 
         courses = get_Courses_Serializer(courses, many=True)
 
-        paginator = ResponsePagination_My_library()
+        paginator = ResponsePagination()
         results = paginator.paginate_queryset(courses.data, request)
         return paginator.get_paginated_response({'data': results})
 
@@ -406,7 +406,7 @@ class Update_Comment_For_Student(APIView):
             })
 
 
-class Add_Courses_Library(APIView):
+class Add_Courses_Wishlist(APIView):
     def post(self, request, *args, **kwargs):
 
         data = self.request.data
@@ -437,19 +437,19 @@ class Add_Courses_Library(APIView):
             })
 
 
-class My_library(APIView):
+class Wishlist(APIView):
     def post(self, request, *args, **kwargs):
         data = self.request.data
         author = data['user']
         get_my_library = CoursesLibrary.objects.filter(user=author)
-        serializer = get_my_library_Serializer(get_my_library, many=True)
+        serializer = get_my_Wishlist_Serializer(get_my_library, many=True)
 
-        paginator = ResponsePagination_My_library()
+        paginator = ResponsePagination()
         results = paginator.paginate_queryset(serializer.data, request)
         return paginator.get_paginated_response({'data': results})
 
 
-class Remove_course_from_my_library(APIView):
+class Remove_course_from_my_Wishlist(APIView):
     def post(self, request, course_of_my_bookstore_id, *args, **kwargs):
         data = self.request.data
         user = data['user']
@@ -469,7 +469,7 @@ class Remove_course_from_my_library(APIView):
         return ""
 
 
-class Add_Paid_Courses_Library(APIView):
+class Add_Paid_Courses_learning(APIView):
     def post(self, request, *args, **kwargs):
 
         data = self.request.data
@@ -500,7 +500,7 @@ class Add_Paid_Courses_Library(APIView):
             })
 
 
-class My_acquired_courses(APIView):
+class learning(APIView):
     def post(self, request, *args, **kwargs):
         sort = request.query_params.get('sort')
         if not (sort == 'course__title' or sort == '-course__title'):
@@ -517,7 +517,7 @@ class My_acquired_courses(APIView):
             itemLibrary['id'] = i.id
 
             course = Course.objects.filter(id=i.course.id)
-            itemLibrary['course'] = data_my_acquired_courses_serializer(
+            itemLibrary['course'] = data_learning_serializer(
                 course.first()).data
 
             rating = i.course.rating.filter(user=author)
@@ -525,7 +525,7 @@ class My_acquired_courses(APIView):
                 itemLibrary['rating'] = RateSerializer(rating.first()).data
             results.append(itemLibrary)
 
-        paginator = ResponsePagination_My_library()
+        paginator = ResponsePagination()
         results = paginator.paginate_queryset(results, request)
         return paginator.get_paginated_response({'data': results})
 
@@ -660,7 +660,7 @@ class Deleted_Rating(APIView):
             return Response({'rating erased'})
 
 
-class ResponsePagination_My_library(PageNumberPagination):
+class ResponsePagination(PageNumberPagination):
     page_query_param = 'p'
     page_size = 2
     page_size_query_param = 'page_size'
@@ -675,7 +675,7 @@ class get_students_are_viewing(APIView):
         courses = Course.objects.filter(rating__rate_number=rating)
         serializers = get_Courses_Serializer(courses, many=True)
 
-        paginator = ResponsePagination_My_library()
+        paginator = ResponsePagination()
         results = paginator.paginate_queryset(serializers.data, request)
         return paginator.get_paginated_response({'data': results})
 
@@ -688,6 +688,6 @@ class get_my_search(APIView):
         courses = Course.objects.filter(title__icontains=title)
         serializers = get_Courses_Serializer(courses, many=True)
 
-        paginator = ResponsePagination_My_library()
+        paginator = ResponsePagination()
         results = paginator.paginate_queryset(serializers.data, request)
         return paginator.get_paginated_response({'data': results})

@@ -113,7 +113,7 @@ class data_course_my_library_serializer(serializers.ModelSerializer):
             'image'
         ]
 
-class data_my_acquired_courses_serializer(serializers.ModelSerializer):
+class data_learning_serializer(serializers.ModelSerializer):
     rating = serializers.IntegerField(source='get_rating', read_only=True)
     author = user_serializer(read_only=True)
 
@@ -124,11 +124,13 @@ class data_my_acquired_courses_serializer(serializers.ModelSerializer):
             'title',
             'rating',
             'author',
-            'image'
+            'image',
+            'category',
+            'price'
         ]
 
 
-class get_my_library_Serializer(serializers.ModelSerializer):
+class get_my_Wishlist_Serializer(serializers.ModelSerializer):
     course = data_course_my_library_serializer(read_only=True)
 
     class Meta:

@@ -33,12 +33,12 @@ urlpatterns = [
     path('comment/<int:comment_id>/update',
          Update_Comment_For_Student.as_view()),
 
-    path('add-courses-library', Add_Courses_Library.as_view()),
-    path('my-library', My_library.as_view()),
+    path('add-courses-library', Add_Courses_Wishlist.as_view()),
+    path('my-library', Wishlist.as_view()),
     path('remove-course/<int:course_of_my_bookstore_id>',
-         Remove_course_from_my_library.as_view()),
+         Remove_course_from_my_Wishlist.as_view()),
 
-    path('add-courses-to-paid', Add_Paid_Courses_Library.as_view()),
-    path('my-acquired-courses', My_acquired_courses.as_view()),
+    path('add-courses-to-paid', Add_Paid_Courses_learning.as_view()),
+    path('my-acquired-courses', learning.as_view()),
 
 ]

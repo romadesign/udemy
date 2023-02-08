@@ -40,14 +40,15 @@ const Content = ({ title }) => {
           </div>
         </div>
       </div>
+      {router.pathname == '/my-courses/wishlist' && (
+        
+        <CardCourseUser data={apiGetMyLibrary} user={getCookie('account')} />
+      )}
       {router.pathname == '/my-courses/learning' && (
         <CardCourseUser
           data={apiMyAcquiredCourses}
           user={getCookie('account')}
         />
-      )}
-      {router.pathname == '/my-courses/wishlist' && (
-        <CardCourseUser data={apiGetMyLibrary} user={getCookie('account')} />
       )}
     </>
   )

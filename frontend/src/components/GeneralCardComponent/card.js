@@ -12,22 +12,24 @@ const Card = ({ course }) => {
   const [modalDetail, setModalDetail] = useState(false)
   const [courseD, setCourseD] = useState()
 
+  console.log(course)
 
-  function truncate(string, n) {
+  function truncate (string, n) {
     return string?.length > n ? string.substr(0, n - 1) + '...' : string
   }
 
   const courseDetail = course => {
-
-    setModalDetail(true)
-    apiGetCourseDetailCard(course)
-      .then(function (res) {
-        setCourseD(res.course)
-        // router.push("/")
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+    if (router.pathname != '/my-courses/learning') {
+      setModalDetail(true)
+      apiGetCourseDetailCard(course)
+        .then(function (res) {
+          setCourseD(res.course)
+          // router.push("/")
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
   }
 
   return (
@@ -37,15 +39,15 @@ const Card = ({ course }) => {
           router.push(
             router.pathname == '/'
               ? {
-                pathname: '/course/[id]',
-                query: { id: course.id },
-                as: 'asdas'
-              }
+                  pathname: '/course/[id]',
+                  query: { id: course.id },
+                  as: 'asdas'
+                }
               : {
-                pathname: '/course/[id]',
-                query: { id: course.course.id },
-                as: 'asdasdasasdaas'
-              }
+                  pathname: '/course/[id]',
+                  query: { id: course.course.id },
+                  as: 'asdasdasasdaas'
+                }
           )
         }}
         onMouseEnter={() =>
@@ -99,11 +101,9 @@ const Card = ({ course }) => {
             )}
         </div>
         <div>
-          {
-            modalDetail == true &&
-            // <CardDetail course={router.pathname == '/' ? course : course.course} setModalDetail={setModalDetail} />
+          {modalDetail == true && (
             <CardDetail course={courseD} setModalDetail={setModalDetail} />
-          }
+          )}
         </div>
       </div>
     </>
