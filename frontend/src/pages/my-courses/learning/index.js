@@ -1,17 +1,11 @@
-import CardCourseUser from '@/components/cardUser/CardCourse'
-import { Api } from '@/hooks/api'
-import { useAuth } from '@/hooks/auth'
-
+import Content from '@/components/ContentInformation/Content'
 
 const Learning = () => {
-    const { apiMyAcquiredCourses } = Api()
-    const { getCookie } = useAuth()
-
-    return (
-        <div >
-            <CardCourseUser title={'mis cursos comprados'} data={apiMyAcquiredCourses} user={getCookie('account')} />
-        </div>
-    )
+  return (
+    <div>
+      <Content title={'My learning'} />
+    </div>
+  )
 }
 
 export default Learning

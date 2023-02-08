@@ -4,7 +4,7 @@ import Card from '../GeneralCardComponent/card'
 
 import styles from '@/styles/course.module.css'
 
-const CardCourse = ({ title, data, user }) => {
+const CardCourse = ({ data, user }) => {
   const [courses, setCourse] = useState()
 
   const payload = {
@@ -31,7 +31,6 @@ const CardCourse = ({ title, data, user }) => {
 
   return (
     <div className={styles.container}>
-      <h3>{title}</h3>
       <div className={styles.button_left_rigth}>
         <div ref={slider} className={styles.content}>
           {courses != undefined &&
