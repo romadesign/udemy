@@ -12,7 +12,6 @@ const Card = ({ course }) => {
   const [modalDetail, setModalDetail] = useState(false)
   const [courseD, setCourseD] = useState()
 
-  console.log(course)
 
   function truncate (string, n) {
     return string?.length > n ? string.substr(0, n - 1) + '...' : string
@@ -23,6 +22,8 @@ const Card = ({ course }) => {
       setModalDetail(true)
       apiGetCourseDetailCard(course)
         .then(function (res) {
+        console.log(res)
+
           setCourseD(res.course)
           // router.push("/")
         })

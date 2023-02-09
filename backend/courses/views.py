@@ -314,33 +314,64 @@ class Course_Detail(APIView):
                 "course": "Not exists"
             })
 
+
 class Course_Detail_card(APIView):
     def get(self, request, *args, **kwargs):
-        id = self.kwargs['id']
-        course_exists = Course.objects.filter(id=id)
+        account = request.COOKIES.get('account')
+        course_id = self.kwargs['id']
+        
+        # checking if the course exists
+        course_exists = Course.objects.filter(id=course_id)
 
-        course_exists.exists()
-        if course_exists:
-            course = course_exists.first()
-            serializer = get_Course_details_card_Serializer(course)
+        if account:
+            course_exists_wishlist = CoursesLibrary.objects.filter(
+                user=account, course=course_id)
+            course_exists_wishlist.exists()
+            course_exists.exists()
+            if course_exists:
+                course = course_exists.first()
+                serializer = get_Course_details_card_Serializer(course)
+                
+            if course_exists_wishlist:
+                return Response({
+                    'success': 'true',
+                    'status code': status.HTTP_201_CREATED,
+                    "course": serializer.data,
+                    "exists" : 'true',
+                    "logged-in" : 'true'
+                })
+                
+            else:
+                return Response({
+                    'success': 'true',
+                    'status code': status.HTTP_201_CREATED,
+                    "course": serializer.data,
+                    "exists" : 'false',
+                    "logged-in" : 'true'
+                    
+                })
 
-            return Response({
-                'success': 'true',
-                'status code': status.HTTP_201_CREATED,
-                "course": serializer.data
-            })
         else:
-            return Response({
-                'success': 'true',
-                'status code': status.HTTP_404_NOT_FOUND,
-                "course": "Not exists"
-            })
+            course_exists.exists()
+            if course_exists:
+                course = course_exists.first()
+                serializer = get_Course_details_card_Serializer(course)
+
+                return Response({
+                    'success': 'true',
+                    'status code': status.HTTP_201_CREATED,
+                    "course": serializer.data,
+                    "exists" : 'false',
+                    "logged-in" : 'false'
+                })
+           
 
 # class Get_Comments(APIView):
 #     def get(self, request, *args, **kwargs):
 #         data = self.request.data
 #         author = data['user']
 #         return paginator.get_paginated_response({'comments': results})
+
 
 class Add_Comment(APIView):
     def post(self, request, course_id, *args, **kwargs):

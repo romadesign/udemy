@@ -20,11 +20,15 @@ export const useAuth = ({} = {}) => {
 
   //cookie delete
   const deleteCookie = name => {
-    if (getCookie('id')) {
+    if (getCookie('jwt')) {
       document.cookie =
         name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
     }
-    if (getCookie('type')) {
+    if (getCookie('status_code_lg')) {
+      document.cookie =
+        name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+    }
+    if (getCookie('account')) {
       document.cookie =
         name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
     }
@@ -52,7 +56,6 @@ export const useAuth = ({} = {}) => {
       .catch(error => {
         if (error.response.status == 403) {
           console.log(error, 'ac')
-
           setCookie('status_code_lg', error.response.status)
           logout()
         }
@@ -91,6 +94,7 @@ export const useAuth = ({} = {}) => {
   const logout = async () => {
     deleteCookie('jwt')
     deleteCookie('status_code_lg')
+    deleteCookie('account')
     await axios.post('/api/logout').then(() => {
       setCookie('status_code_lg', 403)
     })
