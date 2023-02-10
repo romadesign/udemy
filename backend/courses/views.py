@@ -337,7 +337,7 @@ class Course_Detail_card(APIView):
                     'success': 'true',
                     'status code': status.HTTP_201_CREATED,
                     "course": serializer.data,
-                    "exists" : 'true',
+                    "addedToList" : 'true',
                     "logged-in" : 'true'
                 })
                 
@@ -346,7 +346,7 @@ class Course_Detail_card(APIView):
                     'success': 'true',
                     'status code': status.HTTP_201_CREATED,
                     "course": serializer.data,
-                    "exists" : 'false',
+                    "addedToList" : 'false',
                     "logged-in" : 'true'
                     
                 })
@@ -361,7 +361,7 @@ class Course_Detail_card(APIView):
                     'success': 'true',
                     'status code': status.HTTP_201_CREATED,
                     "course": serializer.data,
-                    "exists" : 'false',
+                    "addedToList" : 'false',
                     "logged-in" : 'false'
                 })
            

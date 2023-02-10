@@ -1,7 +1,7 @@
 .content {
-    position: absolute;
+    /* position: absolute; */
     top: 0;
-    width: 260px;
+    width: 100%;
     padding: 1.5rem;
     border: 1px solid #e7e7e7;
     background-color: #fff;
@@ -56,4 +56,9 @@
     height: 45px;
     font-size: 2rem;
     border-radius: 22rem;
+}
+.date{
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: green;
 }

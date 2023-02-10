@@ -11,19 +11,21 @@ const Card = ({ course }) => {
   const router = useRouter()
   const [modalDetail, setModalDetail] = useState(false)
   const [courseD, setCourseD] = useState()
+  const [statusAddMyList, setStatusAddMyList] = useState()
 
+ 
 
   function truncate (string, n) {
     return string?.length > n ? string.substr(0, n - 1) + '...' : string
   }
 
-  const courseDetail = course => {
+  const courseDetail = (course )=> {
     if (router.pathname != '/my-courses/learning') {
       setModalDetail(true)
       apiGetCourseDetailCard(course)
         .then(function (res) {
-        console.log(res)
-
+          console.log(res.addedToList)
+          setStatusAddMyList(res.addedToList)
           setCourseD(res.course)
           // router.push("/")
         })
@@ -35,28 +37,28 @@ const Card = ({ course }) => {
 
   return (
     <>
-      <div
-        onClick={() => {
-          router.push(
-            router.pathname == '/'
-              ? {
-                  pathname: '/course/[id]',
-                  query: { id: course.id },
-                  as: 'asdas'
-                }
-              : {
-                  pathname: '/course/[id]',
-                  query: { id: course.course.id },
-                  as: 'asdasdasasdaas'
-                }
-          )
-        }}
-        onMouseEnter={() =>
-          courseDetail(router.pathname == '/' ? course.id : course.course.id)
-        }
-        className={styles.wrapper}
-      >
-        <div className={styles.carousel}>
+      <div  className={styles.wrapper}>
+        <div
+          onClick={() => {
+            router.push(
+              router.pathname == '/'
+                ? {
+                    pathname: '/course/[id]',
+                    query: { id: course.id },
+                    as: 'asdas'
+                  }
+                : {
+                    pathname: '/course/[id]',
+                    query: { id: course.course.id },
+                    as: 'asdasdasasdaas'
+                  }
+            )
+          }}
+          onMouseEnter={() =>
+            courseDetail(router.pathname == '/' ? (course.id)  : (course.course.id)   )
+          }
+          className={styles.carousel}
+        >
           <img
             src={apiGetImage(
               router.pathname == '/' ? course.image : course.course.image
@@ -87,7 +89,7 @@ const Card = ({ course }) => {
           {router.pathname === '/my-courses/wishlist' && (
             <div>
               <span className={styles.content_rating}>
-                {course.course.rating !== 0 && course.course.rating } 
+                {course.course.rating !== 0 && course.course.rating}
                 <Rating rating={course.course.rating} />
               </span>
               <p className={styles.price}>{course.course.price}$</p>
@@ -96,16 +98,17 @@ const Card = ({ course }) => {
           {router.pathname === '/my-courses/learning' &&
             course.rating != undefined && (
               <span className={styles.content_rating}>
-                {course.rating.rate_number} 
+                {course.rating.rate_number}
                 <Rating rating={course.rating.rate_number} />
               </span>
             )}
+            {modalDetail == true && (
+          <div className={styles.poppover}>
+            <CardDetail course={courseD} setModalDetail={setModalDetail} statusAddMyList={statusAddMyList}/>
+          </div>
+        )}
         </div>
-        <div>
-          {modalDetail == true && (
-            <CardDetail course={courseD} setModalDetail={setModalDetail} />
-          )}
-        </div>
+        
       </div>
     </>
   )
