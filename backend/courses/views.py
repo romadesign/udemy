@@ -319,7 +319,7 @@ class Course_Detail_card(APIView):
     def get(self, request, *args, **kwargs):
         account = request.COOKIES.get('account')
         course_id = self.kwargs['id']
-        
+
         # checking if the course exists
         course_exists = Course.objects.filter(id=course_id)
 
@@ -331,24 +331,24 @@ class Course_Detail_card(APIView):
             if course_exists:
                 course = course_exists.first()
                 serializer = get_Course_details_card_Serializer(course)
-                
+
             if course_exists_wishlist:
                 return Response({
                     'success': 'true',
                     'status code': status.HTTP_201_CREATED,
                     "course": serializer.data,
-                    "addedToList" : 'true',
-                    "logged-in" : 'true'
+                    "addedToList": 'true',
+                    "logged-in": 'true'
                 })
-                
+
             else:
                 return Response({
                     'success': 'true',
                     'status code': status.HTTP_201_CREATED,
                     "course": serializer.data,
-                    "addedToList" : 'false',
-                    "logged-in" : 'true'
-                    
+                    "addedToList": 'false',
+                    "logged-in": 'true'
+
                 })
 
         else:
@@ -361,10 +361,10 @@ class Course_Detail_card(APIView):
                     'success': 'true',
                     'status code': status.HTTP_201_CREATED,
                     "course": serializer.data,
-                    "addedToList" : 'false',
-                    "logged-in" : 'false'
+                    "addedToList": 'false',
+                    "logged-in": 'false'
                 })
-           
+
 
 # class Get_Comments(APIView):
 #     def get(self, request, *args, **kwargs):
@@ -534,16 +534,23 @@ class Add_Paid_Courses_learning(APIView):
 class learning(APIView):
     def post(self, request, *args, **kwargs):
         sort = request.query_params.get('sort')
-        if not (sort == 'course__title' or sort == '-course__title'):
-            sort = 'id'
+        category_id = request.query_params.get('category')
 
         data = self.request.data
         author = data['user']
 
+        if not category_id:
+            category_id = None
+
+        if not (sort == 'course__title' or sort == '-course__title'):
+            sort = 'id'
+
         My_acquired_courses = PaidCoursesLibrary.objects.filter(user=author).order_by(
             sort).select_related('course').prefetch_related('course__rating')
-        results = []
+
+        new_data = []
         for i in My_acquired_courses:
+
             itemLibrary = {}
             itemLibrary['id'] = i.id
 
@@ -554,7 +561,14 @@ class learning(APIView):
             rating = i.course.rating.filter(user=author)
             if rating.exists():
                 itemLibrary['rating'] = RateSerializer(rating.first()).data
-            results.append(itemLibrary)
+            new_data.append(itemLibrary)
+
+        category = Category.objects.filter(id=category_id)
+        if category:
+            results = [x for x in new_data if x['course']
+                       ['category'] == category[0].id]
+        else:
+            results = new_data
 
         paginator = ResponsePagination()
         results = paginator.paginate_queryset(results, request)

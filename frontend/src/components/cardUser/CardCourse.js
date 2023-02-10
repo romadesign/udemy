@@ -12,13 +12,12 @@ const CardCourse = ({ data, user }) => {
   const [next, setNext] = useState()
   const [previous, setPrevious] = useState()
 
-
   const [payload, setPayload] = useState({
     p: 1,
     page_size: 8,
-    sort: 'id'
+    sort: 'id',
+    category: ""
   }) 
-
 
 
   useEffect(() => {
