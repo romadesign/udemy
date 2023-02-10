@@ -4,6 +4,7 @@ import CardCourse from '@/components/card/CardCourse'
 import { Api } from '@/hooks/api'
 import AllCourses from '@/components/AllCourses/AllCourses'
 import Banner from '@/components/Banner/Banner'
+import Footer from '@/components/Footer/Footer'
 import styles from '@/styles/Home.module.css'
 
 export default function Home() {
@@ -27,6 +28,7 @@ export default function Home() {
       {/*crear nueva columna en user y crear nueva tabla con los tipos de profesión*/}
       {/*capturar la profesión del user y buscar cursos relacionandos*/}
       <CardCourse title={'Popular for aspiring'} data={getMySearch} option={'development'}/>
+      <Footer />
     </>
   )
 }

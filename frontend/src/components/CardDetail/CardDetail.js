@@ -71,7 +71,7 @@ const CardDetail = ({ course, setModalDetail, statusAddMyList }) => {
           </div>
           <div className={styles.content_heart}>
             <button className={styles.button}>Add cart</button>
-            {statusAddMyList == false ? (
+            {statusAddMyList == "false" ? (
               <span className={styles.icon}>&#x2661; </span>
             ) : (
               <span className={styles.icon2}> &#x2665; </span>

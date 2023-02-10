@@ -63,6 +63,10 @@
   justify-content: center;
 }
 
+.button_left_rigth_learning_wishlist {
+  display: block;
+}
+
 .button_left {
   background-color: #1c1d1f;
   border: none;
@@ -76,6 +80,7 @@
   top: 20%;
   left: 0;
   cursor: pointer;
+  z-index: 1;
 }
 
 .button_left:hover {
@@ -96,6 +101,7 @@
   top: 20%;
   right: 0;
   cursor: pointer;
+  z-index: 1;
 }
 
 .button_rigth:hover {
