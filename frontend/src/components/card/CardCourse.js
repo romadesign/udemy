@@ -10,7 +10,7 @@ const CardCourse = ({ title, data, option }) => {
   const [next, setNext] = useState()
   const [previous, setPrevious] = useState()
   const [count, setCount] = useState()
-  const [page_size, setPage_size] = useState('page_size=4')
+  const [page_size,   ] = useState('page_size=4')
 
 
 
@@ -69,7 +69,7 @@ const CardCourse = ({ title, data, option }) => {
       <h3>{title}</h3>
       <div className={styles.button_left_rigth}>
         <div>
-          {previous !== null && (
+          {(
             <button className={styles.button_left} onClick={sliderLeft}>
               &#60;
             </button>

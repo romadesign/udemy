@@ -1,19 +1,23 @@
 import Link from 'next/link'
 import { useEffect, useState, useRef } from 'react'
 import Card from '../GeneralCardComponent/card'
+import Pagination from '../Pagination/Pagination'
 import { useRouter } from 'next/router'
 import styles from '@/styles/course.module.css'
-import stylesP from '@/styles/pagination.module.css'
 
 const CardCourse = ({ data, user }) => {
   const slider = useRef()
   const router = useRouter()
   const [courses, setCourse] = useState()
-  const payload = {
+  const [next, setNext] = useState()
+  const [previous, setPrevious] = useState()
+
+
+  const [payload, setPayload] = useState({
     p: 1,
     page_size: 8,
     sort: 'id'
-  }
+  }) 
 
 
 
@@ -25,6 +29,8 @@ const CardCourse = ({ data, user }) => {
     data(user, payload)
       .then(function (res) {
         setCourse(res.results.data)
+        setNext(res.next)
+        setPrevious(res.previous)
         console.log(res)
       })
       .catch(function (error) {
@@ -63,21 +69,13 @@ const CardCourse = ({ data, user }) => {
           {courses != undefined &&
             courses.map((course, id) => <Card key={id} course={course} />)}
         </div>
-        <div className={stylesP.container}>
-          <div>
-          <button className={stylesP.button_left} >
-              &#60;
-            </button>
-          </div>
-          <div>
-            1 - 2 -3 4
-          </div>
-          <div>
-          <button className={stylesP.button_rigth} >
-              &#62;
-            </button>
-          </div>
-        </div>
+          <Pagination 
+            next={next}
+            setNext={setNext}
+            previous={previous}
+            setPrevious={setPrevious}
+            setCourse={setCourse}
+          />
       </div>
     </div>
   )
