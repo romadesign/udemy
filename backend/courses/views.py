@@ -18,6 +18,8 @@ from rest_framework.pagination import PageNumberPagination
 from django.db import connection
 # options for course creators
 
+import itertools
+
 
 class Create_Course(APIView):
     def post(self, request, *args, **kwargs):
@@ -548,31 +550,51 @@ class learning(APIView):
         My_acquired_courses = PaidCoursesLibrary.objects.filter(user=author).order_by(
             sort).select_related('course').prefetch_related('course__rating')
 
-        new_data = []
+        course_data = []
+        category_list_course = []
         for i in My_acquired_courses:
 
             itemLibrary = {}
             itemLibrary['id'] = i.id
 
+            # creating an object with the categories of my acquired courses
+            itemCategory = {}
+            itemCategory['id'] = i.course.category.id
+            itemCategory['name'] = i.course.category.name
+            category_list_course.append(itemCategory)
+
             course = Course.objects.filter(id=i.course.id)
             itemLibrary['course'] = data_learning_serializer(
                 course.first()).data
 
+            # capturing my rating that I put to the course
             rating = i.course.rating.filter(user=author)
             if rating.exists():
                 itemLibrary['rating'] = RateSerializer(rating.first()).data
-            new_data.append(itemLibrary)
+            course_data.append(itemLibrary)
 
+        # filtered by category
         category = Category.objects.filter(id=category_id)
         if category:
-            results = [x for x in new_data if x['course']
+            results = [x for x in course_data if x['course']
                        ['category'] == category[0].id]
         else:
-            results = new_data
+            results = course_data
+
+        # removing repeating categories
+        result_list_filter = []
+        for i in range(len(category_list_course)):
+            if category_list_course[i] not in category_list_course[i + 1:]:
+                result_list_filter.append(category_list_course[i])
+        category_list_filter = Category_Serializer(
+            result_list_filter, many=True)
 
         paginator = ResponsePagination()
         results = paginator.paginate_queryset(results, request)
-        return paginator.get_paginated_response({'data': results})
+        return paginator.get_paginated_response({
+            'data': results,
+            'categoryList': category_list_filter.data
+        })
 
 
 class get_courses_filter_advanced(APIView):

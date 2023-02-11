@@ -30,7 +30,7 @@ const CardCourse = ({ data, user }) => {
         setCourse(res.results.data)
         setNext(res.next)
         setPrevious(res.previous)
-        console.log(res)
+        console.log(res.results.categoryList)
       })
       .catch(function (error) {
         // console.log(error)
