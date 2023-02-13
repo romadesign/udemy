@@ -4,7 +4,7 @@ import { useState } from 'react'
 import axios from '@/lib/axios'
 import { useAuth } from '@/hooks/auth'
 
-const Pagination = ({ next, setNext, previous, setPrevious, setCourse}) => {
+const Pagination = ({ next, setNext, previous, setPrevious, setCourse, page, setPage }) => {
   const router = useRouter()
   const { logout, user } = useAuth()
 
@@ -15,6 +15,7 @@ const Pagination = ({ next, setNext, previous, setPrevious, setCourse}) => {
     setCourse(data.data.results.data)
     setNext(data.data.next)
     setPrevious(data.data.previous)
+    setPage(page + 1)
   }
 
   const getCousePaginationPrevious = async () => {
@@ -24,30 +25,32 @@ const Pagination = ({ next, setNext, previous, setPrevious, setCourse}) => {
     setCourse(data.data.results.data)
     setNext(data.data.next)
     setPrevious(data.data.previous)
+    setPage(page - 1)
   }
 
   return (
     <div className={stylesP.container}>
-      {previous !== null &&
-        (<div>
-          <button className={stylesP.button_left} onClick={getCousePaginationPrevious} >
+      {previous !== null && (
+        <div>
+          <button
+            className={stylesP.button_left}
+            onClick={getCousePaginationPrevious}
+          >
             &#60;
           </button>
-        </div>)
-      }
+        </div>
+      )}
 
+      <div className={stylesP.content_page}>{page}</div>
       <div>
-        1 - 2 -3 4
-      </div>
-      <div>
-        {
-          next != null && (
-            <button className={stylesP.button_rigth} onClick={getCousePaginationNext}>
-              &#62;
-            </button>
-          )
-        }
-
+        {next != null && (
+          <button
+            className={stylesP.button_rigth}
+            onClick={getCousePaginationNext}
+          >
+            &#62;
+          </button>
+        )}
       </div>
     </div>
   )

@@ -10,6 +10,7 @@ const CardCourse = ({ data, user }) => {
   const router = useRouter()
   const [courses, setCourses] = useState([])
   const [next, setNext] = useState()
+  const [page, setPage] = useState(1)
   const [previous, setPrevious] = useState()
   const [categoryList, setCategoryList] = useState([])
   const [payload, setPayload] = useState({
@@ -97,6 +98,8 @@ const CardCourse = ({ data, user }) => {
           previous={previous}
           setPrevious={setPrevious}
           setCourse={setCourses}
+          page={page}
+          setPage={setPage}
         />
       </div>
     </div>

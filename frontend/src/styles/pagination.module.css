@@ -1,46 +1,52 @@
-.container{
-    display: flex;
-    margin-top: 3rem;
-    justify-content: center;
+.container {
+  display: flex;
+  margin-top: 3rem;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
 .button_left {
-    background-color: white;
-    border: 1px solid #1c1d1f;
-    color: #1c1d1f;
-    font-size: 1.2rem;
-    width: 37px;
-    height: 37px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    container-type: inline-size;
-  }
+  background-color: white;
+  border: 1px solid #1c1d1f;
+  color: #1c1d1f;
+  font-size: 1.2rem;
+  width: 37px;
+  height: 37px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  container-type: inline-size;
+}
 
 
 .button_left:hover {
 
-    background-color: #f0f0f0;
-  }
+  background-color: #f0f0f0;
+}
 
-  .button_rigth {
-    background-color: white;
-    border: 1px solid #1c1d1f;
-    color: #1c1d1f;
-    font-size: 1.2rem;
-    width: 37px;
-    height: 37px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    container-type: inline-size;
-  }
-  
-  .button_rigth:hover {
-    background-color: #f0f0f0;
-  }
-  
+.button_rigth {
+  background-color: white;
+  border: 1px solid #1c1d1f;
+  color: #1c1d1f;
+  font-size: 1.2rem;
+  width: 37px;
+  height: 37px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  container-type: inline-size;
+}
+
+.button_rigth:hover {
+  background-color: #f0f0f0;
+}
+
+.content_page {
+  color: #5624d0;
+  font-weight: bold;
+}
