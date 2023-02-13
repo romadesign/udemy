@@ -40,6 +40,11 @@ const CardCourse = ({ data, user }) => {
     setPayload({ ...payload, category: e })
   }
 
+  const onchangeSelectectOrder = e => {
+    //change value payload.sort
+    setPayload({ ...payload, sort: e })
+  }
+
   return (
     <div className={styles.container}>
       {router.pathname == '/my-courses/learning' && (
@@ -47,10 +52,12 @@ const CardCourse = ({ data, user }) => {
           <div>
             <div>Sort by</div>
             <div>
-              <select>
-                <option>Recently Accessed</option>
-                <option>Title A-to Z</option>
-                <option>Title Z-to A</option>
+              <select
+                onChange={event => onchangeSelectectOrder(event.target.value)}
+              >
+                <option value='id'>Recently Accessed</option>
+                <option value='course__title'>Title A-to Z</option>
+                <option value='-course__title'>Title Z-to A</option>
               </select>
             </div>
           </div>
