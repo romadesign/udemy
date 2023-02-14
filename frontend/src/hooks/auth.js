@@ -98,7 +98,6 @@ export const useAuth = ({} = {}) => {
     await axios.post('/api/logout').then(() => {
       setCookie('status_code_lg', 403)
     })
-    router.push('/')
   }
 
   return {

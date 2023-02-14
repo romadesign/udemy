@@ -483,22 +483,23 @@ class Wishlist(APIView):
 
 
 class Remove_course_from_my_Wishlist(APIView):
-    def post(self, request, course_of_my_bookstore_id, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         data = self.request.data
         user = data['user']
         course = data['course']
 
         validate_course = CoursesLibrary.objects.filter(
             course=course, user=user)
+        
         added_course = get_object_or_404(
-            CoursesLibrary, id=course_of_my_bookstore_id)
+            CoursesLibrary, id=validate_course[0].id)
         if not validate_course:
             return Response({
                 "message": "You can't do this option"
             })
         else:
             added_course.delete()
-            return Response({'Deleted requisite'})
+            return Response({'Deleted course'})
         return ""
 
 

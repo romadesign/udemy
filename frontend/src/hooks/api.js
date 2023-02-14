@@ -76,6 +76,14 @@ export const Api = () => {
     return data.data
   }
 
+  const deleteCourseToMyLibrary = async (options) => {
+    const formData = new FormData()
+    formData.append('user', options.user)
+    formData.append('course', options.course)
+    const data = await axios.post(`/api/remove-course-wishlist`, formData)
+    return data.data
+  }
+
   return {
     apiGetCourses,
     apiGetCourseDetail,
@@ -87,6 +95,7 @@ export const Api = () => {
     apiGetCategories,
     apiGetCoursesByCategories,
     apiGetImage,
-    addCourseToMyLibrary
+    addCourseToMyLibrary,
+    deleteCourseToMyLibrary
   }
 } 

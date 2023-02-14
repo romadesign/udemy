@@ -35,9 +35,9 @@ urlpatterns = [
 
     path('add-courses-library', Add_Courses_Wishlist.as_view()),
     path('my-library', Wishlist.as_view()),
-    path('remove-course/<int:course_of_my_bookstore_id>',
+    path('remove-course-wishlist',
          Remove_course_from_my_Wishlist.as_view()),
-
+    
     path('add-courses-to-paid', Add_Paid_Courses_learning.as_view()),
     path('my-acquired-courses', learning.as_view()),
 

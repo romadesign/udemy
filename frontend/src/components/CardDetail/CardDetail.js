@@ -5,7 +5,7 @@ import { useAuth } from '@/hooks/auth'
 import { Api } from '@/hooks/api'
 
 const CardDetail = ({  courseId, course, setModalDetail, addedToList, fCourseDetail }) => {
-  const { addCourseToMyLibrary,  } = Api()
+  const { addCourseToMyLibrary, deleteCourseToMyLibrary  } = Api()
   const { getCookie } = useAuth()
   const router = useRouter()
   const [date, setDate] = useState()
@@ -42,6 +42,12 @@ const CardDetail = ({  courseId, course, setModalDetail, addedToList, fCourseDet
   const addWishlist = () => {
     const options = {course : course.id, user : parseInt(userId)}
     addCourseToMyLibrary(options)
+    fCourseDetail(courseId)
+  }
+
+  const deletedWishlist = () => {
+    const options = {course : course.id, user : parseInt(userId)}
+    deleteCourseToMyLibrary(options)
     fCourseDetail(courseId)
   }
 
@@ -103,7 +109,7 @@ const CardDetail = ({  courseId, course, setModalDetail, addedToList, fCourseDet
                 &#x2661;{' '}
               </span>
             ) : (
-              <span className={styles.icon2}> &#x2665; </span>
+              <span className={styles.icon2} onClick={deletedWishlist}> &#x2665; </span>
             )}
           </div>
         </div>
