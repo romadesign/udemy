@@ -26,7 +26,7 @@ const CardCourse = ({ title, data, option }) => {
         setNext(res.next)
         setPrevious(res.previous)
         setCount(res.count)
-        setPage_size('')
+        
       })
       .catch(function (error) {
         // console.log(error)
@@ -49,7 +49,7 @@ const CardCourse = ({ title, data, option }) => {
     setCourse(data.data.results.data)
     setNext(data.data.next)
     setPrevious(data.data.previous)
-    setPage_size('')
+    
   }
 
   const sliderLeft = () => {
@@ -69,7 +69,7 @@ const CardCourse = ({ title, data, option }) => {
       <h3>{title}</h3>
       <div className={styles.button_left_rigth}>
         <div>
-          {(
+          {( previous != null &&
             <button className={styles.button_left} onClick={sliderLeft}>
               &#60;
             </button>

@@ -1,12 +1,17 @@
 import { Api } from '@/hooks/api'
+import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import Categories from './Categories'
 import styles from '@/styles/category.module.css'
 
 const AllCourses = () => {
   const { apiGetCategories, apiGetCoursesByCategories } = Api()
+  const { getCookie } = useAuth()
 
   const [categories, setCategories] = useState()
+  const [user, setUser] = useState()
+
+  console.log(getCookie('account'))
 
   useEffect(() => {
     getAllCategories()

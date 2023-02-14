@@ -1,14 +1,18 @@
 import styles from '@/styles/cardDetail.module.css'
 import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useAuth } from '@/hooks/auth'
+import { Api } from '@/hooks/api'
 
-const CardDetail = ({ course, setModalDetail, statusAddMyList }) => {
+const CardDetail = ({  courseId, course, setModalDetail, addedToList, fCourseDetail }) => {
+  const { addCourseToMyLibrary,  } = Api()
+  const { getCookie } = useAuth()
   const router = useRouter()
-
   const [date, setDate] = useState()
-
+  const [userId, setUserId] = useState(getCookie('account'))
   const month = course != undefined && course.created.slice(5, 7)
   const day = course != undefined && course.created.slice(8, 10)
+
 
   const mes = [
     { mes: 'January', id: '01' },
@@ -35,6 +39,12 @@ const CardDetail = ({ course, setModalDetail, statusAddMyList }) => {
     setDate(data)
   }
 
+  const addWishlist = () => {
+    const options = {course : course.id, user : parseInt(userId)}
+    addCourseToMyLibrary(options)
+    fCourseDetail(courseId)
+  }
+
   return (
     <>
       {router.pathname !== '/my-courses/learning' && (
@@ -44,7 +54,24 @@ const CardDetail = ({ course, setModalDetail, statusAddMyList }) => {
           onMouseLeave={onMouse}
           className={styles.content}
         >
-          <h6 className={styles.title}>
+          <h6
+            className={styles.title}
+            onClick={() => {
+              router.push(
+                router.pathname == '/'
+                  ? {
+                      pathname: '/course/[id]',
+                      query: { id: course.id },
+                      as: 'asdas'
+                    }
+                  : {
+                      pathname: '/course/[id]',
+                      query: { id: course.course.id },
+                      as: 'asdasdasasdaas'
+                    }
+              )
+            }}
+          >
             {course != undefined && course.title}
           </h6>
           <div>
@@ -71,8 +98,10 @@ const CardDetail = ({ course, setModalDetail, statusAddMyList }) => {
           </div>
           <div className={styles.content_heart}>
             <button className={styles.button}>Add cart</button>
-            {statusAddMyList == "false" ? (
-              <span className={styles.icon}>&#x2661; </span>
+            {addedToList == 'false' ? (
+              <span className={styles.icon} onClick={addWishlist}>
+                &#x2661;{' '}
+              </span>
             ) : (
               <span className={styles.icon2}> &#x2665; </span>
             )}

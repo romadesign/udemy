@@ -67,6 +67,14 @@ export const Api = () => {
     return data
   }
 
+  
+  const addCourseToMyLibrary = async (options) => {
+    const formData = new FormData()
+    formData.append('user', options.user)
+    formData.append('course', options.course)
+    const data = await axios.post(`/api/add-courses-library`, formData)
+    return data.data
+  }
 
   return {
     apiGetCourses,
@@ -78,6 +86,7 @@ export const Api = () => {
     apiMyAcquiredCourses,
     apiGetCategories,
     apiGetCoursesByCategories,
-    apiGetImage
+    apiGetImage,
+    addCourseToMyLibrary
   }
 } 

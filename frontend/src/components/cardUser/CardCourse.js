@@ -5,7 +5,7 @@ import Pagination from '../Pagination/Pagination'
 import { useRouter } from 'next/router'
 import styles from '@/styles/course.module.css'
 
-const CardCourse = ({ data, user }) => {
+const CardCourse = ({ data, user, fCourseDetail }) => {
   const slider = useRef()
   const router = useRouter()
   const [courses, setCourses] = useState([])
@@ -39,11 +39,13 @@ const CardCourse = ({ data, user }) => {
   const onchangeSelectCategory = e => {
     //change value payload.category
     setPayload({ ...payload, category: e })
+    setPage(1)
   }
 
   const onchangeSelectectOrder = e => {
     //change value payload.sort
     setPayload({ ...payload, sort: e })
+    setPage(1)
   }
 
   return (

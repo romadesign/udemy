@@ -2,7 +2,6 @@ import styles from '@/styles/course.module.css'
 import { Api } from '@/hooks/api'
 import Rating from '../GeneralCardComponent/stars'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 import CardDetail from '../CardDetail/CardDetail'
 import { useState } from 'react'
 
@@ -11,6 +10,7 @@ const Card = ({ course }) => {
   const router = useRouter()
   const [modalDetail, setModalDetail] = useState(false)
   const [courseD, setCourseD] = useState()
+  const [courseId, setCourseId] = useState(course.id)
   const [addedToList, setAddedToList] = useState()
 
  
@@ -39,21 +39,6 @@ const Card = ({ course }) => {
     <>
       <div  className={styles.wrapper}>
         <div
-          onClick={() => {
-            router.push(
-              router.pathname == '/'
-                ? {
-                    pathname: '/course/[id]',
-                    query: { id: course.id },
-                    as: 'asdas'
-                  }
-                : {
-                    pathname: '/course/[id]',
-                    query: { id: course.course.id },
-                    as: 'asdasdasasdaas'
-                  }
-            )
-          }}
           onMouseEnter={() =>
             courseDetail(router.pathname == '/' ? (course.id)  : (course.course.id)   )
           }
@@ -104,7 +89,7 @@ const Card = ({ course }) => {
             )}
             {modalDetail == true && (
           <div className={styles.poppover}>
-            <CardDetail course={courseD} setModalDetail={setModalDetail} addedToList={addedToList}/>
+            <CardDetail fCourseDetail={courseDetail} courseId={courseId} course={courseD} setModalDetail={setModalDetail} addedToList={addedToList}/>
           </div>
         )}
         </div>
