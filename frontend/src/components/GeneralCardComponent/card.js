@@ -11,7 +11,8 @@ const Card = ({ course }) => {
   const [modalDetail, setModalDetail] = useState(false)
   const [courseD, setCourseD] = useState()
   const [courseId, setCourseId] = useState(course.id)
-  const [addedToList, setAddedToList] = useState()
+  const [courseExistsInWishlist, setCourseExistsInWishlist] = useState()
+  const [courseExistsinlearning, setCourseExistsinlearning] = useState()
 
  
 
@@ -25,7 +26,8 @@ const Card = ({ course }) => {
       apiGetCourseDetailCard(course)
         .then(function (res) {
           console.log(res)
-          setAddedToList(res.addedToList)
+          setCourseExistsInWishlist(res.courseExistsInWishlist)
+          setCourseExistsinlearning(res.courseExistsinlearning)
           setCourseD(res.course)
           // router.push("/")
         })
@@ -89,7 +91,14 @@ const Card = ({ course }) => {
             )}
             {modalDetail == true && (
           <div className={styles.poppover}>
-            <CardDetail fCourseDetail={courseDetail} courseId={courseId} course={courseD} setModalDetail={setModalDetail} addedToList={addedToList}/>
+            <CardDetail 
+            fCourseDetail={courseDetail} 
+            courseId={courseId} 
+            course={courseD} 
+            setModalDetail={setModalDetail} 
+            courseExistsInWishlist={courseExistsInWishlist}
+            courseExistsinlearning={courseExistsinlearning}
+            />
           </div>
         )}
         </div>

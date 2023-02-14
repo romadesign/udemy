@@ -328,30 +328,47 @@ class Course_Detail_card(APIView):
         if account:
             course_exists_wishlist = CoursesLibrary.objects.filter(
                 user=account, course=course_id)
+            course_exists_learning = PaidCoursesLibrary.objects.filter(
+                user=account, course=course_id)
+
             course_exists_wishlist.exists()
+            course_exists_learning.exists()
+
             course_exists.exists()
             if course_exists:
                 course = course_exists.first()
                 serializer = get_Course_details_card_Serializer(course)
 
-            if course_exists_wishlist:
+            if course_exists_learning:
                 return Response({
                     'success': 'true',
                     'status code': status.HTTP_201_CREATED,
                     "course": serializer.data,
-                    "addedToList": 'true',
+                    "courseExistsInWishlist": 'false',
+                    "courseExistsinlearning": 'true',
                     "logged-in": 'true'
                 })
-
             else:
-                return Response({
-                    'success': 'true',
-                    'status code': status.HTTP_201_CREATED,
-                    "course": serializer.data,
-                    "addedToList": 'false',
-                    "logged-in": 'true'
+                if course_exists_wishlist:
+                    return Response({
+                        'success': 'true',
+                        'status code': status.HTTP_201_CREATED,
+                        "course": serializer.data,
+                        "courseExistsInWishlist": 'true',
+                        "courseExistsinlearning": 'false',
+                        "logged-in": 'true'
+                    })
 
-                })
+                else:
+                    return Response({
+                        'success': 'true',
+                        'status code': status.HTTP_201_CREATED,
+                        "course": serializer.data,
+                        "courseExistsInWishlist": 'false',
+                        "courseExistsinlearning": 'false',
+                        "logged-in": 'true'
+
+                    })
 
         else:
             course_exists.exists()
@@ -363,7 +380,8 @@ class Course_Detail_card(APIView):
                     'success': 'true',
                     'status code': status.HTTP_201_CREATED,
                     "course": serializer.data,
-                    "addedToList": 'false',
+                    "courseExistsInWishlist": 'false',
+                    "courseExistsinlearning": 'false',
                     "logged-in": 'false'
                 })
 
@@ -450,10 +468,12 @@ class Add_Courses_Wishlist(APIView):
         user = User.objects.get(id=author)
         course = Course.objects.get(id=courses)
 
-        # validar si ya esta agregado
-        course_exists = CoursesLibrary.objects.filter(user=user, course=course)
-        course_exists.exists()
-        if not course_exists:
+        # validar si ya esta agregado en wishlist
+        course_exists_wishlist = CoursesLibrary.objects.filter(
+            user=user, course=course)
+
+        course_exists_wishlist.exists()
+        if not course_exists_wishlist:
             courses_list = CoursesLibrary(user=user, course=course)
             courses_list.save()
 
@@ -490,7 +510,7 @@ class Remove_course_from_my_Wishlist(APIView):
 
         validate_course = CoursesLibrary.objects.filter(
             course=course, user=user)
-        
+
         added_course = get_object_or_404(
             CoursesLibrary, id=validate_course[0].id)
         if not validate_course:

@@ -38,7 +38,17 @@
     color: white;
     font-size: 1rem;
     font-weight: 700;
-}
+} 
+
+.button_learning{
+    width: 85%;
+    border: 0;
+    height: 40px;
+    background: #1d1d1d;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+} 
 .icon{
     text-align: center;
     background: #fffcfc;
