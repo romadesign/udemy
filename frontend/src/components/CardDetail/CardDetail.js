@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useAuth } from '@/hooks/auth'
 import { Api } from '@/hooks/api'
+import {useLocalStorage}  from '@/hooks/useLocalStorage'
 
 const CardDetail = ({
   courseId,
@@ -13,12 +14,16 @@ const CardDetail = ({
   courseExistsinlearning
 }) => {
   const { addCourseToMyLibrary, deleteCourseToMyLibrary } = Api()
+  const { getValue, saveValue } = useLocalStorage()
   const { getCookie } = useAuth()
   const router = useRouter()
   const [date, setDate] = useState()
+  const [item, setItem] = useState([]);
   const [userId, setUserId] = useState(getCookie('account'))
   const month = course != undefined && course.created.slice(5, 7)
   const day = course != undefined && course.created.slice(8, 10)
+
+  console.log(course)
 
   const mes = [
     { mes: 'January', id: '01' },
@@ -56,6 +61,18 @@ const CardDetail = ({
     deleteCourseToMyLibrary(options)
     fCourseDetail(courseId)
   }
+
+
+  //add items cart localstorage
+  useEffect(() => { //utilizar useEffect para que actulice la data si no solo lo remplaza en ves de agregar
+    const data = getValue('itemsCart');
+    setItem(data || []);
+  }, []);
+
+  const addItem = () => {
+    const newData = [...item, course];
+    saveValue('itemsCart', newData);
+  };
 
   return (
     <>
@@ -117,6 +134,7 @@ const CardDetail = ({
                       ? styles.button
                       : styles.button_learning
                   }
+                  onClick={addItem}
                 >
                   Add cart
                 </button>

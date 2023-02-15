@@ -32,7 +32,7 @@ const Urls = () => {
           <Link href='/my-courses/wishlist' className={styles.heart}>
             &#9825;
           </Link>
-          <Link href='/'>
+          <Link href='/cart'>
             <img width={25} src='/img/carrito.svg' />
           </Link>
           <Link className={styles.circulo} href='/' onMouseEnter={onMouseEnter}>
