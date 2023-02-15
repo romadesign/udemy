@@ -18,7 +18,8 @@ const CardDetail = ({
   const { getCookie } = useAuth()
   const router = useRouter()
   const [date, setDate] = useState()
-  const [item, setItem] = useState([]);
+  const [newItem, setNewItem] = useState([]);
+  const [itemsCart, setItemsCart] = useState(getValue('itemsCart'))
   const [userId, setUserId] = useState(getCookie('account'))
   const month = course != undefined && course.created.slice(5, 7)
   const day = course != undefined && course.created.slice(8, 10)
@@ -46,8 +47,8 @@ const CardDetail = ({
   }
 
   const showDate = () => {
-    const data = mes.filter(item => item.id == month)
-    setDate(data)
+    const result = mes.filter(item => item.id == month)
+    setDate(result)
   }
 
   const addWishlist = () => {
@@ -62,15 +63,18 @@ const CardDetail = ({
     fCourseDetail(courseId)
   }
 
-
   //add items cart localstorage
   useEffect(() => { //utilizar useEffect para que actulice la data si no solo lo remplaza en ves de agregar
-    const data = getValue('itemsCart');
-    setItem(data || []);
+    setNewItem(itemsCart || []);
   }, []);
 
   const addItem = () => {
-    const newData = [...item, course];
+    const existingItem = itemsCart !== undefined && itemsCart.find((item) => item.id === courseId);
+    if (existingItem) {
+      alert('Este elemento ya existe en el carrito');
+      return;
+    }
+    const newData = [...newItem, course];
     saveValue('itemsCart', newData);
   };
 

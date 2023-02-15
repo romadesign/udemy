@@ -9,11 +9,16 @@ const Cart = () => {
     <div>
       <ul>
         {
-          itemsCart !== undefined && itemsCart.map(item => (
+          itemsCart !== undefined ? itemsCart.map(item => (
             <div>
               {item.id}
             </div>
-          ))
+          )) : 
+          (
+            <div>
+              tu carrito esta vacio
+            </div>
+          )
         }
       </ul>
     </div>
