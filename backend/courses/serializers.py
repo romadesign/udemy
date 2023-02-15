@@ -57,6 +57,7 @@ class get_Course_details_Serializer(serializers.ModelSerializer):
 
 class get_Course_details_card_Serializer(serializers.ModelSerializer):
     what_learnt = WhatLearnt_Serializer(many=True)
+    rating = serializers.IntegerField(source='get_rating', read_only=True)
 
     class Meta:
         model = Course
@@ -67,6 +68,9 @@ class get_Course_details_card_Serializer(serializers.ModelSerializer):
             'created',
             'updated',
             'what_learnt',
+            'price',
+            'rating',
+            
         ]
 
 

@@ -3,7 +3,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useAuth } from '@/hooks/auth'
 import { Api } from '@/hooks/api'
-import {useLocalStorage}  from '@/hooks/useLocalStorage'
+import { useLocalStorage } from '@/hooks/useLocalStorage'
+import Link from 'next/link'
 
 const CardDetail = ({
   courseId,
@@ -11,20 +12,25 @@ const CardDetail = ({
   setModalDetail,
   courseExistsInWishlist,
   fCourseDetail,
-  courseExistsinlearning
+  courseExistsinlearning,modalDetail
 }) => {
   const { addCourseToMyLibrary, deleteCourseToMyLibrary } = Api()
   const { getValue, saveValue } = useLocalStorage()
   const { getCookie } = useAuth()
   const router = useRouter()
   const [date, setDate] = useState()
-  const [newItem, setNewItem] = useState([]);
+  const [newItem, setNewItem] = useState([])
   const [itemsCart, setItemsCart] = useState(getValue('itemsCart'))
+  const [courseExistsInCart, setCourseExistsInCart] = useState(
+    itemsCart !== undefined && itemsCart.some(item => item.id === courseId)
+  )
+  console.log(courseExistsInCart)
+  const [isInCart, setIsInCart] = useState(false);
   const [userId, setUserId] = useState(getCookie('account'))
   const month = course != undefined && course.created.slice(5, 7)
   const day = course != undefined && course.created.slice(8, 10)
 
-  console.log(course)
+  
 
   const mes = [
     { mes: 'January', id: '01' },
@@ -63,20 +69,32 @@ const CardDetail = ({
     fCourseDetail(courseId)
   }
 
-  //add items cart localstorage
-  useEffect(() => { //utilizar useEffect para que actulice la data si no solo lo remplaza en ves de agregar
-    setNewItem(itemsCart || []);
-  }, []);
+  // //add items cart localstorage
+  useEffect(() => {
+    //utilizar useEffect para que actulice la data si no solo lo remplaza en ves de agregar
+    setNewItem(itemsCart || [])
+  }, [])
 
   const addItem = () => {
-    const existingItem = itemsCart !== undefined && itemsCart.find((item) => item.id === courseId);
-    if (existingItem) {
-      alert('Este elemento ya existe en el carrito');
-      return;
+    if (courseExistsInCart) {
+      alert('Este elemento ya existe en el carrito')
+      return
     }
-    const newData = [...newItem, course];
-    saveValue('itemsCart', newData);
-  };
+    
+    const addingNewDataToTheObject = {//adding new data to the object
+      ...course,
+      status: true
+    }
+    const newData = [...newItem, addingNewDataToTheObject];
+
+    
+    saveValue('itemsCart', newData)
+    setModalDetail(false)
+    if(modalDetail === false){
+      fCourseDetail(courseId)
+      setModalDetail(true)
+    }
+  }
 
   return (
     <>
@@ -132,16 +150,21 @@ const CardDetail = ({
                   ))}
               </div>
               <div className={styles.content_heart}>
-                <button
-                  className={
-                    courseExistsinlearning !== 'true'
-                      ? styles.button
-                      : styles.button_learning
-                  }
-                  onClick={addItem}
-                >
-                  Add cart
-                </button>
+                {courseExistsInCart ? (
+                  <Link className={styles.button_learning} href={'/cart'}>Go to cart</Link>
+                  
+                ) : (
+                  <button
+                    className={
+                      courseExistsinlearning !== 'true'
+                        ? styles.button
+                        : styles.button_learning
+                    }
+                    onClick={addItem}
+                  >
+                    Add cart
+                  </button>
+                )}
                 {courseExistsInWishlist == 'false' ? (
                   <span className={styles.icon} onClick={addWishlist}>
                     &#x2661;{' '}
@@ -157,13 +180,15 @@ const CardDetail = ({
           ) : (
             <div>
               You enrolled in this course on Apr 6, 2022
-              <button 
-               className={
-                    courseExistsinlearning !== 'true'
-                      ? styles.button
-                      : styles.button_learning
-                  }
-              >Go to course</button>
+              <button
+                className={
+                  courseExistsinlearning !== 'true'
+                    ? styles.button
+                    : styles.button_learning
+                }
+              >
+                Go to course
+              </button>
             </div>
           )}
         </div>

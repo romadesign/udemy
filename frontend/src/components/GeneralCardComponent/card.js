@@ -4,6 +4,7 @@ import Rating from '../GeneralCardComponent/stars'
 import { useRouter } from 'next/router'
 import CardDetail from '../CardDetail/CardDetail'
 import { useState } from 'react'
+import { useLocalStorage } from '@/hooks/useLocalStorage'
 
 const Card = ({ course }) => {
   const { apiGetImage, apiGetCourseDetailCard } = Api()
@@ -13,9 +14,7 @@ const Card = ({ course }) => {
   const [courseId, setCourseId] = useState(course.id)
   const [courseExistsInWishlist, setCourseExistsInWishlist] = useState()
   const [courseExistsinlearning, setCourseExistsinlearning] = useState()
-
  
-
   function truncate (string, n) {
     return string?.length > n ? string.substr(0, n - 1) + '...' : string
   }
@@ -95,6 +94,7 @@ const Card = ({ course }) => {
             fCourseDetail={courseDetail} 
             courseId={courseId} 
             course={courseD} 
+            modalDetail={modalDetail}
             setModalDetail={setModalDetail} 
             courseExistsInWishlist={courseExistsInWishlist}
             courseExistsinlearning={courseExistsinlearning}
