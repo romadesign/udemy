@@ -39,6 +39,16 @@
   cursor: pointer;
 }
 
+.content_two{
+  width: 20%;
+
+}
+
+
+.content_two span{
+  font-size: 2rem;
+}
+
 .content_data img{
   max-width: 100%;
     height: 78px;
@@ -48,7 +58,6 @@
 width: 80%;
 }
 .content_two h6{
-  width: 20%;
   font-size: 1.2rem;
   font-weight: bold;
 }
@@ -63,10 +72,49 @@ width: 80%;
 
 .content_price{
   padding-left: 4.8rem;
+}
 
+.content_price p {
+  font-weight: bold;
 }
 .contnet_img_text h5{
   font-weight: 400;
   line-height: 1.4;
   font-size: 0.8rem;
+}
+
+.checkout{
+  color: white;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: #8b5bff;
+  height: 50px;
+  text-align: center;
+  font-weight: 800;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.content_one_two_data{
+  display: flex;
+    width: 100%;
+    justify-content: inherit;
+}
+
+@media (max-width: 990px) {
+  .content_one_two_data{
+    display: block;
+    margin-top: 1rem;
+  }
+  .content_options{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    height: 27px;
+    margin-top: 1rem;
+  }
+  .content_price{
+    padding-left: 2.8rem;
+  }
 }

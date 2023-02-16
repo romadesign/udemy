@@ -14,15 +14,18 @@ const Cart = () => {
     return string?.length > n ? string.substr(0, n - 1) + '...' : string
   }
 
-  const [itemsCart, setItemsCart] = useState(getValue('itemsCart') || [])
+  const [itemsCart, setItemsCart] = useState()
   const [totalPrice, setTotalPrice] = useState(0)
 
   useEffect(() => {
+    setItemsCart(getValue('itemsCart') || [])
+  }, [])
+
+  useEffect(() => {
     // Calcular el precio total cada vez que se actualiza itemsCart
-    const price = itemsCart.reduce(
-      (total, course) => total + parseFloat(course.price),
-      0
-    )
+    const price =
+      itemsCart !== undefined &&
+      itemsCart.reduce((total, course) => total + parseFloat(course.price), 0)
     setTotalPrice(price)
   }, [itemsCart])
 
@@ -71,7 +74,8 @@ const Cart = () => {
             </div>
             <div className={styles.content_two}>
               <h6>Total</h6>
-              <span>{totalPrice.toFixed(2)}</span>
+              <span>{parseFloat(totalPrice).toFixed(2)}</span> <br/>
+              <button className={styles.checkout}>Checkout</button>
             </div>
           </div>
         ) : (
@@ -83,3 +87,6 @@ const Cart = () => {
 }
 
 export default Cart
+
+//localstorage-hook-hydration-error
+// https://stackoverflow.com/questions/73944543/react-custom-localstorage-hook-hydration-error-in-nextjs
