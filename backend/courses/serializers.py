@@ -55,24 +55,6 @@ class get_Course_details_Serializer(serializers.ModelSerializer):
             'category'
         ]
 
-class get_Course_details_card_Serializer(serializers.ModelSerializer):
-    what_learnt = WhatLearnt_Serializer(many=True)
-    rating = serializers.IntegerField(source='get_rating', read_only=True)
-
-    class Meta:
-        model = Course
-        fields = [
-            'id',
-            'title',                        
-            'description',
-            'created',
-            'updated',
-            'what_learnt',
-            'price',
-            'rating',
-            
-        ]
-
 
 class user_serializer(serializers.ModelSerializer):
     class Meta:
@@ -81,6 +63,28 @@ class user_serializer(serializers.ModelSerializer):
             'id',
             'name',
         ]
+
+
+class get_Course_details_card_Serializer(serializers.ModelSerializer):
+    what_learnt = WhatLearnt_Serializer(many=True)
+    rating = serializers.IntegerField(source='get_rating', read_only=True)
+    author = user_serializer(read_only=True)
+
+    class Meta:
+        model = Course
+        fields = [
+            'id',
+            'title',     
+            'author',
+            'description',
+            'created',
+            'updated',
+            'what_learnt',
+            'price',
+            'rating',
+            'image',
+        ]
+
 
 
 class post_Course_Serializer(serializers.ModelSerializer):

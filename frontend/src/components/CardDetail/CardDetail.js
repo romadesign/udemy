@@ -12,7 +12,8 @@ const CardDetail = ({
   setModalDetail,
   courseExistsInWishlist,
   fCourseDetail,
-  courseExistsinlearning,modalDetail
+  courseExistsinlearning,
+  modalDetail
 }) => {
   const { addCourseToMyLibrary, deleteCourseToMyLibrary } = Api()
   const { getValue, saveValue } = useLocalStorage()
@@ -24,13 +25,10 @@ const CardDetail = ({
   const [courseExistsInCart, setCourseExistsInCart] = useState(
     itemsCart !== undefined && itemsCart.some(item => item.id === courseId)
   )
-  console.log(courseExistsInCart)
-  const [isInCart, setIsInCart] = useState(false);
+  const [isInCart, setIsInCart] = useState(false)
   const [userId, setUserId] = useState(getCookie('account'))
   const month = course != undefined && course.created.slice(5, 7)
   const day = course != undefined && course.created.slice(8, 10)
-
-  
 
   const mes = [
     { mes: 'January', id: '01' },
@@ -80,17 +78,18 @@ const CardDetail = ({
       alert('Este elemento ya existe en el carrito')
       return
     }
-    
-    const addingNewDataToTheObject = {//adding new data to the object
+
+    const addingNewDataToTheObject = {
+      //adding new data to the object
       ...course,
       status: true
     }
-    const newData = [...newItem, addingNewDataToTheObject];
+    const newData = [...newItem, addingNewDataToTheObject]
 
-    
     saveValue('itemsCart', newData)
     setModalDetail(false)
-    if(modalDetail === false){
+    if (modalDetail === false) {
+      showDate()
       fCourseDetail(courseId)
       setModalDetail(true)
     }
@@ -151,8 +150,9 @@ const CardDetail = ({
               </div>
               <div className={styles.content_heart}>
                 {courseExistsInCart ? (
-                  <Link className={styles.button_learning} href={'/cart'}>Go to cart</Link>
-                  
+                  <Link className={styles.button} href={'/cart'}>
+                    Go to cart
+                  </Link>
                 ) : (
                   <button
                     className={
