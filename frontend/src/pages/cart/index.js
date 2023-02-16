@@ -32,6 +32,7 @@ const Cart = () => {
   const removeItem = courseId => {
     const newItemsCart = itemsCart.filter(i => i.id !== courseId)
     setItemsCart(newItemsCart)
+    //update data
     saveValue('itemsCart', newItemsCart)
   }
 
@@ -42,7 +43,7 @@ const Cart = () => {
         <span>
           {itemsCart !== undefined && itemsCart.length} Courses in Cart
         </span>
-        {itemsCart !== undefined ? (
+        {itemsCart !== undefined && itemsCart.length !== 0? (
           <div className={styles.row}>
             <div className={styles.content_one}>
               {itemsCart.map(course => (
@@ -74,7 +75,7 @@ const Cart = () => {
             </div>
             <div className={styles.content_two}>
               <h6>Total</h6>
-              <span>{parseFloat(totalPrice).toFixed(2)}</span> <br/>
+              <span>${parseFloat(totalPrice).toFixed(2)}</span> <br />
               <button className={styles.checkout}>Checkout</button>
             </div>
           </div>
