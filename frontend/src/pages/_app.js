@@ -1,11 +1,13 @@
 import '@/styles/globals.css'
 import Navbar from '@/components/Navbar/Navbar'
+import {CartItemsProvider} from '@/context/cartItemsContext'
+
 export default function App ({ Component, pageProps }) {
 
   return (
-    <div>
+    <CartItemsProvider>
       <Navbar />
       <Component {...pageProps} />
-    </div>
+    </CartItemsProvider>
   )
 }

@@ -1,4 +1,6 @@
 import { useLocalStorage } from '@/hooks/useLocalStorage'
+import { useCartItems} from '@/context/cartItemsContext'
+
 import React, { Suspense, useEffect, useState } from 'react'
 import { Api } from '@/hooks/api'
 import styles from '@/styles/cart.module.css'
@@ -8,7 +10,10 @@ import Rating from '@/components/GeneralCardComponent/stars'
 const Cart = () => {
   const router = useRouter()
   const { apiGetImage } = Api()
-  const { getValue, saveValue } = useLocalStorage()
+
+  // const { getValue, saveValue } = useLocalStorage()
+  const {getValue, saveValue} = useCartItems()
+
 
   function truncate (string, n) {
     return string?.length > n ? string.substr(0, n - 1) + '...' : string
