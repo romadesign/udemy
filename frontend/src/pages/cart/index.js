@@ -12,34 +12,13 @@ const Cart = () => {
   const { apiGetImage } = Api()
 
   // const { getValue, saveValue } = useLocalStorage()
-  const {getValue, saveValue} = useCartItems()
+  const { itemsCart, removeItem} = useCartItems()
 
 
   function truncate (string, n) {
     return string?.length > n ? string.substr(0, n - 1) + '...' : string
   }
 
-  const [itemsCart, setItemsCart] = useState()
-  const [totalPrice, setTotalPrice] = useState(0)
-
-  useEffect(() => {
-    setItemsCart(getValue('itemsCart') || [])
-  }, [])
-
-  useEffect(() => {
-    // Calcular el precio total cada vez que se actualiza itemsCart
-    const price =
-      itemsCart !== undefined &&
-      itemsCart.reduce((total, course) => total + parseFloat(course.price), 0)
-    setTotalPrice(price)
-  }, [itemsCart])
-
-  const removeItem = courseId => {
-    const newItemsCart = itemsCart.filter(i => i.id !== courseId)
-    setItemsCart(newItemsCart)
-    //update data
-    saveValue('itemsCart', newItemsCart)
-  }
 
   return (
     <div className={styles.container}>
@@ -80,7 +59,7 @@ const Cart = () => {
             </div>
             <div className={styles.content_two}>
               <h6>Total</h6>
-              <span>${parseFloat(totalPrice).toFixed(2)}</span> <br />
+              {/* <span>${parseFloat(totalPrice).toFixed(2)}</span> <br /> */}
               <button className={styles.checkout}>Checkout</button>
             </div>
           </div>

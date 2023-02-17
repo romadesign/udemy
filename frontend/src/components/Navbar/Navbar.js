@@ -1,9 +1,11 @@
 import styles from '@/styles/Navbar.module.css'
 import Link from 'next/link'
 import Urls from './Urls'
+import { useCartItems } from '@/context/cartItemsContext'
 
 const Navbar = () => {
-
+  const {cartCount} = useCartItems()
+  console.log(cartCount, 'lle')
   return (
     <div className={styles.content}>
       <div className={styles.row}>
@@ -14,7 +16,7 @@ const Navbar = () => {
           <span>Categories</span>
           <input type='search' placeholder=' &#128269; Search' />
         </div>
-        <Urls />
+        <Urls cartCount={cartCount} />  
       </div>
     </div>
   )

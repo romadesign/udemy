@@ -5,7 +5,7 @@ import axios from '@/lib/axios'
 import { useAuth } from '@/hooks/auth'
 import { useRouter } from 'next/router'
 
-const Urls = () => {
+const Urls = ({cartCount}) => {
   const { logout, user } = useAuth()
   const router = useRouter()
 
@@ -33,7 +33,7 @@ const Urls = () => {
             &#9825;
           </Link>
           <Link href='/cart'>
-            <img width={25} src='/img/carrito.svg' />
+            <img width={25} src='/img/carrito.svg' /> {cartCount != undefined && cartCount}
           </Link>
           <Link className={styles.circulo} href='/' onMouseEnter={onMouseEnter}>
             <h2>{user.data.name[0]}</h2>
@@ -41,8 +41,8 @@ const Urls = () => {
         </>
       ) : (
         <>
-          <Link href='/'>
-            <img width={25} src='/img/carrito.svg' />
+          <Link href='/cart'>
+            <img width={25} src='/img/carrito.svg' /> {cartCount != undefined && cartCount}
           </Link>
           <Link href='/login'>
             <button className={styles.login}>Log in</button>

@@ -3,7 +3,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useAuth } from '@/hooks/auth'
 import { Api } from '@/hooks/api'
-import { useLocalStorage } from '@/hooks/useLocalStorage'
+import { useCartItems} from '@/context/cartItemsContext'
+
 import Link from 'next/link'
 
 const CardDetail = ({
@@ -16,16 +17,16 @@ const CardDetail = ({
   modalDetail
 }) => {
   const { addCourseToMyLibrary, deleteCourseToMyLibrary } = Api()
-  const { getValue, saveValue } = useLocalStorage()
+  const { itemsCart, addItem} = useCartItems()
+
   const { getCookie } = useAuth()
   const router = useRouter()
   const [date, setDate] = useState()
-  const [newItem, setNewItem] = useState([])
-  const [itemsCart, setItemsCart] = useState(getValue('itemsCart'))
+
   const [courseExistsInCart, setCourseExistsInCart] = useState(
     itemsCart !== undefined && itemsCart.some(item => item.id === courseId)
   )
-  const [isInCart, setIsInCart] = useState(false)
+
   const [userId, setUserId] = useState(getCookie('account'))
   const month = course != undefined && course.created.slice(5, 7)
   const day = course != undefined && course.created.slice(8, 10)
@@ -67,33 +68,18 @@ const CardDetail = ({
     fCourseDetail(courseId)
   }
 
-  // //add items cart localstorage
-  useEffect(() => {
-    //utilizar useEffect para que actulice la data si no solo lo remplaza en ves de agregar
-    setNewItem(itemsCart || [])
-  }, [])
-
-  const addItem = () => {
-    if (courseExistsInCart) {
-      alert('Este elemento ya existe en el carrito')
-      return
-    }
-
-    const addingNewDataToTheObject = {
-      //adding new data to the object
-      ...course,
-      status: true
-    }
-    const newData = [...newItem, addingNewDataToTheObject]
-
-    saveValue('itemsCart', newData)
+  const addItems = () => {
+    
+    
     setModalDetail(false)
+    addItem(course)
     if (modalDetail === false) {
       showDate()
       fCourseDetail(courseId)
       setModalDetail(true)
     }
   }
+
 
   return (
     <>
@@ -160,7 +146,7 @@ const CardDetail = ({
                         ? styles.button
                         : styles.button_learning
                     }
-                    onClick={addItem}
+                    onClick={addItems}
                   >
                     Add cart
                   </button>
