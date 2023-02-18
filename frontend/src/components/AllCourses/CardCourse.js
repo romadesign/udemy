@@ -58,7 +58,7 @@ const CardCourse = ({
       getData(1, page)
         .then(function (res) {
           setCourses(res.results.data)
-          // setCourses(prevResults => [...prevResults, ...res.results.data])
+          // setCourses(prevResults => [...prevResults, ...res.results.data]) 
           setNext(res.next)
           setPrevious(res.previous)
         })

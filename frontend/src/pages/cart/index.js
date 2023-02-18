@@ -11,9 +11,7 @@ const Cart = () => {
   const router = useRouter()
   const { apiGetImage } = Api()
 
-  // const { getValue, saveValue } = useLocalStorage()
-  const { itemsCart, removeItem} = useCartItems()
-
+  const { itemsCart, removeItem, totalPrice} = useCartItems()
 
   function truncate (string, n) {
     return string?.length > n ? string.substr(0, n - 1) + '...' : string
@@ -59,7 +57,7 @@ const Cart = () => {
             </div>
             <div className={styles.content_two}>
               <h6>Total</h6>
-              {/* <span>${parseFloat(totalPrice).toFixed(2)}</span> <br /> */}
+              <span>${parseFloat(totalPrice).toFixed(2)}</span> <br />
               <button className={styles.checkout}>Checkout</button>
             </div>
           </div>

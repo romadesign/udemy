@@ -10,6 +10,8 @@ export const CartItemsProvider = ({ children }) => {
 
   const [itemsCart, setItemsCart] = useState([]);
   const [cartCount, setCartCount] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0)
+
 
   console.log(itemsCart)
 
@@ -19,6 +21,16 @@ export const CartItemsProvider = ({ children }) => {
     setItemsCart(cartItems);
     setCartCount(count);
   }, []);
+
+  useEffect(() => {
+    // Calcular el precio total cada vez que se actualiza itemsCart
+    const price = itemsCart.reduce(
+      (total, course) => total + parseFloat(course.price),
+      0
+    )
+    setTotalPrice(price)
+  }, [itemsCart])
+  
 
   const addItem = (item) => {
     const newItemsCart = [...itemsCart, item];
@@ -38,5 +50,5 @@ export const CartItemsProvider = ({ children }) => {
 
 
 
-  return <UserContext.Provider value={{ itemsCart, setItemsCart, setCartCount,  cartCount, addItem, removeItem }}>{children}</UserContext.Provider>
+  return <UserContext.Provider value={{ itemsCart, setItemsCart, setCartCount,  cartCount, addItem, removeItem, totalPrice }}>{children}</UserContext.Provider>
 }
