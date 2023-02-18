@@ -5,6 +5,7 @@ import Link from 'next/link'
 
 const Categories = ({ category, getData }) => {
   const [courses, setCourses] = useState()
+  console.log(courses)
   const [next, setNext] = useState()
   const [previous, setPrevious] = useState()
   const [count, setCount] = useState()
@@ -14,6 +15,7 @@ const Categories = ({ category, getData }) => {
   const [activateLinkClick, setActivateLinkClick] = useState(false)
 
   const captureId = category_id => {
+    setCourses([])
     let page = 1
     setPage(page)
     getData(category_id, page)

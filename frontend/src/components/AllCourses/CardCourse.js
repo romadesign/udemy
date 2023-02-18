@@ -20,6 +20,7 @@ const CardCourse = ({
 
   const getCousePaginationPrevious = async () => {
     page = page - 1
+
     setPage(page)
     if (statusData == true) {
       getData(1, page)
@@ -52,6 +53,7 @@ const CardCourse = ({
   const getCousePaginationNext = async () => {
     page = page + 1
     setPage(page)
+   
     if (statusData == true) {
       getData(1, page)
         .then(function (res) {
@@ -64,6 +66,7 @@ const CardCourse = ({
           // console.log(error)
         })
     } else {
+      setCourses([])
       getData(categoryId, page)
         .then(function (res) {
           setCourses(res.results.data)
