@@ -157,3 +157,24 @@
   text-align: left;
   font-family: var(--font-mono);
 }
+
+.cart_text{
+  display: flex;
+  position: relative;
+  padding-right: 1rem;
+}
+.cart_text span{
+  background-color: #a435f0;
+    position: absolute;
+    right: -2px;
+    top: -13px;
+    font-size: 0.8rem;
+    color: white;
+    font-weight: bold;
+    width: 25px;
+    border-radius: 100%;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
