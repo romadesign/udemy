@@ -5,7 +5,6 @@ import { useCartItems } from '@/context/cartItemsContext'
 
 const Navbar = () => {
   const {cartCount} = useCartItems()
-  console.log(cartCount, 'lle')
   return (
     <div className={styles.content}>
       <div className={styles.row}>

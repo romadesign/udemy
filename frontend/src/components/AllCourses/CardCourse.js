@@ -18,9 +18,10 @@ const CardCourse = ({
 }) => {
   const slider = useRef()
 
+
   const getCousePaginationPrevious = async () => {
     page = page - 1
-
+    setCourses([])
     setPage(page)
     if (statusData == true) {
       getData(1, page)
@@ -53,7 +54,7 @@ const CardCourse = ({
   const getCousePaginationNext = async () => {
     page = page + 1
     setPage(page)
-   
+    setCourses([])
     if (statusData == true) {
       getData(1, page)
         .then(function (res) {
@@ -66,7 +67,6 @@ const CardCourse = ({
           // console.log(error)
         })
     } else {
-      setCourses([])
       getData(categoryId, page)
         .then(function (res) {
           setCourses(res.results.data)
@@ -81,6 +81,7 @@ const CardCourse = ({
 
   useEffect(() => {
     if (courses == undefined) {
+      setCourses([])
       let categoryIdGet = 1
       getData(categoryIdGet, page)
         .then(function (res) {

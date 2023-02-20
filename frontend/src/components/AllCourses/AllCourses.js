@@ -11,7 +11,7 @@ const AllCourses = () => {
   const [categories, setCategories] = useState()
   const [user, setUser] = useState()
 
-  console.log(getCookie('account'))
+  
 
   useEffect(() => {
     getAllCategories()

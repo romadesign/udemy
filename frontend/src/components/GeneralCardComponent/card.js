@@ -11,10 +11,14 @@ const Card = ({ course }) => {
   const router = useRouter()
   const [modalDetail, setModalDetail] = useState(false)
   const [courseD, setCourseD] = useState()
-  const [courseId, setCourseId] = useState(course.id)
+  // const [courseId, setCourseId] = useState(router.pathname !== '/wishlist' ?  course.id : course.course.id)
+  const [courseId, setCourseId] = useState(router.pathname !== '/my-courses/wishlist' ?  course.id : course.course.id)
   const [courseExistsInWishlist, setCourseExistsInWishlist] = useState()
   const [courseExistsinlearning, setCourseExistsinlearning] = useState()
  
+
+  console.log(course.id)
+
   function truncate (string, n) {
     return string?.length > n ? string.substr(0, n - 1) + '...' : string
   }
@@ -24,7 +28,6 @@ const Card = ({ course }) => {
       setModalDetail(true)
       apiGetCourseDetailCard(course)
         .then(function (res) {
-          console.log(res)
           setCourseExistsInWishlist(res.courseExistsInWishlist)
           setCourseExistsinlearning(res.courseExistsinlearning)
           setCourseD(res.course)

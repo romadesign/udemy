@@ -20,6 +20,7 @@ const CardCourse = ({ title, data, option }) => {
   }, [])
 
   const getCourse = async () => {
+    setCourse([])
     data(option, page_size)
       .then(function (res) {
         setCourse(res.results.data)
@@ -34,6 +35,7 @@ const CardCourse = ({ title, data, option }) => {
   }
 
   const getCousePaginationPrevious = async () => {
+    setCourse([])
     const formData = new FormData()
     formData.append('option', option)
     const data = await axios.post(previous, formData)
@@ -43,6 +45,7 @@ const CardCourse = ({ title, data, option }) => {
   }
 
   const getCousePaginationNext = async () => {
+    setCourse([])
     const formData = new FormData()
     formData.append('option', option)
     const data = await axios.post(`${next}&${page_size}`, formData)

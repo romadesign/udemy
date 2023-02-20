@@ -22,7 +22,7 @@ const CardDetail = ({
   const { getCookie } = useAuth()
   const router = useRouter()
   const [date, setDate] = useState()
-  console.log(courseId)
+
   const [courseExistsInCart, setCourseExistsInCart] = useState(
     itemsCart !== undefined && itemsCart.some(item => item.id === courseId)
   )
