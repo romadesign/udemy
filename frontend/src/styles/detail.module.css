@@ -1,0 +1,152 @@
+.container {
+  margin: 0 auto;
+  background: #1c1d1f;
+  color: white;
+  font-family: var(--font-mono);
+  gap: 1rem;
+  position: relative;
+}
+
+
+.content_one {
+  width: 70rem;
+  padding-top: 3.2rem;
+  padding-bottom: 3.2rem;
+  margin: 0 auto;
+  position: relative;
+}
+
+.content_button {
+  display: grid;
+}
+
+.course_landing_page_sidebar_container {
+  display: block;
+    position: absolute;
+    top: 3.2rem;
+    margin-right: 2rem;
+    right: 0;
+    border-bottom: 1px solid #d1d7dc;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 8%), 0 4px 12px rgb(0 0 0 / 8%);
+    background-color: #fff;
+  padding-bottom: 1rem;
+
+}
+
+.course_landing_page_sidebar_container img {
+  width: 300px;
+  border: 1px solid #d1d7dc;
+}
+
+.course_landing_page_sidebar_container button{
+  margin: 0 1rem ;
+  color: white;
+  padding: 0;
+  border: 0;
+  background: #a435f0;
+  height: 50px;
+  text-align: center;
+  font-weight: 800;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.content_title_description {
+  width: 45rem;
+}
+
+.content_title_description h1{
+  padding-bottom: 1rem;
+}
+
+.ratings{
+  display: flex;
+  gap: 0.4rem;
+  color: rgb(221, 162, 0);
+  font-weight: bold;
+  padding-top: 0.6rem;
+}
+
+.content_two {
+  background-color: white;
+  padding-top: 3.2rem;
+  padding-bottom: 3.2rem;
+  color: black;
+}
+
+.content_two_title_learn {
+  width: 70rem;
+  margin: auto;
+}
+
+.content_title_what_learnt {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.content_two_title_learn h2{
+  padding-bottom: 1rem;
+}
+.content_two_title_learn span{
+  font-size: 0.9rem;
+}
+
+.contet_what_learnt{
+  width: 46rem;
+    border: 1px solid #d1d7dc;
+    padding: 2.4rem 2.4rem;
+}
+
+.price{
+  margin: 0 1rem;
+  color: black;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.content_data_course{
+  padding-top: 0.6rem;
+}
+
+.language{
+  padding-top: 0.6rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.content_three{
+  background-color: white;
+  padding-bottom: 3.2rem;
+  color: black;
+}
+
+.content_includes{
+  width: 70rem;
+  margin: auto;
+}
+
+.content_includes_data{
+  width: 45rem;
+}
+.content_span{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.content_span span{
+  margin-top: 0.6rem;
+}
+
+.content_four{
+  background-color: white;
+  padding-bottom: 3.2rem;
+  color: black;
+}
+.content_four_data{
+  width: 70rem;
+  margin: auto;
+}
+.contet_four_data_requirements{
+  width: 45rem;
+}
