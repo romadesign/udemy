@@ -150,3 +150,50 @@
 .contet_four_data_requirements{
   width: 45rem;
 }
+
+.content_five{
+  background-color: white;
+  padding-bottom: 3.2rem;
+  color: black;
+}
+
+.content_five_data_author{
+  color: #5624d0;
+  text-decoration: none;
+  font-weight: 620;
+  font-size: 1.3rem;
+  padding-top: 1rem;
+}
+
+.contet_five_row{
+  width: 70rem;
+  margin: auto;
+}
+.content_five_data{
+  width: 45rem;
+}
+
+.content_five_data_rating_img{
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.content_five_data_rating_img img{
+  width: 17%;
+  border-radius: 50%;
+}
+
+.content_five_data_instructor{
+  display: grid;
+}
+
+.content_sevent{
+  background-color: white;
+  padding-bottom: 3.2rem;
+  color: black;
+}
+.content_sevent_row{
+  width: 70rem;
+  margin: auto;
+}

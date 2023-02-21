@@ -18,15 +18,14 @@ class WhatLearnt_Serializer(serializers.ModelSerializer):
     class Meta:
         model = WhatLearnt
         fields = '__all__'
+        
 
 
 class Comment_Serializer(serializers.ModelSerializer):
+    
     class Meta:
         model = Comment
-        fields = [
-            'user',
-            'message'
-        ]
+        fields = ['user', 'message']
 
 
 class user_serializer(serializers.ModelSerializer):
@@ -38,11 +37,11 @@ class user_serializer(serializers.ModelSerializer):
         ]
 
 
-
 class get_Course_details_Serializer(serializers.ModelSerializer):
     category = Category_Serializer(read_only=True)  # method get
     rating = serializers.IntegerField(source='get_rating', read_only=True)
-    instructor_rating= serializers.IntegerField(source='get_no_rating', read_only=True)
+    instructor_rating = serializers.IntegerField(
+        source='get_no_rating', read_only=True)
     requisite = RequisiteSerializer(many=True)
     what_learnt = WhatLearnt_Serializer(many=True)
     comments = Comment_Serializer(many=True, read_only=True)
@@ -71,7 +70,6 @@ class get_Course_details_Serializer(serializers.ModelSerializer):
         ]
 
 
-
 class get_Course_details_card_Serializer(serializers.ModelSerializer):
     what_learnt = WhatLearnt_Serializer(many=True)
     rating = serializers.IntegerField(source='get_rating', read_only=True)
@@ -81,7 +79,7 @@ class get_Course_details_card_Serializer(serializers.ModelSerializer):
         model = Course
         fields = [
             'id',
-            'title',     
+            'title',
             'author',
             'description',
             'created',
@@ -91,7 +89,6 @@ class get_Course_details_card_Serializer(serializers.ModelSerializer):
             'rating',
             'image',
         ]
-
 
 
 class post_Course_Serializer(serializers.ModelSerializer):
@@ -127,6 +124,7 @@ class data_course_my_library_serializer(serializers.ModelSerializer):
             'author',
             'image'
         ]
+
 
 class data_learning_serializer(serializers.ModelSerializer):
     rating = serializers.IntegerField(source='get_rating', read_only=True)
@@ -192,7 +190,8 @@ class get_Courses_Serializer(serializers.ModelSerializer):
             'price',
             'rating',
         ]
-        
+
+
 class Deleted_Course_Serializer(serializers.ModelSerializer):
     author = user_serializer(read_only=True)
 
@@ -210,9 +209,7 @@ class Deleted_Course_Serializer(serializers.ModelSerializer):
         ]
 
 
-
 class RateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rate
         fields = ('id', 'rate_number', 'user')
-

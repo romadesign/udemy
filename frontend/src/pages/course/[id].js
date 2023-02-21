@@ -88,6 +88,38 @@ const CourseDetail = ({ course }) => {
               </div>
             </div>
           </div>
+          <div className={styles.content_five}>
+            <div className={styles.contet_five_row}>
+              <div className={styles.content_five_data}>
+                <h2>Instructor</h2>
+                <div>
+                  <span className={styles.content_five_data_author}>
+                    {course.course.author.name}
+                  </span>
+                  <div className={styles.content_five_data_rating_img}>
+                    <img src='https://www.seekpng.com/png/small/423-4230959_renders-esferas-del-dragn-taringa-render-de-esfera.png' />
+                    <div className={styles.content_five_data_instructor}>
+                      <span>
+                        &#9733; {course.course.rating} Instructor Rating
+                      </span>
+                      <span>1,838,534 Students</span>
+                      <span>45 Courses</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={styles.content_sevent}>
+            <div className={styles.content_sevent_row}>
+              <div>
+                <h2>
+                  &#9733; {course.course.rating} course rating .{' '}
+                  {course.course.instructor_rating} ratings
+                </h2>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

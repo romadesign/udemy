@@ -303,7 +303,7 @@ class Course_Detail(APIView):
         if course_exists:
             course = course_exists.first()
             serializer = get_Course_details_Serializer(course)
-
+            
             return Response({
                 'success': 'true',
                 'status code': status.HTTP_201_CREATED,
