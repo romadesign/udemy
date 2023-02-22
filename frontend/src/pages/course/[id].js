@@ -4,10 +4,11 @@ import axios from '@/lib/axios'
 import Rating from '@/components/GeneralCardComponent/stars'
 import styles from '@/styles/detail.module.css'
 
-const CourseDetail = ({ course }) => {
+const CourseDetail = ({ course, comments }) => {
   const { apiGetImage } = Api()
 
   console.log(course)
+  console.log(comments)
 
   return (
     <>
@@ -130,11 +131,20 @@ export const getServerSideProps = async context => {
   const { data: course } = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/course/` + context.query.id
   )
+
+  const { data: comments } = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/course-comments/` + context.query.id
+  )
+
   return {
     props: {
-      course
+      course,
+      comments
     }
   }
 }
+
+
+
 
 export default CourseDetail
