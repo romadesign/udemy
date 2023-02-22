@@ -176,6 +176,38 @@ class get_my_purchased_course(serializers.ModelSerializer):
         fields = ['id', 'course', 'user']
 
 
+
+
+
+
+
+
+
+
+
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = '__all__'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class get_Courses_Serializer(serializers.ModelSerializer):
     rating = serializers.IntegerField(source='get_rating', read_only=True)
     author = user_serializer(read_only=True)

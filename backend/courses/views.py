@@ -303,7 +303,7 @@ class Course_Detail(APIView):
         if course_exists:
             course = course_exists.first()
             serializer = get_Course_details_Serializer(course)
-            
+
             return Response({
                 'success': 'true',
                 'status code': status.HTTP_201_CREATED,
@@ -316,6 +316,39 @@ class Course_Detail(APIView):
                 "course": "Not exists"
             })
 
+
+class Comment_course(APIView):
+    def get(self, request, *args, **kwargs):
+        id = self.kwargs['id']
+    
+        comments = Comment.objects.filter(course__comments__course=id)
+        # Lista para guardar elementos únicos
+        unique_list = []
+
+        # Recorrer la lista original y agregar cada elemento único a la nueva lista
+        for item in comments:
+            if not any(d.id == item.id for d in unique_list):
+                unique_list.append(item)
+
+        data = []
+        for item in unique_list:
+            item_comment = {}
+            item_comment['id'] = item.id
+            item_comment['message'] = item.message
+            
+            # Mostrando datos del usuario que dejo un comentario
+            data_user = User.objects.filter(id=item.user)
+            item_comment['user'] = user_serializer(data_user.first()).data
+
+            # Capturando el rating del usuario que dejo su comentario
+            courses = Rate.objects.filter(user=data_user[0].id, course__rating__course=id)
+            serializers = RateSerializer(courses.first()).data
+            item_comment['rating'] = serializers
+
+            data.append(item_comment)
+        
+        return Response({'data': data})
+        
 
 class Course_Detail_card(APIView):
     def get(self, request, *args, **kwargs):

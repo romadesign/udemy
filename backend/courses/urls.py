@@ -24,6 +24,8 @@ urlpatterns = [
     path('courses-filter', get_courses_filter_advanced.as_view()),
     path('course/<int:id>/', Course_Detail.as_view()),
     path('course-detail/<int:id>/', Course_Detail_card.as_view()),
+    path('course-comments/<int:id>/', Comment_course.as_view()),
+
 
     path('add-rating-course', Add_Rating.as_view()),
     path('edit-rating-course', Edit_Rating.as_view()),
