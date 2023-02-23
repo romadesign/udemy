@@ -19,8 +19,6 @@ const Login = () => {
   useEffect(() => {
     var index = data.findIndex(e => e.gmail == email)
     var result = index != -1 ? setstatusboton(false) : setstatusboton(true)
-    console.log(result)
-
   })
 
   const submitForm = async event => {

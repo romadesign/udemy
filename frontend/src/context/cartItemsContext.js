@@ -13,8 +13,6 @@ export const CartItemsProvider = ({ children }) => {
   const [totalPrice, setTotalPrice] = useState(0)
 
 
-  console.log(itemsCart)
-
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem('itemsCart')) || [];
     const count = cartItems.reduce((total, course) => total + 1, 0);

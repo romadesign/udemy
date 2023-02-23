@@ -10,7 +10,6 @@ const Pagination = ({ next, setNext, previous, setPrevious, setCourse, page, set
 
   const getCousePaginationNext = async () => {
     setCourse([])
-    console.log('hice click')
 
     const formData = new FormData()
     formData.append('user', user.data.id)
@@ -22,7 +21,6 @@ const Pagination = ({ next, setNext, previous, setPrevious, setCourse, page, set
   }
 
   const getCousePaginationPrevious = async () => {
-    console.log('hice click')
     setCourse([])
     const formData = new FormData()
     formData.append('user', user.data.id)

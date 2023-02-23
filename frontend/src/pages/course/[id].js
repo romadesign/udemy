@@ -3,18 +3,70 @@ import { Api } from '@/hooks/api'
 import axios from '@/lib/axios'
 import Rating from '@/components/GeneralCardComponent/stars'
 import styles from '@/styles/detail.module.css'
+import { useEffect, useState } from 'react'
 
 const CourseDetail = ({ course, comments }) => {
   const { apiGetImage } = Api()
 
-  console.log(course)
-  console.log(comments)
+  const [commentsdata, setComments] = useState(comments.data)
+  const [isScrolled, setIsScrolled] = useState(false)
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true)
+      } else {
+        setIsScrolled(false)
+      }
+      // if(window.scrollX > 1165){
+      //   setIsScrolled(false)
+      // }
+    }
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScroll)
+    }
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
 
   return (
     <>
       <div className={styles.container}>
+        <div 
+        className={isScrolled != true ? styles.subnavbar : styles.subnavbarother}
+        >
+          <div className={styles.subnavbar_title_description}>
+            <h1>{course.course.title}</h1>
+          </div>
+          <div className={styles.subnavbar_ratings}>
+            <span>{course.course.rating}</span>
+            <span>
+              <Rating rating={course.course.rating} />
+            </span>
+          </div>
+        </div>
+
         <div className={styles.row}>
           <div className={styles.content_one}>
+            <div 
+            className={isScrolled != true ? styles.course_landing_page_sidebar_container : styles.course_landing_page_sidebar_container_other }
+            
+            >
+              <div>
+                <img src={apiGetImage(course.course.image)} />
+                <div>
+                  <p className={styles.price}>{course.course.price}$</p>
+                </div>
+                <div className={styles.content_button}>
+                  <button>Go to cart</button>
+                  <button>Buy now</button>
+                </div>
+              </div>
+            </div>
             <div className={styles.content_title_description}>
               <h1>{course.course.title}</h1>
               <p>{course.course.description}</p>
@@ -32,19 +84,8 @@ const CourseDetail = ({ course, comments }) => {
                 <span>Language: {course.course.language}</span>
               </div>
             </div>
-            <div className={styles.course_landing_page_sidebar_container}>
-              <div>
-                <img src={apiGetImage(course.course.image)} />
-                <div>
-                  <p className={styles.price}>{course.course.price}$</p>
-                </div>
-                <div className={styles.content_button}>
-                  <button>Go to cart</button>
-                  <button>Buy now</button>
-                </div>
-              </div>
-            </div>
           </div>
+
           <div className={styles.content_two}>
             <div className={styles.content_two_title_learn}>
               <div className={styles.contet_what_learnt}>
@@ -59,6 +100,7 @@ const CourseDetail = ({ course, comments }) => {
               </div>
             </div>
           </div>
+
           <div className={styles.content_three}>
             <div className={styles.content_includes}>
               <div className={styles.content_includes_data}>
@@ -74,6 +116,7 @@ const CourseDetail = ({ course, comments }) => {
               </div>
             </div>
           </div>
+
           <div className={styles.content_four}>
             <div className={styles.content_four_data}>
               <div className={styles.contet_four_data_requirements}>
@@ -89,6 +132,7 @@ const CourseDetail = ({ course, comments }) => {
               </div>
             </div>
           </div>
+
           <div className={styles.content_five}>
             <div className={styles.contet_five_row}>
               <div className={styles.content_five_data}>
@@ -111,6 +155,7 @@ const CourseDetail = ({ course, comments }) => {
               </div>
             </div>
           </div>
+
           <div className={styles.content_sevent}>
             <div className={styles.content_sevent_row}>
               <div>
@@ -119,6 +164,36 @@ const CourseDetail = ({ course, comments }) => {
                   {course.course.instructor_rating} ratings
                 </h2>
               </div>
+            </div>
+          </div>
+
+          <div className={styles.content_nine}>
+            <div className={styles.content_nine_row}>
+              <div className={styles.content_nine_data}>
+                <div className={styles.content_card_user}>
+                  {commentsdata !== undefined &&
+                    commentsdata.map(item => (
+                      <div>
+                        <div className={styles.content_img_user}>
+                          <div className={styles.circulo}>
+                            {item.user.name[0]}
+                          </div>
+                          <div>
+                            <h5>{item.user.name}</h5>
+                            <span>
+                              {/* <Rating rating={3} /> */}
+                              <Rating rating={item.rating.rate_number} />
+                            </span>
+                          </div>
+                        </div>
+                        <div>
+                          <span>{item.message}</span>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+              <div></div>
             </div>
           </div>
         </div>
@@ -133,7 +208,8 @@ export const getServerSideProps = async context => {
   )
 
   const { data: comments } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/course-comments/` + context.query.id
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/course-comments/` +
+      context.query.id
   )
 
   return {
@@ -143,8 +219,5 @@ export const getServerSideProps = async context => {
     }
   }
 }
-
-
-
 
 export default CourseDetail
