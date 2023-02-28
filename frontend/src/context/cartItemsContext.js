@@ -16,8 +16,11 @@ export const CartItemsProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0)
 
+<<<<<<< HEAD
   console.log(itemsCart)
   console.log(cartCount)
+=======
+>>>>>>> 7ef3b34442c9bb245d7a11786cbb2aba9e700856
 
   useEffect(() => {
     const myData = JSON.parse(localStorage.getItem('myData')) || {};

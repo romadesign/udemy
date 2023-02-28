@@ -48,14 +48,12 @@ export const useAuth = ({} = {}) => {
     axios
       .get('/api/user')
       .then(res => {
-        console.log(res, 'ac')
         setCookie('status_code_lg', res.status)
         setCookie('account', res.data.id)
         return res
       })
       .catch(error => {
         if (error.response.status == 403) {
-          console.log(error, 'ac')
           setCookie('status_code_lg', error.response.status)
           logout()
         }
