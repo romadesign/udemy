@@ -18,10 +18,27 @@ const Cart = () => {
   }
 
   const addItemsSaveLather = (course) => {
-    var typedatesave = 2;
-    addItem(course, typedatesave)
-    removeItem(course.id)
+    var option = 2;
+    addItem(course, option)
+    removeItemsListCart(course)
   }
+  
+  const removeItemsListSaveLater = (course)=>{
+    var option = 2;
+    removeItem(course.id, option)
+  }
+  
+  const moveCourseItemsCart = (course) => {
+    var option = 1;
+    addItem(course, option)
+    removeItemsListSaveLater(course)
+  }
+  const removeItemsListCart = (course)=>{
+    var option = 1;
+    removeItem(course.id, option)
+  }
+
+  
 
 
   return (
@@ -49,7 +66,7 @@ const Cart = () => {
                     </div>
                     <div className={styles.contnet_option_price}>
                       <div className={styles.content_options}>
-                        <button onClick={() => removeItem(course.id)}>
+                        <button onClick={() => removeItemsListCart(course)}>
                           Remove
                         </button>
                         <button onClick={() => addItemsSaveLather(course)}>Save for later</button>
@@ -95,10 +112,10 @@ const Cart = () => {
                     </div>
                     <div className={styles.contnet_option_price}>
                       <div className={styles.content_options_later}>
-                        <button >
+                        <button onClick={() => removeItemsListSaveLater(course)}>
                           Remove
                         </button>
-                        <button>Move to cart</button>
+                        <button onClick={() => moveCourseItemsCart(course)}>Move to cart</button>
                       </div>
                       <div className={styles.content_price}>
                         <p className={styles.price}>{course.price}$</p>

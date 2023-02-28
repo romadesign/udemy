@@ -38,10 +38,10 @@ export const CartItemsProvider = ({ children }) => {
   }, [itemsCart])
 
 
-  const addItem = (item, typedatesave) => {
+  const addItem = (item, option) => {
     // Obtener el objeto de datos del localStorage
     const data = JSON.parse(localStorage.getItem('myData')) || {};
-    if (typedatesave == 1) {
+    if (option == 1) {
       // Obtener el array itemsCart del objeto de datos (o crearlo si no existe)
       const items = data.itemsCart || [];
       // Agregar el nuevo elemento al array
@@ -52,7 +52,7 @@ export const CartItemsProvider = ({ children }) => {
       setItemsCart(items);
       const count = data.itemsCart.reduce((total, course) => total + 1, 0);
       setCartCount(count);
-    } else if (typedatesave = 2) {
+    } else if (option = 2) {
       const item_save_later = data.save_later || [];
       item_save_later.push(item);
       data.save_later = item_save_later;
@@ -63,19 +63,26 @@ export const CartItemsProvider = ({ children }) => {
     localStorage.setItem('myData', JSON.stringify(data));
   };
 
-  const removeItem = (courseId) => {
+  const removeItem = (courseId, option) => {
     // Obtener el objeto de datos del localStorage
     const data = JSON.parse(localStorage.getItem('myData')) || {};
-    // Obtener el array itemsCart del objeto de datos (o crearlo si no existe)
-    const itemsCart = data.itemsCart || [];
-    // Actualizar el objeto de datos con el nuevo array itemsCart
-    const newItemsCart = itemsCart.filter((i) => i.id !== courseId);
-    data.itemsCart = newItemsCart;
-    setItemsCart(newItemsCart);
+    if (option == 1) {
+      // Obtener el array itemsCart del objeto de datos (o crearlo si no existe)
+      const itemsCart = data.itemsCart || [];
+      // Actualizar el objeto de datos con el nuevo array itemsCart
+      const newItemsCart = itemsCart.filter((i) => i.id !== courseId);
+      data.itemsCart = newItemsCart;
+      setItemsCart(newItemsCart);
 
-    //Restar count
-    const count = newItemsCart.reduce((total, course) => total + 1, 0);
-    setCartCount(count);
+      //Restar count
+      const count = newItemsCart.reduce((total, course) => total + 1, 0);
+      setCartCount(count);
+    } else if (option = 2) {
+      const save_later = data.save_later || [];
+      const newItemssaveLater = save_later.filter((i) => i.id !== courseId);
+      data.save_later = newItemssaveLater;
+      setSave_later(newItemssaveLater);
+    }
     localStorage.setItem('myData', JSON.stringify(data));
   };
 
