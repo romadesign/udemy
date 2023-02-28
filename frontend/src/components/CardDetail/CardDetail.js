@@ -70,9 +70,9 @@ const CardDetail = ({
 
   const addItems = () => {
     
-    
+    var typedatesave = 1
     setModalDetail(false)
-    addItem(course)
+    addItem(course, typedatesave)
     if (modalDetail === false) {
       showDate()
       fCourseDetail(courseId)

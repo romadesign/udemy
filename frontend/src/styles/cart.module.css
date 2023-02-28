@@ -39,6 +39,23 @@
   cursor: pointer;
 }
 
+.content_options_later{
+  display: grid;
+  text-align: end;
+  height: 55px;
+}
+
+.content_options_later button{
+  color: #5624d0;
+  background-color: transparent;
+  min-width: auto;
+  padding: 0;
+  border: 0;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+
 .content_two{
   width: 20%;
 
@@ -100,6 +117,16 @@ width: 80%;
   display: flex;
     width: 100%;
     justify-content: inherit;
+}
+
+.contnet_option_later{
+  color: #5624d0;
+  background-color: transparent;
+  min-width: auto;
+  padding: 0;
+  border: 0;
+  text-align: inherit;
+  cursor: pointer;
 }
 
 @media (max-width: 990px) {
