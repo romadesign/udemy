@@ -1,4 +1,3 @@
-import { addRequestMeta } from 'next/dist/server/request-meta'
 import { createContext, useContext, useEffect, useState } from 'react'
 
 export const UserContext = createContext()
@@ -8,19 +7,11 @@ export const useCartItems = () => {
 }
 
 export const CartItemsProvider = ({ children }) => {
-
-
   const [data, setData] = useState({});
   const [itemsCart, setItemsCart] = useState([]);
   const [save_later, setSave_later] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0)
-
-<<<<<<< HEAD
-  console.log(itemsCart)
-  console.log(cartCount)
-=======
->>>>>>> 7ef3b34442c9bb245d7a11786cbb2aba9e700856
 
   useEffect(() => {
     const myData = JSON.parse(localStorage.getItem('myData')) || {};
@@ -73,10 +64,11 @@ export const CartItemsProvider = ({ children }) => {
   };
 
   const removeItem = (courseId) => {
+    // Obtener el objeto de datos del localStorage
     const data = JSON.parse(localStorage.getItem('myData')) || {};
-
+    // Obtener el array itemsCart del objeto de datos (o crearlo si no existe)
     const itemsCart = data.itemsCart || [];
-
+    // Actualizar el objeto de datos con el nuevo array itemsCart
     const newItemsCart = itemsCart.filter((i) => i.id !== courseId);
     data.itemsCart = newItemsCart;
     setItemsCart(newItemsCart);
