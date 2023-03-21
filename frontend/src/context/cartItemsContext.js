@@ -39,6 +39,7 @@ export const CartItemsProvider = ({ children }) => {
 
 
   const addItem = (item, option) => {
+    removeItem(item.id, 2)//remove  item de item_save_later cuando agregamos a la lista
     // Obtener el objeto de datos del localStorage
     const data = JSON.parse(localStorage.getItem('myData')) || {};
     if (option == 1) {
