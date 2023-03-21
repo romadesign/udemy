@@ -185,12 +185,12 @@
 }
 
 .content_options option {
-  font-weight:normal;
+  font-weight: normal;
   margin: 1rem;
   cursor: pointer !important;
 }
 
-.poppover{
+.poppover {
   position: absolute;
   top: 0;
   opacity: 1;
@@ -200,3 +200,84 @@
   width: 100%;
 }
 
+.what_learnt_hover {
+  position: absolute;
+  zoom: 1;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  z-index: 1;
+  padding: 5px;
+  transition: all ease .8s;
+  top: 0;
+  width: 100%;
+  padding: 1.5rem;
+  border: 1px solid #e7e7e7;
+  background-color: #fff;
+  box-shadow: 0 0 0 1px #d1d7dc, 0 2px 4px rgb(0 0 0 / 8%), 0 4px 12px rgb(0 0 0 / 8%);
+  font-family: var(--font-mono);
+}
+
+.what_learnt_hover:hover {
+  filter: alpha(opacity=80);
+  opacity: 1;
+  /*Al hacer hover sobre la caja hacemos visible los datos*/
+}
+
+
+.title {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+}
+.description{
+    font-size: 0.8rem;
+}
+
+.content_heart{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.button{
+    width: 85%;
+    border: 0;
+    height: 40px;
+    background: #b12dff;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+} 
+
+.button_learning{
+    width: 85%;
+    border: 0;
+    height: 40px;
+    background: #1d1d1d;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+.icon{
+    text-align: center;
+    background: #fffcfc;
+    border: 1px solid;
+    width: 54px;
+    height: 45px;
+    font-size: 2rem;
+    border-radius: 22rem;
+}
+.icon2{
+    text-align: center;
+    background: #fffcfc;
+    border: 1px solid;
+    width: 54px;
+    height: 45px;
+    font-size: 2rem;
+    border-radius: 22rem;
+}

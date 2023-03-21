@@ -12,6 +12,8 @@ export const Api = () => {
     const formData = new FormData()
     formData.append('option', option)
     const data = await axios.post(`/api/getstudents-are-viewing?p=1&${page_size}`, formData)
+    console.log(data.data, 'hello')
+
     return data.data
   }
 
