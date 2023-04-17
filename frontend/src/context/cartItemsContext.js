@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
+import { Api } from '@/hooks/api'
+import { useAuth } from '@/hooks/auth'
 
 export const UserContext = createContext()
 
@@ -7,6 +9,15 @@ export const useCartItems = () => {
 }
 
 export const CartItemsProvider = ({ children }) => {
+  const { apiGetMyLibrary } = Api()
+  const { getCookie } = useAuth()
+  const [payload, setPayload] = useState({
+    p: 1,
+    page_size: 8,
+    sort: 'id',
+    category: ''
+  })
+
   const [data, setData] = useState({});
   const [itemsCart, setItemsCart] = useState([]);
   const [save_later, setSave_later] = useState([]);
@@ -24,6 +35,22 @@ export const CartItemsProvider = ({ children }) => {
     }
 
   }, []);
+
+  useEffect(() =>{
+    getDatawishlist()
+  } ,[payload])
+  const getDatawishlist = async () => {
+    apiGetMyLibrary(getCookie('account'), payload)
+      .then(res => {
+        console.log(res, 'res nuevop')
+       
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
+
 
   useEffect(() => {
     // Calcular el precio total cada vez que se actualiza itemsCart
