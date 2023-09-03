@@ -7,19 +7,19 @@ const Login = () => {
   const { login } = useAuth()
 
   const [email, setEmail] = useState('')
-  const [data, setData] = useState([
-    { gmail: 'romacode@gmail.com' },
-    { gmail: 'test@gmail.com' }
-  ])
+  // const [data, setData] = useState([
+  //   { gmail: 'romacode@gmail.com' },
+  //   { gmail: 'test@gmail.com' }
+  // ])
   const [password, setPassword] = useState('romacode')
   const [statusboton, setstatusboton] = useState(false)
   const [errors, setErrors] = useState([])
   const [status, setStatus] = useState(null)
 
-  useEffect(() => {
-    var index = data.findIndex(e => e.gmail == email)
-    var result = index != -1 ? setstatusboton(false) : setstatusboton(true)
-  })
+  // useEffect(() => {
+  //   var index = data.findIndex(e => e.gmail == email)
+  //   var result = index != -1 ? setstatusboton(false) : setstatusboton(true)
+  // })
 
   const submitForm = async event => {
     event.preventDefault()
@@ -50,7 +50,8 @@ const Login = () => {
               onChange={e => setPassword(e.target.value)}
             />
           </div>
-          <button disabled={statusboton}>Log in</button>
+          {/* <button disabled={statusboton}>Log in</button> */}
+          <button >Log in</button>
         </form>
         <span>
           or <Link href='/login'>Forgot Password</Link>

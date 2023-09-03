@@ -16,6 +16,7 @@ const CardDetail = ({
   courseExistsinlearning,
   modalDetail
 }) => {
+  console.log(course, 'holpi')
   const { addCourseToMyLibrary, deleteCourseToMyLibrary } = Api()
   const { itemsCart, addItem} = useCartItems()
 
@@ -90,6 +91,7 @@ const CardDetail = ({
           onMouseLeave={onMouse}
           className={styles.content}
         >
+          
           {courseExistsinlearning !== 'true' ? (
             <div>
               <h6
@@ -149,8 +151,11 @@ const CardDetail = ({
                     onClick={addItems}
                   >
                     Add cart
+                    
                   </button>
+                  
                 )}
+
                 {courseExistsInWishlist == 'false' ? (
                   <span className={styles.icon} onClick={addWishlist}>
                     &#x2661;{' '}

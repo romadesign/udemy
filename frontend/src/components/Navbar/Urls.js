@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 
 const Urls = ({ cartCount }) => {
   const { logout, user } = useAuth()
+  console.log(user)
   const router = useRouter()
 
   const [modalProfile, setModalProfile] = useState(false)
@@ -39,7 +40,7 @@ const Urls = ({ cartCount }) => {
             </div>
           </Link>
           <Link className={styles.circulo} href='/' onMouseEnter={onMouseEnter}>
-            <h2>{user.data.name[0]}</h2>
+            <h2>{user.name[0]}</h2>
           </Link>
         </>
       ) : (
@@ -63,11 +64,11 @@ const Urls = ({ cartCount }) => {
         <div className={styles.content_profile} onMouseLeave={onMouseLeave}>
           <div className={styles.content_profile_name}>
             <Link className={styles.circulo_profile} href='/'>
-              <h2>{user.data.name[0]}</h2>
+              <h2>{user.name[0]}</h2>
             </Link>
             <div>
-              <h3>{user.data.name}</h3>
-              <p>{user.data.email}</p>
+              <h3>{user.name}</h3>
+              <p>{user.email}</p>
             </div>
           </div>
           <div className={styles.authseparator}></div>

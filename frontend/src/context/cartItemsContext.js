@@ -36,14 +36,14 @@ export const CartItemsProvider = ({ children }) => {
 
   }, []);
 
-  useEffect(() =>{
+  useEffect(() => {
     getDatawishlist()
-  } ,[payload])
+  }, [payload])
   const getDatawishlist = async () => {
     apiGetMyLibrary(getCookie('account'), payload)
       .then(res => {
         console.log(res, 'res nuevop')
-       
+
       })
       .catch(error => {
         console.error(error)

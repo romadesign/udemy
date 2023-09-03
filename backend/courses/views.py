@@ -83,7 +83,7 @@ class Delete_Course(APIView):
                 return Response({"Course successfully removed"})
         else:
             return Response({"The course does not exist"})
-
+    
 
 class Update_course(APIView):
     def put(self, request, course_id, *args, **kwargs):
@@ -519,7 +519,7 @@ class Add_Courses_Wishlist(APIView):
             return Response({
                 'success': 'true',
                 'status code': status.HTTP_404_NOT_FOUND,
-                "course": "Ya tienes agregado este curso"
+                "course": "Ya tienes agregad    o este curso"
             })
 
 

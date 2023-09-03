@@ -20,6 +20,7 @@ const Card = ({ course }) => {
   const router = useRouter()
   const [modalDetail, setModalDetail] = useState(false)
   const [courseD, setCourseD] = useState()
+  console.log(courseD)
   // const [courseId, setCourseId] = useState(router.pathname !== '/wishlist' ?  course.id : course.course.id)
   const [courseId, setCourseId] = useState(
     router.pathname !== '/my-courses/wishlist' ? course.id : course.course.id
@@ -102,17 +103,17 @@ const Card = ({ course }) => {
               router.pathname == '/' ? course.image : course.course.image
             )}
           />
-
+          
           <h4>
             {truncate(
               router.pathname == '/' ? course.title : course.course.title,
               40
             )}
           </h4>
-
+           
           <h5>
             {router.pathname == '/'
-              ? course.author.name
+              ? course.author.name 
               : course.course.author.name}
           </h5>
           {router.pathname === '/' && (
@@ -227,6 +228,7 @@ const Card = ({ course }) => {
                 <Rating rating={course.rating.rate_number} />
               </span>
             )}
+            
           {modalDetail == true && (
             <div className={styles.poppover}>
               <CardDetail

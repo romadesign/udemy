@@ -23,7 +23,7 @@ const CardCourse = ({
     page = page - 1
     setCourses([])
     setPage(page)
-    if (statusData == true) {
+    if (statusData == 'true') {
       getData(1, page)
         .then(function (res) {
           setCourses(res.results.data)

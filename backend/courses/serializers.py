@@ -212,6 +212,7 @@ class get_Courses_Serializer(serializers.ModelSerializer):
     rating = serializers.IntegerField(source='get_rating', read_only=True)
     author = user_serializer(read_only=True)
     what_learnt = WhatLearnt_Serializer(many=True)
+    requisite = RequisiteSerializer(many=True)
 
     class Meta:
         model = Course
@@ -223,6 +224,7 @@ class get_Courses_Serializer(serializers.ModelSerializer):
             'price',
             'rating',
             'what_learnt',
+            'requisite',
         ]
 
 

@@ -36,8 +36,8 @@ const CourseDetail = ({ course, comments }) => {
   return (
     <>
       <div className={styles.container}>
-        <div 
-        className={isScrolled != true ? styles.subnavbar : styles.subnavbarother}
+        <div
+          className={isScrolled != true ? styles.subnavbar : styles.subnavbarother}
         >
           <div className={styles.subnavbar_title_description}>
             <h1>{course.course.title}</h1>
@@ -52,9 +52,8 @@ const CourseDetail = ({ course, comments }) => {
 
         <div className={styles.row}>
           <div className={styles.content_one}>
-            <div 
-            className={isScrolled != true ? styles.course_landing_page_sidebar_container : styles.course_landing_page_sidebar_container_other }
-            
+            <div
+              className={isScrolled != true ? styles.course_landing_page_sidebar_container : styles.course_landing_page_sidebar_container_other}
             >
               <div>
                 <img src={apiGetImage(course.course.image)} />
@@ -204,12 +203,12 @@ const CourseDetail = ({ course, comments }) => {
 
 export const getServerSideProps = async context => {
   const { data: course } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/course/` + context.query.id
+    `${process.env.NEXT_PUBLIC_BASE_URL_HOST}/api/course/` + context.query.id
   )
 
   const { data: comments } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/course-comments/` +
-      context.query.id
+    `${process.env.NEXT_PUBLIC_BASE_URL_HOST}/api/course-comments/` +
+    context.query.id
   )
 
   return {

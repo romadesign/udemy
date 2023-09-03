@@ -40,9 +40,9 @@ const Categories = ({ category, getData }) => {
             <li
               key={cat.id}
               className={
-                activateLinkClick == true
-                  ? categorySelected == cat.id && styles.statusOptionTrue
-                  : cat.id == 1 && styles.statusOptionTrue
+                activateLinkClick === true
+                  ? (categorySelected === cat.id ? styles.statusOptionTrue : "")
+                  : cat.id === 1 ? styles.statusOptionTrue : "" 
               }
               onClick={() => captureId(cat.id)}
             >

@@ -42,6 +42,7 @@
 .carousel h4 {
   font-family: var(--font-mono);
   margin-top: 0.4rem;
+  color: black;
 }
 
 .carousel img {
@@ -227,9 +228,11 @@
 .title {
     font-size: 1rem;
     margin-bottom: 0.4rem;
+    color: black;
 }
 .description{
     font-size: 0.8rem;
+    color: black;
 }
 
 .content_heart{

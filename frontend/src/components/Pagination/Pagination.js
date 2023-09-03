@@ -8,11 +8,12 @@ const Pagination = ({ next, setNext, previous, setPrevious, setCourse, page, set
   const router = useRouter()
   const { logout, user } = useAuth()
 
+
   const getCousePaginationNext = async () => {
     setCourse([])
 
     const formData = new FormData()
-    formData.append('user', user.data.id)
+    formData.append('user', user.id)
     const data = await axios.post(`${next}`, formData)
     setCourse(data.data.results.data)
     setNext(data.data.next)
@@ -23,7 +24,7 @@ const Pagination = ({ next, setNext, previous, setPrevious, setCourse, page, set
   const getCousePaginationPrevious = async () => {
     setCourse([])
     const formData = new FormData()
-    formData.append('user', user.data.id)
+    formData.append('user', user.id)
     const data = await axios.post(`${previous}`, formData)
     setCourse(data.data.results.data)
     setNext(data.data.next)

@@ -33,7 +33,10 @@
   height: 48px;
   border-radius: 2rem;
   padding: 0 2.4rem 0 1rem;
-  border: 1px solid;
+  background: white;
+  border: 1px solid #1c1d1f;
+    color: #5d5d5d;
+    font-size: 0.9rem;
 }
 
 

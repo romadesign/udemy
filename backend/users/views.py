@@ -19,7 +19,7 @@ class RegisterView(APIView):
         status_code = status.HTTP_201_CREATED
         response = {
             'success': 'True',
-            'status code': status_code,
+            'statuscode': status_code,
             'message': 'User registered  successfully',
         }
         return Response(response, status=status_code)

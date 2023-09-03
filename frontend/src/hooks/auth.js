@@ -50,7 +50,7 @@ export const useAuth = ({} = {}) => {
       .then(res => {
         setCookie('status_code_lg', res.status)
         setCookie('account', res.data.id)
-        return res
+        return res.data
       })
       .catch(error => {
         if (error.response.status == 403) {
@@ -65,7 +65,7 @@ export const useAuth = ({} = {}) => {
     axios
       .post('/api/register', props)
       .then(res => {
-        if (res.data.status_code == 201) {
+        if (res.data.statuscode == 201) {
           router.push('/login')
         }
       })
