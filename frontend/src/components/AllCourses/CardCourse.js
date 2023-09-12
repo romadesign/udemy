@@ -99,7 +99,6 @@ const CardCourse = ({
   const sliderRigth = () => {
     getCousePaginationNext()
     const e = (slider.current.scrollLeft = slider.current.scrollLeft + 500)
-    console.log(e)
   }
 
   return (

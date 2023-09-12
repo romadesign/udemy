@@ -6,8 +6,7 @@ import { useAuth } from '@/hooks/auth'
 import { useRouter } from 'next/router'
 
 const Urls = ({ cartCount }) => {
-  const { logout, user } = useAuth()
-  console.log(user)
+  const { logout, user } = useAuth()  
   const router = useRouter()
 
   const [modalProfile, setModalProfile] = useState(false)

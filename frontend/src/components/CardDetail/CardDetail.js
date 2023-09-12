@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useAuth } from '@/hooks/auth'
 import { Api } from '@/hooks/api'
-import { useCartItems} from '@/context/cartItemsContext'
+import { useCartItems } from '@/context/cartItemsContext'
 
 import Link from 'next/link'
 
@@ -18,7 +18,7 @@ const CardDetail = ({
 }) => {
   console.log(course, 'holpi')
   const { addCourseToMyLibrary, deleteCourseToMyLibrary } = Api()
-  const { itemsCart, addItem} = useCartItems()
+  const { itemsCart, addItem } = useCartItems()
 
   const { getCookie } = useAuth()
   const router = useRouter()
@@ -70,7 +70,7 @@ const CardDetail = ({
   }
 
   const addItems = () => {
-    
+
     var option = 1
     setModalDetail(false)
     addItem(course, option)
@@ -91,7 +91,7 @@ const CardDetail = ({
           onMouseLeave={onMouse}
           className={styles.content}
         >
-          
+
           {courseExistsinlearning !== 'true' ? (
             <div>
               <h6
@@ -100,15 +100,15 @@ const CardDetail = ({
                   router.push(
                     router.pathname == '/'
                       ? {
-                          pathname: '/course/[id]',
-                          query: { id: course.id },
-                          as: 'asdas'
-                        }
+                        pathname: '/course/[id]',
+                        query: { id: course.id },
+                        as: 'asdas'
+                      }
                       : {
-                          pathname: '/course/[id]',
-                          query: { id: course.course.id },
-                          as: 'asdasdasasdaas'
-                        }
+                        pathname: '/course/[id]',
+                        query: { id: course.course.id },
+                        as: 'asdasdasasdaas'
+                      }
                   )
                 }}
               >
@@ -151,9 +151,9 @@ const CardDetail = ({
                     onClick={addItems}
                   >
                     Add cart
-                    
+
                   </button>
-                  
+
                 )}
 
                 {courseExistsInWishlist == 'false' ? (

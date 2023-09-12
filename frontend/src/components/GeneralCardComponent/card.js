@@ -20,7 +20,6 @@ const Card = ({ course }) => {
   const router = useRouter()
   const [modalDetail, setModalDetail] = useState(false)
   const [courseD, setCourseD] = useState()
-  console.log(courseD)
   // const [courseId, setCourseId] = useState(router.pathname !== '/wishlist' ?  course.id : course.course.id)
   const [courseId, setCourseId] = useState(
     router.pathname !== '/my-courses/wishlist' ? course.id : course.course.id
@@ -55,7 +54,6 @@ const Card = ({ course }) => {
           setCourseExistsInWishlist(res.courseExistsInWishlist)
           setCourseExistsinlearning(res.courseExistsinlearning)
           setCourseD(res.course)
-          console.log(res)
 
           // router.push("/")
         })
