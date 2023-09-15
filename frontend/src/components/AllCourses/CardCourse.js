@@ -113,7 +113,11 @@ const CardCourse = ({
         </div>
         <div ref={slider} className={styles.content}>
           {courses != undefined &&
-            courses.map((course, id) => <Card key={id} course={course} />)}
+            courses.map((course, id) => (
+              <div key={id} className={styles.flexItem}>
+                <Card key={id} course={course} />
+              </div>
+            ))}
         </div>
         <div>
           {next != null && (

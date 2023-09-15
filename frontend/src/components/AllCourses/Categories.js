@@ -42,7 +42,7 @@ const Categories = ({ category, getData }) => {
               className={
                 activateLinkClick === true
                   ? (categorySelected === cat.id ? styles.statusOptionTrue : "")
-                  : cat.id === 1 ? styles.statusOptionTrue : "" 
+                  : cat.id === 1 ? styles.statusOptionTrue : ""
               }
               onClick={() => captureId(cat.id)}
             >

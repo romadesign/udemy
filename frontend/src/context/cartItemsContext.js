@@ -42,7 +42,7 @@ export const CartItemsProvider = ({ children }) => {
   const getDatawishlist = async () => {
     apiGetMyLibrary(getCookie('account'), payload)
       .then(res => {
-        console.log(res, 'res nuevop')
+        // console.log(res, 'res nuevop')
 
       })
       .catch(error => {

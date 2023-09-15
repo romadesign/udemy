@@ -10,10 +10,10 @@ const CardCourse = ({ title, data, option }) => {
   const [next, setNext] = useState()
   const [previous, setPrevious] = useState()
   const [count, setCount] = useState()
-  const [page_size,   ] = useState('page_size=4')
+  const [page_size,  setPageSise ] = useState('page_size=5')
 
 
-
+  console.log(count)
   useEffect(() => {
     getCourse()
 
@@ -71,6 +71,7 @@ const CardCourse = ({ title, data, option }) => {
     <div  className={styles.container}>
       <h3>{title}</h3>
       <div className={styles.button_left_rigth}>
+        {/* Button */}
         <div>
           {( previous != null &&
             <button className={styles.button_left} onClick={sliderLeft}>
@@ -78,10 +79,16 @@ const CardCourse = ({ title, data, option }) => {
             </button>
           )}
         </div>
+        {/* content */}
         <div ref={slider} className={styles.content}>
           {courses != undefined &&
-            courses.map((course, id) => <Card key={id} course={course} />)}
+            courses.map((course, id) => (
+              <div key={id} className={styles.flexItem}>
+                <Card key={id} course={course} />
+              </div>
+            ))}
         </div>
+        {/* Button */}
         <div>
           {next != null && (
             <button className={styles.button_rigth} onClick={sliderRigth}>
