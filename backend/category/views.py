@@ -31,9 +31,15 @@ class courses_by_categories_filter(APIView):
     def post(self, request, *args, **kwargs):
         data = self.request.data
         category = data['category']
+        sortBy = data['sortBy']
+        
+        if not (sortBy == 'price' or sortBy == 'rating'):
+            sortBy = 'created'
 
-        categories = Course.objects.filter(category=category)
+
+        categories = Course.objects.filter(category=category).order_by(sortBy)
         serializer = get_Courses_Serializer(categories, many=True)
         paginator = ResponsePagination_My_library()
         results = paginator.paginate_queryset(serializer.data, request)
+        
         return paginator.get_paginated_response({'data': results})
