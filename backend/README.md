@@ -137,3 +137,13 @@ SQL
 ```
   https://runebook.dev/es/docs/django/topics/db/sql 
 ```
+
+
+## Confingurado con Docker
+```
+    // ir a la carpeta backend y colocar
+    docker-compose up || docker-compose up -d
+
+    // Se instalara todo para poder ejecutar el proyecto en la parte backend
+  
+```
