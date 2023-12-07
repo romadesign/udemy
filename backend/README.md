@@ -147,3 +147,7 @@ SQL
     // Se instalara todo para poder ejecutar el proyecto en la parte backend
   
 ```
+
+## Php admin login
+    user : root
+    password: root
